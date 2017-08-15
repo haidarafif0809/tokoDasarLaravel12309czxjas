@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User_otoritas extends Model
+class Otoritas extends Model
 {
     //
         protected $table = 'role_user';

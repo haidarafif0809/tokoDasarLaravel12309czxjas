@@ -31,6 +31,6 @@ class User extends Authenticatable
     
     public function role()
           {
-            return $this->hasOne('App\User_otoritas','user_id','id');
+            return $this->hasOne('App\Otoritas','user_id','id');
           }
 }

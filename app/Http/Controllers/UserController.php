@@ -8,11 +8,11 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Role;
-use App\User_otoritas;
+use App\Otoritas;
 use Auth;
 use Session;
 
-class MasterUserController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
