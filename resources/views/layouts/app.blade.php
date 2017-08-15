@@ -48,8 +48,20 @@
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
+                    <ul class="nav navbar-nav"> 
+                    @if (!Auth::guest())
+                        <li><a href="{{ url('home') }}">Beranda</a></li>
+                    @endif
+                    @role('admin') 
+                        <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                   Master Data
+                                </a>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
+                            <li><a href="{{ route('master_users.index') }}">User</a></li> 
+                          </ul>
+                        </li>
+                    @endrole 
                     </ul>
 
                     <!-- Right Side Of Navbar -->
