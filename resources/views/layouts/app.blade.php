@@ -60,6 +60,7 @@
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
                             <li><a href="{{ route('master_users.index') }}">User</a></li> 
                             <li><a href="{{ route('master_otoritas.index') }}">Otoritas</a></li> 
+                            <li><a href="{{ route('master_suplier.index') }}">Suplier</a></li> 
                           </ul>
                         </li>
                     @endrole 
