@@ -139,7 +139,7 @@ class KategoriBarangController extends Controller
         }
         else{
         Session:: flash("flash_notification", [
-            "level"=>"success",
+            "level"=>"danger",
             "message"=>"Kategori Barang Berhasil Di Hapus"
             ]);
         return redirect()->route('master_kategori_barang.index');

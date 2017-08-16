@@ -37,6 +37,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth', 'role:admin']], function
 	Route::resource('master_suplier', 'SuplierController'); 
 	Route::resource('master_satuan', 'SatuanController'); 
 	Route::resource('master_kategori_barang', 'KategoriBarangController'); 
+	Route::resource('master_pelanggan', 'PelangganController'); 
 
 
 	Route::get('master_users/konfirmasi/{id}',[

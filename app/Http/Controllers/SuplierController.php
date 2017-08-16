@@ -146,7 +146,7 @@ class SuplierController extends Controller
         }
         else{
         Session:: flash("flash_notification", [
-            "level"=>"success",
+            "level"=>"danger",
             "message"=>"Suplier Berhasil Di Hapus"
             ]);
         return redirect()->route('master_suplier.index');

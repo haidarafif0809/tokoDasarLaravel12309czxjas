@@ -139,7 +139,7 @@ class SatuanController extends Controller
         }
         else{
         Session:: flash("flash_notification", [
-            "level"=>"success",
+            "level"=>"danger",
             "message"=>"Satuan Berhasil Di Hapus"
             ]);
         return redirect()->route('master_satuan.index');
