@@ -61,6 +61,8 @@
                             <li><a href="{{ route('master_users.index') }}">User</a></li> 
                             <li><a href="{{ route('master_otoritas.index') }}">Otoritas</a></li> 
                             <li><a href="{{ route('master_suplier.index') }}">Suplier</a></li> 
+                            <li><a href="{{ route('master_satuan.index') }}">Satuan</a></li> 
+                            <li><a href="{{ route('master_kategori_barang.index') }}">Kategori Barang</a></li> 
                           </ul>
                         </li>
                     @endrole 
