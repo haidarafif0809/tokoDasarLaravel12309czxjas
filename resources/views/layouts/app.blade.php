@@ -64,6 +64,7 @@
                             <li><a href="{{ route('master_satuan.index') }}">Satuan</a></li> 
                             <li><a href="{{ route('master_kategori_barang.index') }}">Kategori Barang</a></li> 
                             <li><a href="{{ route('master_pelanggan.index') }}">Pelanggan</a></li> 
+                            <li><a href="{{ route('master_group_akun.index') }}">Group Akun</a></li> 
                           </ul>
                         </li>
                     @endrole 
