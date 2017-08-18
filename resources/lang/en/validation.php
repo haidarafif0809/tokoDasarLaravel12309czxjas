@@ -60,7 +60,7 @@ return [
         'array'   => 'The :attribute must have at least :min items.',
     ],
     'not_in'               => 'The selected :attribute is invalid.',
-    'numeric'              => 'The :attribute must be a number.',
+    'numeric'              => 'Mohon Maaf :attribute harus berupa angka.',
     'present'              => 'The :attribute field must be present.',
     'regex'                => 'The :attribute format is invalid.',
     'required'             => 'The :attribute field is required.',
