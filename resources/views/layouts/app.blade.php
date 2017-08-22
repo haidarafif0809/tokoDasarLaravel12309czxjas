@@ -48,8 +48,27 @@
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
+                    <ul class="nav navbar-nav"> 
+                    @if (!Auth::guest())
+                        <li><a href="{{ url('home') }}">Beranda</a></li>
+                    @endif
+                    @role('admin') 
+                        <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                   Master Data
+                                </a>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
+                            <li><a href="{{ route('master_users.index') }}">User</a></li> 
+                            <li><a href="{{ route('master_otoritas.index') }}">Otoritas</a></li> 
+                            <li><a href="{{ route('master_suplier.index') }}">Suplier</a></li> 
+                            <li><a href="{{ route('master_satuan.index') }}">Satuan</a></li> 
+                            <li><a href="{{ route('master_kategori_barang.index') }}">Kategori Barang</a></li> 
+                            <li><a href="{{ route('master_pelanggan.index') }}">Pelanggan</a></li> 
+                            <li><a href="{{ route('master_barang.index') }}">Barang</a></li> 
+                            <li><a href="{{ route('master_group_akun.index') }}">Group Akun</a></li> 
+                          </ul>
+                        </li>
+                    @endrole 
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -66,6 +85,7 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
+                                        <a href="{{ url('/ubah-password') }}">Ubah Password</a>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
