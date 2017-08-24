@@ -6,7 +6,7 @@
 			<div class="col-md-12">
 				<ul class="breadcrumb">
 					<li><a href="{{ url('/home') }} ">Home</a></li>
-					<li><a href="{{ url('/admin/master_group_akun') }}">Group Akun</a></li>
+					<li><a href="{{ url('/master_group_akun') }}">Group Akun</a></li>
 					<li class="active">Edit Group Akun</li>
 				</ul>
 

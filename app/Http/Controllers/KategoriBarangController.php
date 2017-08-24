@@ -7,6 +7,7 @@ use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use App\KategoriBarang;  
+use App\Barang;  
 use Session;
 
 class KategoriBarangController extends Controller
@@ -27,12 +28,12 @@ class KategoriBarangController extends Controller
                         'model'     => $kategori_barang,
                         'form_url'  => route('master_kategori_barang.destroy', $kategori_barang->id),
                         'edit_url'  => route('master_kategori_barang.edit', $kategori_barang->id),
-                        'confirm_message'   => 'Yakin Mau Menghapus Kategori Barang ' . $kategori_barang->nama_kategori_barang . '?'
+                        'confirm_message'   => 'Yakin Mau Menghapus Kategori Produk ' . $kategori_barang->nama_kategori_barang . '?'
                         ]);
                 })->make(true);
         }
         $html = $htmlBuilder
-        ->addColumn(['data' => 'nama_kategori_barang', 'name' => 'nama_kategori_barang', 'title' => 'Nama Kategori Barnag']) 
+        ->addColumn(['data' => 'nama_kategori_barang', 'name' => 'nama_kategori_barang', 'title' => 'Nama Kategori Produk']) 
         ->addColumn(['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable'=>false]);
 
         return view('master_kategori_barang.index')->with(compact('html'));
@@ -68,7 +69,7 @@ class KategoriBarangController extends Controller
 
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Berhasil Menambah KategoriBarang $request->nama_kategori_barang"
+            "message"=>"Berhasil Menambah Kategori Produk $request->nama_kategori_barang"
             ]);
         return redirect()->route('master_kategori_barang.index');
     }
@@ -117,7 +118,7 @@ class KategoriBarangController extends Controller
 
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Berhasil Mengubah Kategori Barang $request->nama_kategori_barang"
+            "message"=>"Berhasil Mengubah Kategori Produk $request->nama_kategori_barang"
             ]);
 
         return redirect()->route('master_kategori_barang.index');
@@ -133,14 +134,24 @@ class KategoriBarangController extends Controller
     {
         //
        
-        if(!KategoriBarang::destroy($id)) 
-        {
-            return redirect()->back();
-        }
-        else{
+        //menghapus data dengan pengecekan alert /peringatan
+        $produk = Barang::where('kategori_barangs_id',$id); 
+ 
+        if ($produk->count() > 0) {
+        // menyiapkan pesan error
         Session:: flash("flash_notification", [
             "level"=>"danger",
-            "message"=>"Kategori Barang Berhasil Di Hapus"
+            "message"=>"Kategori Produk Tidak Bisa Di Hapus Karena Masih Memiliki Produk"
+            ]);
+
+        return redirect()->route('master_satuan.index');      
+        }  
+        else{
+
+        KategoriBarang::destroy($id);
+        Session:: flash("flash_notification", [
+            "level"=>"danger",
+            "message"=>"Kategori Produk Berhasil Di Hapus"
             ]);
         return redirect()->route('master_kategori_barang.index');
         }

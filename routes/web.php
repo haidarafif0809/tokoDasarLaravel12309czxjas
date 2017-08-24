@@ -16,22 +16,11 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index'); 
-	Route::get('/ubah-password',[
-	'middleware' => ['auth'],
-	'as' => 'users.ubah_password',
-	'uses' => 'UbahPasswordController@ubah_password'
-	]);
 
-	Route::put('/proses-ubah-password/{id}',[
-	'middleware' => ['auth'],
-	'as' => 'users.proses_ubah_password',
-	'uses' => 'UbahPasswordController@proses_ubah_password'
-	]);
-	
-Route::group(['prefix'=>'admin', 'middleware'=>['auth', 'role:admin']], function () {
-
+Route::group(['middleware' => 'auth'], function()
+{
+    
 	Route::resource('master_users', 'UserController'); 
 	Route::resource('master_otoritas', 'OtoritasController'); 
 	Route::resource('master_suplier', 'SuplierController'); 
@@ -44,6 +33,18 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth', 'role:admin']], function
 	Route::resource('master_daftar_akun', 'DaftarAkunController'); 
 
 
+
+	Route::get('/ubah-password',[
+	'middleware' => ['auth'],
+	'as' => 'users.ubah_password',
+	'uses' => 'UbahPasswordController@ubah_password'
+	]);
+
+	Route::put('/proses-ubah-password/{id}',[
+	'middleware' => ['auth'],
+	'as' => 'users.proses_ubah_password',
+	'uses' => 'UbahPasswordController@proses_ubah_password'
+	]); 
 
 	Route::get('master_users/konfirmasi/{id}',[
 	'middleware' => ['auth','role:admin'],
@@ -62,5 +63,5 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth', 'role:admin']], function
 	'as' => 'master_users.no_konfirmasi',
 	'uses' => 'UserController@no_konfirmasi'
 	]);	
-
+  
 });

@@ -7,17 +7,17 @@
 </div>
 
 <div class="form-group{{ $errors->has('kode_barang') ? ' has-error' : '' }}">
-	{!! Form::label('kode_barang', 'Kode Barang', ['class'=>'col-md-2 control-label']) !!}
+	{!! Form::label('kode_barang', 'Kode Produk', ['class'=>'col-md-2 control-label']) !!}
 	<div class="col-md-4">
-		{!! Form::text('kode_barang', null, ['class'=>'form-control','placeholder'=>'Kode Barang','required','autocomplete'=>'off']) !!}
+		{!! Form::text('kode_barang', null, ['class'=>'form-control','placeholder'=>'Kode Produk','required','autocomplete'=>'off']) !!}
 		{!! $errors->first('kode_barang', '<p class="help-block">:message</p>') !!}
 	</div>
 </div>
 
 <div class="form-group{{ $errors->has('nama_barang') ? ' has-error' : '' }}">
-	{!! Form::label('nama_barang', 'Nama Barang', ['class'=>'col-md-2 control-label']) !!}
+	{!! Form::label('nama_barang', 'Nama Produk', ['class'=>'col-md-2 control-label']) !!}
 	<div class="col-md-4">
-		{!! Form::text('nama_barang', null, ['class'=>'form-control','placeholder'=>'Nama Barang','required','autocomplete'=>'off']) !!}
+		{!! Form::text('nama_barang', null, ['class'=>'form-control','placeholder'=>'Nama Produk','required','autocomplete'=>'off']) !!}
 		{!! $errors->first('nama_barang', '<p class="help-block">:message</p>') !!}
 	</div>
 </div>

@@ -5,17 +5,17 @@
 		<div class="col-md-12">
 			<ul class="breadcrumb">
 				<li><a href="{{ url('/home') }}">Home</a></li>
-				<li class="active">Barang</li>
+				<li class="active">Produk</li>
 			</ul>
  
 			
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h2 class="panel-title">Barang</h2>
+					<h2 class="panel-title">Produk</h2>
 				</div>
 
 				<div class="panel-body">
-					<p> <a class="btn btn-primary" href="{{ route('master_barang.create') }}">Tambah</a> </p>
+					<p> <a class="btn btn-primary" href="{{ route('master_barang.create') }}">Tambah Produk</a> </p>
 					<div class="table-responsive">
 					{!! $html->table(['class'=>'table-striped table']) !!}
 					</div>

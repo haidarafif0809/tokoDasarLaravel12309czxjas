@@ -26,8 +26,21 @@ class BarangController extends Controller
             # code...
             $data_barang = Barang::with(['satuan','kategoribarang']);
             return Datatables::of($data_barang)
-            ->addColumn('action', function($barang){
-
+            ->addColumn('semua_data_harga', function($produk){ 
+                    return view('master_barang._action', [ 
+                        'model'     => $produk, 
+                        'id_produk'     => $produk->id, 
+                        ]);
+                })
+            ->addColumn('harga_beli_baru',function($data_harga_beli){
+                $harga_beli = number_format($data_harga_beli->harga_beli,0,',','.'); 
+                return $harga_beli;
+                })            
+            ->addColumn('harga_jual_baru',function($data_harga_jual){
+                $harga_jual = number_format($data_harga_jual->harga_jual,0,',','.'); 
+                return $harga_jual;
+                })
+            ->addColumn('action', function($barang){ 
                 return view('datatable._action',[
 
                         'model'             => $barang,
@@ -35,25 +48,19 @@ class BarangController extends Controller
                         'edit_url'          => route('master_barang.edit',$barang->id),
                         'confirm_message'   => 'Anda Yakin Mau Menghapus ' .$barang->nama_barang .' ?' 
 
-                    ]);
-
+                    ]); 
             })->make(true);
         }
         $html = $htmlBuilder
-        ->addColumn(['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable'=>false])
         ->addColumn(['data' => 'kode_barcode', 'name' => 'kode_barcode', 'title' => 'Barcode'])
-        ->addColumn(['data' => 'kode_barang', 'name' => 'kode_barang', 'title' => 'Kode Barang'])
-        ->addColumn(['data' => 'nama_barang', 'name' => 'nama_barang', 'title' => 'Nama Barang'])
-        ->addColumn(['data' => 'harga_beli', 'name' => 'harga_beli', 'title' => 'Harga Beli'])
-        ->addColumn(['data' => 'harga_jual', 'name' => 'harga_jual', 'title' => 'Harga Jual  Level 1'])
-        ->addColumn(['data' => 'harga_jual2', 'name' => 'harga_jual2', 'title' => 'Harga Jual Level 2'])
-        ->addColumn(['data' => 'harga_jual3', 'name' => 'harga_jual3', 'title' => 'Harga Jual  Level 3'])
-        ->addColumn(['data' => 'harga_jual4', 'name' => 'harga_jual4', 'title' => 'Harga Jual  Level 4'])
-        ->addColumn(['data' => 'harga_jual5', 'name' => 'harga_jual5', 'title' => 'Harga Jual  Level 2'])
-        ->addColumn(['data' => 'harga_jual6', 'name' => 'harga_jual6', 'title' => 'Harga Jual  Level 6'])
-        ->addColumn(['data' => 'harga_jual7', 'name' => 'harga_jual7', 'title' => 'Harga Jual  Level 7'])       
+        ->addColumn(['data' => 'kode_barang', 'name' => 'kode_barang', 'title' => 'Kode'])
+        ->addColumn(['data' => 'nama_barang', 'name' => 'nama_barang', 'title' => 'Nama'])
+        ->addColumn(['data' => 'harga_beli_baru', 'name' => 'harga_beli_baru', 'title' => 'Harga Beli'])
+        ->addColumn(['data' => 'harga_jual_baru', 'name' => 'harga_jual_baru', 'title' => 'Harga Jual 1']) 
+        ->addColumn(['data' => 'semua_data_harga', 'name' => 'semua_data_harga', 'title' => 'Harga Jual 2 - 7']) 
         ->addColumn(['data' => 'satuan.nama_satuan', 'name' => 'satuan.nama_satuan', 'title' => 'Satuan'])        
-        ->addColumn(['data' => 'kategoribarang.nama_kategori_barang', 'name' => 'kategoribarang.nama_kategori_barang', 'title' => 'Kategori']);
+        ->addColumn(['data' => 'kategoribarang.nama_kategori_barang', 'name' => 'kategoribarang.nama_kategori_barang', 'title' => 'Kategori'])
+        ->addColumn(['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable'=>false]);
 
         return view('master_barang.index')->with(compact('html'));
     }

@@ -6,7 +6,7 @@
 		<div class="col-md-12">
 			<ul class="breadcrumb">
 				<li><a href="{{ url('/home') }} ">Home</a></li>
-				<li><a href="{{ url('/admin/master_pelanggan') }}">Pelanggan</a></li>
+				<li><a href="{{ url('/master_pelanggan') }}">Pelanggan</a></li>
 				<li class="active">Tambah Pelanggan</li>
 			</ul>
 			<div class="panel panel-default">

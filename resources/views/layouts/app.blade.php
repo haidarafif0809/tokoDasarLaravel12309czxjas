@@ -50,9 +50,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav"> 
                     @if (!Auth::guest())
-                        <li><a href="{{ url('home') }}">Beranda</a></li>
-                    @endif
-                    @role('admin') 
+                        <li><a href="{{ url('home') }}">Beranda</a></li> 
                         <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                    Master Data
@@ -62,13 +60,14 @@
                             <li><a href="{{ route('master_otoritas.index') }}">Otoritas</a></li> 
                             <li><a href="{{ route('master_suplier.index') }}">Suplier</a></li> 
                             <li><a href="{{ route('master_satuan.index') }}">Satuan</a></li> 
-                            <li><a href="{{ route('master_kategori_barang.index') }}">Kategori Barang</a></li> 
+                            <li><a href="{{ route('master_kategori_barang.index') }}">Kategori Produk</a></li> 
                             <li><a href="{{ route('master_pelanggan.index') }}">Pelanggan</a></li> 
-                            <li><a href="{{ route('master_barang.index') }}">Barang</a></li> 
+                            <li><a href="{{ route('master_barang.index') }}">Produk</a></li> 
                             <li><a href="{{ route('master_group_akun.index') }}">Group Akun</a></li> 
+                            <li><a href="{{ route('master_daftar_akun.index') }}">Daftar Akun</a></li> 
                           </ul>
                         </li>
-                    @endrole 
+                    @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

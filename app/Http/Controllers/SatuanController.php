@@ -7,6 +7,7 @@ use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use App\Satuan;  
+use App\Barang;  
 use Session;
 
 class SatuanController extends Controller
@@ -133,11 +134,20 @@ class SatuanController extends Controller
     {
         //
        
-        if(!Satuan::destroy($id)) 
-        {
-            return redirect()->back();
-        }
+        //menghapus data dengan pengecekan alert /peringatan
+        $produk = Barang::where('satuans_id',$id); 
+ 
+        if ($produk->count() > 0) {
+        // menyiapkan pesan error
+        Session:: flash("flash_notification", [
+            "level"=>"danger",
+            "message"=>"Satuan Tidak Bisa Di Hapus Karena Masih Memiliki Produk"
+            ]);
+
+        return redirect()->route('master_satuan.index');      
+        } 
         else{
+        Satuan::destroy($id);
         Session:: flash("flash_notification", [
             "level"=>"danger",
             "message"=>"Satuan Berhasil Di Hapus"

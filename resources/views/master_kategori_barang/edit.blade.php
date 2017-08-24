@@ -6,13 +6,13 @@
 			<div class="col-md-12">
 				<ul class="breadcrumb">
 					<li><a href="{{ url('/home') }} ">Home</a></li>
-					<li><a href="{{ url('/admin/master_kategori_barang') }}">Kategori Barang</a></li>
-					<li class="active">Edit Kategori Barang</li>
+					<li><a href="{{ url('/master_kategori_barang') }}">Kategori Produk</a></li>
+					<li class="active">Edit Kategori Produk</li>
 				</ul>
 
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h2 class="panel-title">Edit Kategori Barang</h2>
+						<h2 class="panel-title">Edit Kategori Produk</h2>
 					</div>
 
 					<div class="panel-body">
