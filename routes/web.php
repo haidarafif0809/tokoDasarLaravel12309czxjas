@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function()
 	Route::resource('master_barang', 'BarangController'); 
 	Route::resource('master_group_akun', 'GroupAkunController'); 
 	Route::resource('master_daftar_akun', 'DaftarAkunController'); 
+	Route::resource('master_setting_akun', 'SettingAkunController'); 
 
 
 

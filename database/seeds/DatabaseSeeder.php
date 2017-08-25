@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BarangTableSeeder::class);
         $this->call(GroupAkunSeeder::class);
         $this->call(DaftarAkunSeeder::class);
+        $this->call(SettingAkunSeeder::class);
 
     }
 }

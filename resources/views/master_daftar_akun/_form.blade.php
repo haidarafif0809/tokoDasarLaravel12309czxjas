@@ -17,7 +17,7 @@
 <div class="form-group{{ $errors->has('group_akun') ? ' has-error' : '' }}">
 	{!! Form::label('group_akun', 'Group Akun', ['class'=>'col-md-2 control-label']) !!}
 	<div class="col-md-4">
-		{!! Form::select('group_akun', []+App\GroupAkun::pluck('nama_group_akun','kode_group_akun')->all(), null, ['class'=>'form-control js-selectize-reguler', 'placeholder' => 'Pilih Group Akun']) !!}
+		{!! Form::select('group_akun', []+App\GroupAkun::pluck('nama_group_akun','id')->all(), null, ['class'=>'form-control js-selectize-reguler', 'placeholder' => 'Pilih Group Akun']) !!}
 		{!! $errors->first('group_akun', '<p class="help-block">:message</p>') !!}
 	</div>
 </div>

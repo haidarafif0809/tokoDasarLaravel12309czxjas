@@ -22,7 +22,7 @@ class DaftarAkunController extends Controller
         //
         if ($request->ajax()) {
             # code...
-            $master_daftar_akun = DaftarAkun::select(['id','kode_daftar_akun','nama_daftar_akun','group_akun','kategori_akun','tipe_akun']);
+            $master_daftar_akun = DaftarAkun::with(['group_akun']);
             return Datatables::of($master_daftar_akun)->addColumn('action', function($daftar_akun){
                     return view('datatable._action', [
                         'model'     => $daftar_akun,
@@ -36,7 +36,7 @@ class DaftarAkunController extends Controller
         ->addColumn(['data' => 'kode_daftar_akun', 'name' => 'kode_daftar_akun', 'title' => 'Kode Akun']) 
         ->addColumn(['data' => 'nama_daftar_akun', 'name' => 'nama_daftar_akun', 'title' => 'Nama Akun'])  
         ->addColumn(['data' => 'kategori_akun', 'name' => 'kategori_akun', 'title' => 'Kategori Akun']) 
-        ->addColumn(['data' => 'group_akun', 'name' => 'group_akun', 'title' => 'Sub Akun']) 
+        ->addColumn(['data' => 'group_akun.kode_group_akun', 'name' => 'group_akun.kode_group_akun', 'title' => 'Sub Akun']) 
         ->addColumn(['data' => 'tipe_akun', 'name' => 'tipe_akun', 'title' => 'Tipe Akun'])  
         ->addColumn(['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable'=>false]);
 
@@ -70,6 +70,7 @@ class DaftarAkunController extends Controller
             'kategori_akun'     => 'required',
             'tipe_akun'     => 'required'
             ]);
+         
          $user = Auth::user()->name;
          $daftar_akun = DaftarAkun::create([
             'kode_daftar_akun' =>$request->kode_daftar_akun,

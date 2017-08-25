@@ -15,7 +15,7 @@ class GroupAkunSeeder extends Seeder
         //
     // Membuat sample group akun
     $group_akun = new GroupAkun();
-    $group_akun->kode_group_akun = "1"; 
+    $group_akun->kode_group_akun = "1-1000"; 
     $group_akun->nama_group_akun = "ASET"; 
     $group_akun->parent = "-";  
     $group_akun->kategori_akun = "Aset"; 
@@ -25,7 +25,7 @@ class GroupAkunSeeder extends Seeder
 
     // Membuat sample group akun
     $group_akun = new GroupAkun();
-    $group_akun->kode_group_akun = "2"; 
+    $group_akun->kode_group_akun = "2-1000"; 
     $group_akun->nama_group_akun = "ASET 2"; 
     $group_akun->parent = "-";  
     $group_akun->kategori_akun = "Aset lancar"; 
@@ -35,7 +35,7 @@ class GroupAkunSeeder extends Seeder
 
     // Membuat sample group akun
     $group_akun = new GroupAkun();
-    $group_akun->kode_group_akun = "3"; 
+    $group_akun->kode_group_akun = "3-1000"; 
     $group_akun->nama_group_akun = "Kas"; 
     $group_akun->parent = "-";  
     $group_akun->kategori_akun = "Aset"; 
