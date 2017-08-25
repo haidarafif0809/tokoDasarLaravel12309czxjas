@@ -17,7 +17,7 @@ class CreateDaftarAkunsTable extends Migration
             $table->increments('id');
             $table->string('kode_daftar_akun')->unique();
             $table->string('nama_daftar_akun');
-            $table->string('grup_akun');
+            $table->string('group_akun');
             $table->string('kategori_akun');
             $table->string('tipe_akun');
             $table->string('user_buat')->nullable();
