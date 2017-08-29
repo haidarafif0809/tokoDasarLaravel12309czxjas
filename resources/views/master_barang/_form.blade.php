@@ -119,17 +119,7 @@
 		{!! $errors->first('status', '<p class="help-block">:message</p>') !!}
 	</div>
 </div>
-
-<div class="form-group{{ $errors->has('supliers_id') ? ' has-error' : '' }}">
-	{!! Form::label('supliers_id', 'Suplier', ['class'=>'col-md-2 control-label']) !!}
-	<div class="col-md-4">
-		{!! Form::select('supliers_id', 
-		[''=>'']+App\Suplier::pluck('nama_suplier','id')->all(),
-		null, ['class'=>'form-control js-selectize-reguler', 'placeholder' => 'Silahkan Pilih']) !!}
-		{!! $errors->first('supliers_id', '<p class="help-block">:message</p>') !!}
-	</div>
-</div>
-
+  
 <div class="form-group{{ $errors->has('limit_stok') ? ' has-error' : '' }}">
 	{!! Form::label('limit_stok', 'Limit Stok', ['class'=>'col-md-2 control-label']) !!}
 	<div class="col-md-4">

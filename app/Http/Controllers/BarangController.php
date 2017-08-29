@@ -102,8 +102,7 @@ class BarangController extends Controller
           'harga_jual6'         => 'numeric',
           'harga_jual7'         => 'numeric',
           'satuans_id'          => 'required|exists:satuans,id',
-          'status'              => 'required',
-          'supliers_id'         => 'required|exists:supliers,id',
+          'status'              => 'required', 
           'limit_stok'          => 'numeric',
           'over_stok'           => 'numeric'
         ]);
@@ -165,8 +164,7 @@ class BarangController extends Controller
             'harga_jual6'           =>$request->harga_jual6,
             'harga_jual7'           =>$request->harga_jual7,
             'satuans_id'            =>$request->satuans_id,
-            'status'                =>$request->status,
-            'supliers_id'           =>$request->supliers_id,
+            'status'                =>$request->status, 
             'limit_stok'            =>$request->limit_stok,
             'over_stok'             =>$request->over_stok
         ]);
@@ -233,8 +231,7 @@ class BarangController extends Controller
           'harga_jual6'         => 'numeric',
           'harga_jual7'         => 'numeric',
           'satuans_id'          => 'required|exists:satuans,id',
-          'status'              => 'required',
-          'supliers_id'         => 'required|exists:supliers,id',
+          'status'              => 'required', 
           'limit_stok'          => 'numeric',
           'over_stok'           => 'numeric'
         ]);
@@ -296,8 +293,7 @@ class BarangController extends Controller
             'harga_jual6'           =>$request->harga_jual6,
             'harga_jual7'           =>$request->harga_jual7,
             'satuans_id'            =>$request->satuans_id,
-            'status'                =>$request->status,
-            'supliers_id'           =>$request->supliers_id,
+            'status'                =>$request->status, 
             'limit_stok'            =>$request->limit_stok,
             'over_stok'             =>$request->over_stok
         ]);
