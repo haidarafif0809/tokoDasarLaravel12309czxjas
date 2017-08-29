@@ -12,25 +12,19 @@ use Session;
 use Auth;
 
 class SettingAkunController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request, Builder $htmlBuilder)
-    {
-        //
-        if ($request->ajax()) {
-            # code...
-            $master_setting_akun = SettingAkun::with(['daftar_akun']);
-            return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){
-                    return view('master_setting_akun._action', [
+{ 
+    public function index(Request $request){
+        return view('master_setting_akun.index');
+    }
+
+    public function table_data_item(Request $request){
+        $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','data_item');
+        return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
+                    return view('master_setting_akun._action', [ 
                         'model'     => $setting_akun,
                         'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
                         'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
-                        'confirm_message'   => 'Yakin Mau Menghapus Group Akun ' . $setting_akun->nama_group_akun . '?'
-                        ]);
+                        ]);                
                 })->addColumn('akun', function($data_setting_akun){
 
                 if ($data_setting_akun->id_akun == NULL) {
@@ -38,59 +32,154 @@ class SettingAkunController extends Controller
                 }
                 else {
                     $daftar_akun = DaftarAkun::find($data_setting_akun->id_akun);
+                    $data_daftar_akun = $daftar_akun->kode_daftar_akun ." - ". $daftar_akun->nama_daftar_akun;                    
 
-                    return $daftar_akun->nama_daftar_akun; 
+                    return $data_daftar_akun ; 
                 }
                
             })->make(true);
-        }
-        $html = $htmlBuilder
-        ->addColumn(['data' => 'nama_setting_akun', 'name' => 'nama_setting_akun', 'title' => 'Nama Setting Akun']) 
-        ->addColumn(['data' => 'akun', 'name' => 'akun', 'title' => 'Akun', 'orderable' => false, 'searchable'=>false])  
-        ->addColumn(['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable'=>false]);
+ 
+    } 
 
-        return view('master_setting_akun.index')->with(compact('html'));
-    }
+    public function table_akun_pembelian(Request $request){
+        $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','akun_pembelian');
+        return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
+                    return view('master_setting_akun._action', [ 
+                        'model'     => $setting_akun,
+                        'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
+                        'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
+                        ]);                
+                })->addColumn('akun', function($data_setting_akun){
 
+                if ($data_setting_akun->id_akun == NULL) {
+                    return "Akun Belum di kaitkan";
+                }
+                else {
+                    $daftar_akun = DaftarAkun::find($data_setting_akun->id_akun);
+                    $data_daftar_akun = $daftar_akun->kode_daftar_akun ." - ". $daftar_akun->nama_daftar_akun;                    
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+                    return $data_daftar_akun ; 
+                }
+               
+            })->make(true);
+ 
+    } 
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function table_akun_retur_pembelian(Request $request){
+        $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','akun_retur_pembelian');
+        return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
+                    return view('master_setting_akun._action', [ 
+                        'model'     => $setting_akun,
+                        'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
+                        'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
+                        ]);                
+                })->addColumn('akun', function($data_setting_akun){
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+                if ($data_setting_akun->id_akun == NULL) {
+                    return "Akun Belum di kaitkan";
+                }
+                else {
+                    $daftar_akun = DaftarAkun::find($data_setting_akun->id_akun);
+                    $data_daftar_akun = $daftar_akun->kode_daftar_akun ." - ". $daftar_akun->nama_daftar_akun;                 
+                    return $data_daftar_akun ; 
+                }
+               
+            })->make(true);
+ 
+    } 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function table_akun_penjualan(Request $request){
+        $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','akun_penjualan');
+        return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
+                    return view('master_setting_akun._action', [ 
+                        'model'     => $setting_akun,
+                        'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
+                        'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
+                        ]);                
+                })->addColumn('akun', function($data_setting_akun){
+
+                if ($data_setting_akun->id_akun == NULL) {
+                    return "Akun Belum di kaitkan";
+                }
+                else {
+                    $daftar_akun = DaftarAkun::find($data_setting_akun->id_akun);
+                    $data_daftar_akun = $daftar_akun->kode_daftar_akun ." - ". $daftar_akun->nama_daftar_akun;                     
+                    return $data_daftar_akun ;  
+                }
+               
+            })->make(true);
+ 
+    } 
+
+    public function table_akun_retur_penjualan(Request $request){
+        $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','akun_retur_penjualan');
+        return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
+                    return view('master_setting_akun._action', [ 
+                        'model'     => $setting_akun,
+                        'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
+                        'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
+                        ]);                
+                })->addColumn('akun', function($data_setting_akun){
+
+                if ($data_setting_akun->id_akun == NULL) {
+                    return "Akun Belum di kaitkan";
+                }
+                else {
+                    $daftar_akun = DaftarAkun::find($data_setting_akun->id_akun);
+                    $data_daftar_akun = $daftar_akun->kode_daftar_akun ." - ". $daftar_akun->nama_daftar_akun;                     
+                    return $data_daftar_akun ; 
+                }
+               
+            })->make(true);
+ 
+    } 
+    
+    public function table_akun_hutang_piutang(Request $request){
+        $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','akun_hutang_piutang');
+        return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
+                    return view('master_setting_akun._action', [ 
+                        'model'     => $setting_akun,
+                        'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
+                        'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
+                        ]);                
+                })->addColumn('akun', function($data_setting_akun){
+
+                if ($data_setting_akun->id_akun == NULL) {
+                    return "Akun Belum di kaitkan";
+                }
+                else {
+                    $daftar_akun = DaftarAkun::find($data_setting_akun->id_akun);
+                    $data_daftar_akun = $daftar_akun->kode_daftar_akun ." - ". $daftar_akun->nama_daftar_akun;                     
+                    return $data_daftar_akun ; 
+                }
+               
+            })->make(true);
+ 
+    } 
+
+    public function table_modal_dan_laba(Request $request){
+        $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','modal_dan_laba');
+        return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
+                    return view('master_setting_akun._action', [ 
+                        'model'     => $setting_akun,
+                        'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
+                        'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
+                        ]);                
+                })->addColumn('akun', function($data_setting_akun){
+
+                if ($data_setting_akun->id_akun == NULL) {
+                    return "Akun Belum di kaitkan";
+                }
+                else {
+                    $daftar_akun = DaftarAkun::find($data_setting_akun->id_akun);
+                    $data_daftar_akun = $daftar_akun->kode_daftar_akun ." - ". $daftar_akun->nama_daftar_akun;                     
+                    return $data_daftar_akun ; 
+                }
+               
+            })->make(true);
+ 
+    } 
+
     public function edit($id)
     {
         //
@@ -98,13 +187,6 @@ class SettingAkunController extends Controller
         return view('master_setting_akun.edit')->with(compact('master_setting_akun')); 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
@@ -112,26 +194,16 @@ class SettingAkunController extends Controller
             'id_akun'     => ' '
             ]);
  
-        SettingAkun::where('id', $id)->update([ 
+       SettingAkun::where('id', $id)->update([ 
             'id_akun' =>$request->id_akun
             ]);
 
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Berhasil Mengubah Setting Akun $request->nama_setting_akun"
+            "message"=>"Berhasil Mengubah Setting Akun $request->display_nama_setting_akun"
             ]);
 
-        return redirect()->route('master_setting_akun.index');
+        return view('master_setting_akun.index');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+ 
 }

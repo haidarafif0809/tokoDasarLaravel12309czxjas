@@ -144,7 +144,7 @@ class KategoriBarangController extends Controller
             "message"=>"Kategori Produk Tidak Bisa Di Hapus Karena Masih Memiliki Produk"
             ]);
 
-        return redirect()->route('master_satuan.index');      
+        return redirect()->route('master_kategori_barang.index');      
         }  
         else{
 

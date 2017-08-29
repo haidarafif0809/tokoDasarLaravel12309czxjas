@@ -65,4 +65,47 @@ Route::group(['middleware' => 'auth'], function()
 	'uses' => 'UserController@no_konfirmasi'
 	]);	
   
+	Route::post('master_setting_akun/table_data_item',[
+	'middleware' => ['auth'],
+	'as' => 'table.data_item',
+	'uses' => 'SettingAkunController@table_data_item'
+	]);
+
+	Route::post('master_setting_akun/table_akun_pembelian',[
+	'middleware' => ['auth'],
+	'as' => 'table.akun_pembelian',
+	'uses' => 'SettingAkunController@table_akun_pembelian'
+	]);
+
+	Route::post('master_setting_akun/table_akun_retur_pembelian',[
+	'middleware' => ['auth'],
+	'as' => 'table.akun_retur_pembelian',
+	'uses' => 'SettingAkunController@table_akun_retur_pembelian'
+	]);
+
+	Route::post('master_setting_akun/table_akun_penjualan',[
+	'middleware' => ['auth'],
+	'as' => 'table.akun_penjualan',
+	'uses' => 'SettingAkunController@table_akun_penjualan'
+	]);
+
+	Route::post('master_setting_akun/table_akun_retur_penjualan',[
+	'middleware' => ['auth'],
+	'as' => 'table.akun_retur_penjualan',
+	'uses' => 'SettingAkunController@table_akun_retur_penjualan'
+	]);
+
+	Route::post('master_setting_akun/table_akun_hutang_piutang',[
+	'middleware' => ['auth'],
+	'as' => 'table.akun_hutang_piutang',
+	'uses' => 'SettingAkunController@table_akun_hutang_piutang'
+	]);
+
+
+	Route::post('master_setting_akun/table_modal_dan_laba',[
+	'middleware' => ['auth'],
+	'as' => 'table.modal_dan_laba',
+	'uses' => 'SettingAkunController@table_modal_dan_laba'
+	]);
+
 });

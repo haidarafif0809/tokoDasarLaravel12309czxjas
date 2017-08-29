@@ -27,14 +27,9 @@ class BarangTableSeeder extends Seeder
             $barang->harga_jual7 = "0";
             $barang->satuans_id = "1";
             $barang->kategori_barangs_id = "1";
-            $barang->status = "Aktif";
-            $barang->supliers_id = "1";
+            $barang->status = "Aktif"; 
             $barang->limit_stok = "0";
             $barang->over_stok = "10";
-            $barang->berkaitan_dgn_stok = "1000";
-            $barang->jenis_barang = "Barang";
-            $barang->tipe_barang = "Barang";
-            $barang->golongan = "Barang";
             $barang->golongan_barang = "Barang";
             $barang->save();
 
@@ -53,14 +48,9 @@ class BarangTableSeeder extends Seeder
             $barang->harga_jual7 = "0";
             $barang->satuans_id = "5";
             $barang->kategori_barangs_id = "1";
-            $barang->status = "Aktif";
-            $barang->supliers_id = "2";
+            $barang->status = "Aktif"; 
             $barang->limit_stok = "0";
             $barang->over_stok = "10";
-            $barang->berkaitan_dgn_stok = "1000";
-            $barang->jenis_barang = "Barang";
-            $barang->tipe_barang = "Barang";
-            $barang->golongan = "Barang";
             $barang->golongan_barang = "Barang";
             $barang->save();
 
@@ -78,14 +68,9 @@ class BarangTableSeeder extends Seeder
             $barang->harga_jual7 = "0";
             $barang->satuans_id = "8";
             $barang->kategori_barangs_id = "1";
-            $barang->status = "Aktif";
-            $barang->supliers_id = "3";
+            $barang->status = "Aktif"; 
             $barang->limit_stok = "0";
             $barang->over_stok = "10";
-            $barang->berkaitan_dgn_stok = "1000";
-            $barang->jenis_barang = "Barang";
-            $barang->tipe_barang = "Barang";
-            $barang->golongan = "Barang";
             $barang->golongan_barang = "Barang";
             $barang->save();
 

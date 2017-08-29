@@ -16,6 +16,8 @@ class CreateSettingAkunsTable extends Migration
         Schema::create('setting_akuns', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nama_setting_akun');
+            $table->string('display_nama_setting_akun');
+            $table->string('group_setting_akun');
             $table->integer('id_akun')->nullable();
             $table->timestamps();
         });
