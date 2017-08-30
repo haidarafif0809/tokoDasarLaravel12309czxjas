@@ -316,16 +316,15 @@ class BarangController extends Controller
      */
     public function destroy($id)
     {
-         //hapus barang
-        $barang = Barang::find($id);
-
-        $barang->delete();
-
-          Session::flash("flash_notification", [
-            "level"=>"danger",
-            "message"=>"Barang berhasil dihapus"
-        ]);
-
+        if (!Barang::destroy($id)) {
+            return redirect()->back();
+        }
+        else{
+            Session::flash("flash_notification", [
+                "level"     => "danger",
+                "message"   => "Barang Berhasil Di Hapus"
+            ]);
         return redirect()->route('master_barang.index');
+        }
     }
 }

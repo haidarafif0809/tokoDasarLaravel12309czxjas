@@ -66,6 +66,7 @@
                             <li><a href="{{ route('master_group_akun.index') }}">Group Akun</a></li> 
                             <li><a href="{{ route('master_daftar_akun.index') }}">Daftar Akun</a></li> 
                             <li><a href="{{ route('master_setting_akun.index') }}">Setting Akun</a></li> 
+                            <li><a href="{{ route('master_gudang.index') }}">Gudang</a></li> 
                           </ul>
                         </li>
                     @endif
