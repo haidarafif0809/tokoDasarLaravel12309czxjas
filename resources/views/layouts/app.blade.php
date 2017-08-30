@@ -53,7 +53,7 @@
                         <li><a href="{{ url('home') }}">Beranda</a></li> 
                         <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                   Master Data
+                                   Master Data <span class="caret"></span>
                                 </a>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
                             <li><a href="{{ route('master_users.index') }}">User</a></li> 
@@ -67,6 +67,14 @@
                             <li><a href="{{ route('master_daftar_akun.index') }}">Daftar Akun</a></li> 
                             <li><a href="{{ route('master_setting_akun.index') }}">Setting Akun</a></li> 
                             <li><a href="{{ route('master_gudang.index') }}">Gudang</a></li> 
+                          </ul>
+                        </li>
+                        <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                   Persediaan <span class="caret"></span>
+                                </a>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
+                            <li><a href="{{ route('item-masuk.index') }}">Item Masuk</a></li>  
                           </ul>
                         </li>
                     @endif

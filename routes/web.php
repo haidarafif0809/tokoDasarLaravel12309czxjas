@@ -33,8 +33,26 @@ Route::group(['middleware' => 'auth'], function()
 	Route::resource('master_daftar_akun', 'DaftarAkunController'); 
 	Route::resource('master_setting_akun', 'SettingAkunController'); 
 	Route::resource('master_gudang', 'GudangController'); 
+	Route::resource('item-masuk', 'ItemMasukController'); 
 
 
+	Route::post('/item-masuk/proses-tambah-tbs-item-masuk',[
+	'middleware' => ['auth'],
+	'as' => 'item-masuk.proses_tambah_tbs_item_masuk',
+	'uses' => 'ItemMasukController@proses_tambah_tbs_item_masuk'
+	]);
+
+	Route::post('/item-masuk/proses-hapus-tbs-item-masuk/{id}',[
+	'middleware' => ['auth'],
+	'as' => 'item-masuk.proses_hapus_tbs_item_masuk',
+	'uses' => 'ItemMasukController@proses_hapus_tbs_item_masuk'
+	]);
+
+	Route::post('/item-masuk/proses-hapus-semua-tbs-item-masuk/',[
+	'middleware' => ['auth'],
+	'as' => 'item-masuk.proses_hapus_semua_tbs_item_masuk',
+	'uses' => 'ItemMasukController@proses_hapus_semua_tbs_item_masuk'
+	]);
 
 	Route::get('/ubah-password',[
 	'middleware' => ['auth'],
