@@ -61,6 +61,7 @@ class ItemMasukController extends Controller
                 })->make(true);
         }
         $html = $htmlBuilder
+        ->addColumn(['data' => 'id', 'name' => 'id', 'title' => 'ID'])
         ->addColumn(['data' => 'produk.kode_barang', 'name' => 'produk.kode_barang', 'title' => 'Kode Produk'])  
         ->addColumn(['data' => 'produk.nama_barang', 'name' => 'produk.nama_barang', 'title' => 'Nama Produk']) 
         ->addColumn(['data' => 'jumlah_produk', 'name' => 'jumlah_produk', 'title' => 'Jumlah'])
