@@ -33,9 +33,36 @@ Route::group(['middleware' => 'auth'], function()
 	Route::resource('master_daftar_akun', 'DaftarAkunController'); 
 	Route::resource('master_setting_akun', 'SettingAkunController'); 
 	Route::resource('master_gudang', 'GudangController'); 
-	Route::resource('item-masuk', 'ItemMasukController'); 
+	Route::resource('item-masuk', 'ItemMasukController');
+	Route::resource('item-keluar', 'ItemKeluarController');
 
 
+//ITEM KELUAR
+	Route::post('/item-keluar/proses-tambah-tbs-item-keluar',[
+	'middleware' => ['auth'],
+	'as' => 'item-keluar.proses_tambah_tbs_item_keluar',
+	'uses' => 'ItemKeluarController@proses_tambah_tbs_item_keluar'
+	]);
+
+	Route::post('/item-keluar/proses-hapus-semua-tbs-item-keluar/',[
+	'middleware' => ['auth'],
+	'as' => 'item-keluar.proses_hapus_semua_tbs_item_keluar',
+	'uses' => 'ItemKeluarController@proses_hapus_semua_tbs_item_keluar'
+	]);
+
+	Route::delete('/item-keluar/proses-hapus-tbs-item-keluar/{id}',[
+	'middleware' => ['auth'],
+	'as' => 'item-keluar.proses_hapus_tbs_item_keluar',
+	'uses' => 'ItemKeluarController@proses_hapus_tbs_item_keluar'
+	]);
+
+	Route::post('/item-keluar/proses-barcode-item-keluar',[
+	'middleware' => ['auth'],
+	'as' => 'item-keluar.proses_barcode_item_keluar',
+	'uses' => 'ItemKeluarController@proses_barcode_item_keluar'
+	]);
+
+//ITEM MASUK
 	Route::post('/item-masuk/proses-tambah-tbs-item-masuk',[
 	'middleware' => ['auth'],
 	'as' => 'item-masuk.proses_tambah_tbs_item_masuk',

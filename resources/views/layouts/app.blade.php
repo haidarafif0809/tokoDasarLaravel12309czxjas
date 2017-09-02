@@ -53,6 +53,15 @@
 
                      @if (!Auth::guest())
                         <li class="active"><a href="{{ url('home') }}"> <p><i class="material-icons">dashboard</i> Beranda</p></a></li>
+                 
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons">business center </i> Persediaan <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
+                                <li><a href="{{ route('item-keluar.index') }}">Item Keluar</a></li> 
+                                <li><a href="{{ route('item-masuk.index') }}">Item Masuk</a></li> 
+                            </ul>
+                        </li>
                     @endif
                   
                 </ul>
@@ -76,22 +85,22 @@
                       
                            
                         @if (!Auth::guest())
-                        <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                   Master Data <span class="caret"></span>
-                                </a>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
-                            <li><a href="{{ route('master_users.index') }}">User</a></li> 
-                            <li><a href="{{ route('master_otoritas.index') }}">Otoritas</a></li> 
-                            <li><a href="{{ route('master_suplier.index') }}">Suplier</a></li> 
-                            <li><a href="{{ route('master_satuan.index') }}">Satuan</a></li> 
-                            <li><a href="{{ route('master_kategori_barang.index') }}">Kategori Barang</a></li> 
-                            <li><a href="{{ route('master_pelanggan.index') }}">Pelanggan</a></li> 
-                            <li><a href="{{ route('master_barang.index') }}">Barang</a></li> 
-                            <li><a href="{{ route('master_group_akun.index') }}">Group Akun</a></li> 
-                          </ul>
-                        </li>
-                    @endif
+                            <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                       Master Data <span class="caret"></span>
+                                    </a>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
+                                <li><a href="{{ route('master_users.index') }}">User</a></li> 
+                                <li><a href="{{ route('master_otoritas.index') }}">Otoritas</a></li> 
+                                <li><a href="{{ route('master_suplier.index') }}">Suplier</a></li> 
+                                <li><a href="{{ route('master_satuan.index') }}">Satuan</a></li> 
+                                <li><a href="{{ route('master_kategori_barang.index') }}">Kategori Barang</a></li> 
+                                <li><a href="{{ route('master_pelanggan.index') }}">Pelanggan</a></li> 
+                                <li><a href="{{ route('master_barang.index') }}">Barang</a></li> 
+                                <li><a href="{{ route('master_group_akun.index') }}">Group Akun</a></li> 
+                              </ul>
+                            </li>
+                        @endif
                               <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ url('/login') }}">Login</a></li>
