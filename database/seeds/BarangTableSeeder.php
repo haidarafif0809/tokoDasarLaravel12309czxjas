@@ -13,10 +13,31 @@ class BarangTableSeeder extends Seeder
     public function run()
     {
         // sample barang 1
-       		$barang = new Barang();
-       	    $barang->kode_barang = "0018";
-            $barang->kode_barcode = "1234567";
-            $barang->nama_barang = "Beras 10kg";
+            $barang = new Barang();
+            $barang->kode_barang = "B001";
+            $barang->kode_barcode = "5700011001";
+            $barang->nama_barang = "KECAP ASIN ABC";
+            $barang->harga_beli = "55000";
+            $barang->harga_jual = "6500";
+            $barang->harga_jual2 = "7500";
+            $barang->harga_jual3 = "0";
+            $barang->harga_jual4 = "0";
+            $barang->harga_jual5 = "0";
+            $barang->harga_jual6 = "0";
+            $barang->harga_jual7 = "0";
+            $barang->satuans_id = "1";
+            $barang->kategori_barangs_id = "1";
+            $barang->status = "Aktif"; 
+            $barang->limit_stok = "0";
+            $barang->over_stok = "10";
+            $barang->golongan_barang = "Barang";
+            $barang->save();
+
+        // sample barang 2
+            $barang = new Barang();
+            $barang->kode_barang = "B002";
+            $barang->kode_barcode = "5700021002";
+            $barang->nama_barang = "MINYAK BIMOLI 1 L";
             $barang->harga_beli = "85000";
             $barang->harga_jual = "90000";
             $barang->harga_jual2 = "100000";
@@ -33,40 +54,20 @@ class BarangTableSeeder extends Seeder
             $barang->golongan_barang = "Barang";
             $barang->save();
 
-
-             // sample barang 2
-       		$barang = new Barang();
-       	    $barang->kode_barang = "TBG";
-            $barang->nama_barang = "TABUNG GAS";
-            $barang->harga_beli = "11200";
-            $barang->harga_jual = "115000";
-            $barang->harga_jual2 = "150000";
+        // sample barang 3
+            $barang = new Barang();
+            $barang->kode_barang = "B003";
+            $barang->kode_barcode = "5700031003";
+            $barang->nama_barang = "SAMBAL TERASI ABC";
+            $barang->harga_beli = "10500";
+            $barang->harga_jual = "11000";
+            $barang->harga_jual2 = "12000";
             $barang->harga_jual3 = "0";
             $barang->harga_jual4 = "0";
             $barang->harga_jual5 = "0";
             $barang->harga_jual6 = "0";
             $barang->harga_jual7 = "0";
-            $barang->satuans_id = "5";
-            $barang->kategori_barangs_id = "1";
-            $barang->status = "Aktif"; 
-            $barang->limit_stok = "0";
-            $barang->over_stok = "10";
-            $barang->golongan_barang = "Barang";
-            $barang->save();
-
-              // sample barang 3
-       		$barang = new Barang();
-       	    $barang->kode_barang = "020";
-            $barang->nama_barang = "DETERGEN BOOM 450 G";
-            $barang->harga_beli = "4167";
-            $barang->harga_jual = "417700";
-            $barang->harga_jual2 = "500000";
-            $barang->harga_jual3 = "0";
-            $barang->harga_jual4 = "0";
-            $barang->harga_jual5 = "0";
-            $barang->harga_jual6 = "0";
-            $barang->harga_jual7 = "0";
-            $barang->satuans_id = "8";
+            $barang->satuans_id = "1";
             $barang->kategori_barangs_id = "1";
             $barang->status = "Aktif"; 
             $barang->limit_stok = "0";
