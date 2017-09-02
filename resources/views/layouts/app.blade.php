@@ -14,15 +14,10 @@
     <!-- Styles -->
     <link href="{{ asset('css/font-awesome.min.css') }}" rel='stylesheet' type='text/css'>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/material-dashboard.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dataTables.bootstrap.css') }}" rel="stylesheet"> 
     <link href="{{ asset('css/selectize.bootstrap3.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet">  
-    <link href="{{ asset('css/bootstrap-clockpicker.min.css') }}" rel="stylesheet"> 
-
-    <!--     Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'> 
+    <link href="{{ asset('css/bootstrap-clockpicker.min.css') }}" rel="stylesheet">  
 
     <!-- Scripts -->
     <script>
@@ -32,32 +27,29 @@
     </script>
 </head>
 <body>
+    <div id="app">
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
 
-    <div class="wrapper">
-        <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
+                    <!-- Collapsed Hamburger -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
 
-            <!--
-                Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+                    <!-- Branding Image -->
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        {{ config('app.name', 'Laravel') }}
+                    </a>
+                </div>
 
-                Tip 2: you can also add an image using data-image tag
-            -->
-
-            <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text">
-                    ANDAGLOS
-                </a>
-            </div>
-
-            <div class="sidebar-wrapper">
-                <ul class="nav">
-                    <li class="active">
-                        <a href="dashboard.html">
-                            <i class="material-icons">dashboard</i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-
-                     @if (!Auth::guest())
+                <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="nav navbar-nav"> 
+                    @if (!Auth::guest())
                         <li><a href="{{ url('home') }}">Beranda</a></li>
                     @endif
                     @role('admin') 
@@ -77,36 +69,18 @@
                           </ul>
                         </li>
                     @endrole 
-                </ul>
-            </div>
-        </div>
+                    </ul>
 
-        <div class="main-panel">
-            <nav class="navbar navbar-transparent navbar-absolute">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">Toko Dasar</a>
-                    </div>
-                    <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav navbar-right">
-                      
-                           
-                          
-
-                              <!-- Authentication Links -->
+                    <!-- Right Side Of Navbar -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ url('/login') }}">Login</a></li>
                             <li><a href="{{ url('/register') }}">Register</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <i class="material-icons">person</i> {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
@@ -125,39 +99,12 @@
                                 </ul>
                             </li>
                         @endif
-                        </ul>
-
-                      
-                    </div>
-                </div>
-            </nav>
-
-            <div class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                     @include('layouts._flash')
-                    @yield('content')
-                    </div>
+                    </ul>
                 </div>
             </div>
-            <footer class="footer">
-                <div class="container-fluid">
-                    <nav class="pull-left">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Home
-                                </a>
-                            </li>
-
-                        </ul>
-                    </nav>
-                    <p class="copyright pull-right">
-                        &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
-                    </p>
-                </div>
-            </footer>
-        </div>
+        </nav>
+        @include('layouts._flash')
+        @yield('content')
     </div>
 
     <!-- Scripts -->
@@ -171,16 +118,6 @@
 <script src="{{ asset('js/bootstrap-clockpicker.js') }}"></script>
 <script src="{{ asset('js/selectize.min.js') }}"></script> 
 <script src="{{ asset('js/custom.js') }}"></script>
-
-<script src="{{ asset('js/material.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/material-dashboard.js') }}" type="text/javascript"></script>
-
-    <!--  Charts Plugin -->
-    <script src="{{ asset('js/chartist.min.js') }}"></script>
-
-    <!--  Notifications Plugin    -->
-    <script src="{{ asset('js/bootstrap-notify.js') }}"></script>
-
 @yield('scripts')
 </body>
 </html>
