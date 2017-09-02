@@ -50,7 +50,9 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav"> 
                     @if (!Auth::guest())
-                        <li><a href="{{ url('home') }}">Beranda</a></li> 
+                        <li><a href="{{ url('home') }}">Beranda</a></li>
+                    @endif
+                    @role('admin') 
                         <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                    Master Data <span class="caret"></span>
@@ -74,6 +76,7 @@
                                    Persediaan <span class="caret"></span>
                                 </a>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
+                            <li><a href="{{ route('item-keluar.index') }}">Item Keluar</a></li>  
                             <li><a href="{{ route('item-masuk.index') }}">Item Masuk</a></li>  
                           </ul>
                         </li>
@@ -127,6 +130,7 @@
 <script src="{{ asset('js/bootstrap-clockpicker.js') }}"></script>
 <script src="{{ asset('js/selectize.min.js') }}"></script> 
 <script src="{{ asset('js/custom.js') }}"></script>
+<script src="{{ asset('js/shortcut.js') }}"></script>
 @yield('scripts')
 </body>
 </html>
