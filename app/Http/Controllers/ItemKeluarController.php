@@ -7,9 +7,11 @@ use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB; 
 use App\ItemKeluar; 
-use App\TbsItemKeluar;  
+use App\TbsItemKeluar;
+use App\DetailItemKeluar;  
 use App\Barang;  
 use Session;
+use Auth;
 
 class ItemKeluarController extends Controller
 {
@@ -21,7 +23,7 @@ class ItemKeluarController extends Controller
     public function index(Request $request, Builder $htmlBuilder)
     {
         if ($request->ajax()) {
-            $item_keluar = ItemKeluar::select(['id', 'nomor_faktur', 'keterangan', 'total', 'user_buat', 'user_edit','created_at', 'updated_at']);
+            $item_keluar = ItemKeluar::with(['user_buat', 'user_edit']);
             return Datatables::of($item_keluar)->addColumn('action', function($itemkeluar){
                 return view('datatable._action', [
                     'model'             => $itemkeluar,
@@ -36,14 +38,58 @@ class ItemKeluarController extends Controller
             ->addColumn(['data' => 'nomor_faktur', 'name' => 'nomor_faktur', 'title' => 'No. Faktur'])
             ->addColumn(['data' => 'total', 'name' => 'total', 'title' => 'Total'])
             ->addColumn(['data' => 'keterangan', 'name' => 'keterangan', 'title' => 'Keterangan'])
-            ->addColumn(['data' => 'user_buat', 'name' => 'user_buat', 'title' => 'Petugas'])
-            ->addColumn(['data' => 'user_edit', 'name' => 'user_edit', 'title' => 'Petugas Edit'])
+            ->addColumn(['data' => 'user_buat.name', 'name' => 'user_buat.name', 'title' => 'Petugas'])
+            ->addColumn(['data' => 'user_edit.name', 'name' => 'user_edit.name', 'title' => 'Petugas Edit'])
             ->addColumn(['data' => 'created_at', 'name' => 'created_at', 'title' => 'Waktu'])
             ->addColumn(['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Waktu Edit'])
-            ->addColumn(['action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable' => false]);
+            ->addColumn(['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable' => false]);
 
         return view('item_keluar.index')->with(compact('html'));
 
+    }
+
+    public function no_faktur(){
+      //PROSES MEMBUAT NO. FAKTUR ITEM KELUAR
+        $tahun_sekarang = date('Y');
+        $bulan_sekarang = date('m');
+        $tahun_terakhir = substr($tahun_sekarang, 2);
+      
+      //mengecek jumlah karakter dari bulan sekarang
+        $cek_jumlah_bulan = strlen($bulan_sekarang);
+
+      //jika jumlah karakter dari bulannya sama dengan 1 maka di tambah 0 di depannya
+        if ($cek_jumlah_bulan == 1) {
+          $data_bulan_terakhir = "0".$bulan_sekarang;
+         }
+        else{
+          $data_bulan_terakhir = $bulan_sekarang;
+         }
+      
+      //ambil bulan dan no_faktur dari tanggal item_keluar terakhir
+         $item_keluar = ItemKeluar::select([DB::raw('MONTH(created_at) bulan'), 'nomor_faktur'])->first();
+
+         if ($item_keluar != NULL) {
+          $ambil_nomor = substr($item_keluar->nomor_faktur, 0, -8);
+          $bulan_akhir = $item_keluar->bulan;
+         }
+         else{
+          $ambil_nomor = 1;
+          $bulan_akhir = 13;
+         }
+         
+      /*jika bulan terakhir dari item_keluar tidak sama dengan bulan sekarang, 
+      maka nomor nya kembali mulai dari 1, jika tidak maka nomor terakhir ditambah dengan 1
+      */
+        if ($bulan_akhir != $bulan_sekarang) {
+          $no_faktur = "1/IK/".$data_bulan_terakhir."/".$tahun_terakhir;
+        }
+        else {
+          $nomor = 1 + $ambil_nomor ;
+          $no_faktur = $nomor."/IK/".$data_bulan_terakhir."/".$tahun_terakhir;
+        }
+
+        return $no_faktur;
+      //PROSES MEMBUAT NO. FAKTUR ITEM KELUAR
     }
 
     /**
@@ -79,21 +125,40 @@ class ItemKeluarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-         $this->validate($request, [
-            'nama_satuan'     => 'required|unique:satuans,nama_satuan,'
-            ]);
+    public function store(Request $request) {
 
-         $satuan = ItemKeluar::create([
-            'nama_satuan' =>$request->nama_satuan
+        $session_id = session()->getId();
+        $user = Auth::user()->id;
+        $no_faktur = $this->no_faktur();
+
+      //INSERT DETAIL ITEM KELUAR
+        $data_produk_item_keluar = TbsItemKeluar::where('session_id', $session_id);
+        foreach ($data_produk_item_keluar->get() as $data_tbs) {
+            $detail_item_keluar = DetailItemKeluar::create([
+                'id_produk' =>$data_tbs->id_produk,              
+                'no_faktur' => $no_faktur,
+                'jumlah_produk' =>$data_tbs->jumlah_produk,
             ]);
+        }
+
+      //INSERT ITEM KELUAR
+        $itemkeluar = ItemKeluar::create([
+            'nomor_faktur' => $no_faktur,
+            'keterangan' =>$request->keterangan,
+            'total' => '85000',
+            'user_buat' => $user,
+            'user_edit' => $user,
+        ]);
+        
+      //HAPUS TBS ITEM KELUAR
+        $data_produk_item_keluar->delete();
 
         Session::flash("flash_notification", [
-            "level"=>"success",
-            "message"=>"Berhasil Menambah Satuan $request->nama_satuan"
-            ]);
-        return redirect()->route('master_satuan.index');
+            "level"     => "success",
+            "message"   => "Berhasil Melakukan Transaksi Item Keluar"
+        ]);
+
+        return redirect()->route('item-keluar.index');
     }
 
     /**
@@ -136,9 +201,14 @@ class ItemKeluarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+        ItemKeluar::destroy($id);        
+        Session:: flash("flash_notification", [
+            "level"=>"danger",
+            "message"=>"Item Keluar Berhasil Di Hapus"
+            ]);
+        return redirect()->route('item-keluar.index');
+
     }
 
 //PROSES TAMBAH TBS ITEM KELUAR
@@ -194,17 +264,30 @@ class ItemKeluarController extends Controller
 
         $data_produk = Barang::select(['id', 'kode_barcode'])->where('kode_barcode', $request->barcode)->first();
 
-        $tbsitemkeluar = TbsItemKeluar::create([
-            'id_produk' =>$data_produk->id,
-            'session_id' => session()->getId(),
-            'jumlah_produk' => '1',
-        ]);
+        if ($data_produk == NULL) {
+            $pesan_alert = "Produk Dengan Barcode '".$request->barcode."' Tidak Ada!";
+            Session::flash("flash_notification", [
+              "level"=>"warning",
+              "message"=> $pesan_alert
+            ]); 
 
-        Session::flash("flash_notification", [
-            "level"=>"success",
-            "message"=>"Berhasil Menambah Produk"
-            ]);
-        return back();
+            return back();
+        }
+        else{
+
+          $tbsitemkeluar = TbsItemKeluar::create([
+              'id_produk' =>$data_produk->id,
+              'session_id' => session()->getId(),
+              'jumlah_produk' => '1',
+          ]);
+
+          Session::flash("flash_notification", [
+              "level"=>"success",
+              "message"=>"Berhasil Menambah Produk"
+              ]);
+          return back();
+
+        }
     }
 
 //PROSES HAPUS TBS ITEM KELUAR
@@ -234,5 +317,6 @@ class ItemKeluarController extends Controller
             ]);
        return back();
     }
+
 
 }

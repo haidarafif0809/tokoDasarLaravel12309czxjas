@@ -13,7 +13,7 @@ class CreateDetailItemKeluarsTable extends Migration
      */
     public function up()
     {
-        Schema::create('detail_keluars', function (Blueprint $table) {
+        Schema::create('detail_item_keluars', function (Blueprint $table) {
             $table->increments('id_detail_item_keluar');
             $table->string('no_faktur');
             $table->string('id_produk');

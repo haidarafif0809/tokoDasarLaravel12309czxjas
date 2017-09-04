@@ -2,8 +2,8 @@
 
 @section('content')
 
-<!-- Modal Produk -->
-  <div class="modal" id="modal_produk" role="dialog">
+<!-- MODAL PILIH PRODUK -->
+  <div class="modal" id="modal_produk" role="dialog" data-backdrop="">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -39,7 +39,37 @@
       
     </div>
   </div>
+<!-- / MODAL PILIH PRODUK -->
 
+<!-- MODAL TOMBOL SELESAI -->
+  <div class="modal" id="modal_selesai" role="dialog" data-backdrop="">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">
+				  <div class="alert-icon">
+					<i class="material-icons">info_outline</i> <b>Anda Yakin Ingin Menyelesaikan Transaksi Ini ?</b>
+				</div>
+		</h4>
+        </div>
+
+        {!! Form::open(['url' => route('item-keluar.store'),'method' => 'post', 'class'=>'form-horizontal']) !!}
+	        <div class="modal-body">
+	        	<textarea class="form-control" name="keterangan" placeholder="Keterangan" rows="5">-</textarea>
+	        </div>
+	        <div class="modal-footer"> 
+			  {!! Form::submit('Simpan', ['class'=>'btn btn-success']) !!}			    
+	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        </div>
+	    {!! Form::close() !!}
+      </div>
+      
+    </div>
+  </div>
+<!-- / MODAL TOMBOL SELESAI -->
 
 	<div class="row">
 		<div class="col-md-12">
@@ -71,33 +101,25 @@
 									</div> 
 								{!! Form::close() !!}
 						</div>
-						
-						<div class="col-md-6">
-							<!--FORM BARCODE ITEM KELUAR -->
-								{!! Form::open(['url' => route('item-keluar.proses_barcode_item_keluar'),'method' => 'post', 'class'=>'form-horizontal']) !!}
-									<div class="form-group{{ $errors->has('barcode') ? ' has-error' : '' }}"> 
-										<div class="col-md-6">				
-											{!! Form::text('barcode', null, ['class'=>'form-control','placeholder'=>'Barcode','required','autocomplete'=>'off', 'id'=>'kode_barcode']) !!}
-											{!! $errors->first('barcode', '<p class="help-block">:message</p>') !!}
-										</div> 
-									</div> 
-								{!! Form::close() !!}
+						<div class="col-md-4"></div>
+						<div class="col-md-2">
+							<!-- TOMBOL BATAL -->
+							{!! Form::open(['url' => route('item-keluar.proses_hapus_semua_tbs_item_keluar'),'method' => 'post', 'class' => 'form-group js-confirm', 'data-confirm' => 'Apakah Anda Ingin Membatalkan Item Keluar ?']) !!} 
+						       		{!! Form::submit('Batal (F10}', ['class'=>'btn btn-danger', 'id'=>'btnBatal']) !!}
+						       		
+						    <!--- TOMBOL SELESAI -->
+						       	<button type="button" class="btn btn-primary" id="btnSelesai" data-toggle="modal" data-target="#modal_selesai">Selesai (F8)</button>
+							{!! Form::close() !!}
 						</div>
 
 					<!--TOMBOL SELESAI & BATAL -->
 						<div class="col-md-4">
-								<div class="form-group col-md-6"><br><br>
-									<textarea name = "keterangan" id="keterangan" rows="1" cols="50" class="form-control" placeholder="Keterangan (F7)"></textarea>
-								</div>
 								<div class="form-group col-md-3">
-					       			{!! Form::open(['url' => route('item-keluar.store'),'method' => 'post', 'class' => 'form-group js-confirm', 'id' => 'keterangan', 'data-confirm' => 'Apakah Anda Yakin Ingin Menyelesaikan Item Keluar ?']) !!} 
-					       			  	{!! Form::submit('Selesai (F8)', ['class'=>'btn btn-primary', 'id'=>'btnSelesai']) !!}
-								    {!! Form::close() !!}
+					       			 
+					       			  	
 								</div>
 								<div class="form-group col-md-2">												       			   
-					       			{!! Form::open(['url' => route('item-keluar.proses_hapus_semua_tbs_item_keluar'),'method' => 'post', 'class' => 'form-group js-confirm', 'data-confirm' => 'Apakah Anda Ingin Membatalkan Item Keluar ?']) !!} 
-					       			 	{!! Form::submit('Batal (F10}', ['class'=>'btn btn-danger', 'id'=>'btnBatal']) !!}
-								    {!! Form::close() !!}
+					       			
 								</div>										
 						</div>
 

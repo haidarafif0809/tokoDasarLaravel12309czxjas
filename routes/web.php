@@ -62,6 +62,7 @@ Route::group(['middleware' => 'auth'], function()
 	'uses' => 'ItemKeluarController@proses_barcode_item_keluar'
 	]);
 
+
 //ITEM MASUK
 	Route::post('/item-masuk/proses-tambah-tbs-item-masuk',[
 	'middleware' => ['auth'],
