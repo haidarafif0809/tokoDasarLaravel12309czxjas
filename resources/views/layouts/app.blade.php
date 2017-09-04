@@ -49,7 +49,7 @@
             </div>
 
             <div class="sidebar-wrapper">
-                <ul class="nav">
+                <ul class="nav" style="text-align: right;">
 
                      @if (!Auth::guest())
                         <li class="active"><a href="{{ url('home') }}"> <p><i class="material-icons">dashboard</i> Beranda</p></a></li>

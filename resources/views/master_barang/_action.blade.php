@@ -1,7 +1,7 @@
 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal{{$id_produk}}">List</button>  
  
   <!-- Modal -->
-  <div class="modal fade" id="myModal{{$id_produk}}" role="dialog">
+  <div class="modal " id="myModal{{$id_produk}}" role="dialog" data-backdrop="">
     <div class="modal-dialog modal-sm">
       
       <div class="modal-content">
