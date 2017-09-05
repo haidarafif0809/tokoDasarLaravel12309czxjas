@@ -15,7 +15,7 @@ class CreateItemMasuksTable extends Migration
     {
         Schema::create('item_masuks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nomor_faktur');
+            $table->string('no_faktur');
             $table->string('keterangan');
             $table->string('total');
             $table->string('user_buat');

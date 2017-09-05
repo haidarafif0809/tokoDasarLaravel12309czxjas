@@ -14,7 +14,10 @@ class CreateDetailItemMasuksTable extends Migration
     public function up()
     {
         Schema::create('detail_item_masuks', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id_detail_item_masuk');
+            $table->string('no_faktur');
+            $table->string('id_produk');
+            $table->string('jumlah_produk'); 
             $table->timestamps();
         });
     }
