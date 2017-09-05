@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class TbsItemMasuk extends Model
 {
     //
-     protected $fillable = ['id','session_id','id_produk','jumlah_produk'];
+     protected $fillable = ['id_tbs_item_masuk','session_id','id_produk','jumlah_produk'];
+     protected $primaryKey = 'id_tbs_item_masuk';
 
     	public function produk()
 		  {
