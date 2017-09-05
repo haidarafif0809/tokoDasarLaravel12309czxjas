@@ -16,8 +16,8 @@ class CreateDetailItemKeluarsTable extends Migration
         Schema::create('detail_item_keluars', function (Blueprint $table) {
             $table->increments('id_detail_item_keluar');
             $table->string('no_faktur');
-            $table->string('id_produk');
-            $table->string('jumlah_produk'); 
+            $table->integer('id_produk');
+            $table->integer('jumlah_produk'); 
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateDetailItemKeluarsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detail_keluars');
+        Schema::dropIfExists('detail_item_keluars');
     }
 }
