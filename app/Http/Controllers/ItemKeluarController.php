@@ -125,6 +125,8 @@ class ItemKeluarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+  //PROSES SELESAI TRANSAKSI ITEM KELUAR
     public function store(Request $request) {
 
         $session_id = session()->getId();
@@ -142,9 +144,16 @@ class ItemKeluarController extends Controller
         }
 
       //INSERT ITEM KELUAR
+        if ($request->keterangan == "") {
+          $keterangan = "-";
+        }
+        else{
+          $keterangan = $request->keterangan;
+        }
+
         $itemkeluar = ItemKeluar::create([
             'nomor_faktur' => $no_faktur,
-            'keterangan' =>$request->keterangan,
+            'keterangan' =>$keterangan,
             'total' => '85000',
             'user_buat' => $user,
             'user_edit' => $user,
@@ -153,9 +162,17 @@ class ItemKeluarController extends Controller
       //HAPUS TBS ITEM KELUAR
         $data_produk_item_keluar->delete();
 
+        $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">check</i>
+                    </div>
+                    <b>Sukses : Berhasil Melakukan Transaksi Item Keluar Faktur "'.$no_faktur.'"</b>
+                </div>';
+
         Session::flash("flash_notification", [
             "level"     => "success",
-            "message"   => "Berhasil Melakukan Transaksi Item Keluar"
+            "message"   => $pesan_alert
         ]);
 
         return redirect()->route('item-keluar.index');
@@ -202,10 +219,19 @@ class ItemKeluarController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        ItemKeluar::destroy($id);        
+      $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">check</i>
+                    </div>
+                    <b>Sukses : Item Keluar Berhasil Dihapus</b>
+                </div>';
+
+        ItemKeluar::destroy($id);  
+
         Session:: flash("flash_notification", [
             "level"=>"danger",
-            "message"=>"Item Keluar Berhasil Di Hapus"
+            "message"=> $pesan_alert
             ]);
         return redirect()->route('item-keluar.index');
 
@@ -227,11 +253,17 @@ class ItemKeluarController extends Controller
         
         $data_barang = Barang::select('nama_barang')->where('id', $request->id_produk)->first();
       
-        $pesan_alert = "Produk '".$data_barang->nama_barang."' Sudah Ada, Silakan Pilih Produk Lain !";
-
 //JIKA PRODUK YG DIPILIH SUDAH ADA DI TBS
         if ($data_tbs > 0) {
-       
+            
+            $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">warning</i>
+                    </div>
+                    <b>Warning : Produk "'.$data_barang->nama_barang.'" Sudah Ada, Silakan Pilih Produk Lain !</b>
+                </div>';
+
             Session::flash("flash_notification", [
               "level"=>"warning",
               "message"=> $pesan_alert
@@ -241,6 +273,14 @@ class ItemKeluarController extends Controller
         }
         else{
 
+           $pesan_alert = 
+             '<div class="container-fluid">
+                  <div class="alert-icon">
+                  <i class="material-icons">check</i>
+                  </div>
+                  <b>Sukses : Berhasil Menambah Produk "'.$data_barang->nama_barang.'"</b>
+              </div>';
+
             $tbsitemkeluar = TbsItemKeluar::create([
                 'id_produk' =>$request->id_produk,              
                 'session_id' => $session_id,
@@ -249,8 +289,8 @@ class ItemKeluarController extends Controller
 
             Session::flash("flash_notification", [
                 "level"=>"success",
-                "message"=>"Berhasil Menambah Produk"
-                ]);
+                "message"=> $pesan_alert
+            ]);
             return back();
 
         }
@@ -262,10 +302,18 @@ class ItemKeluarController extends Controller
             'barcode'     => 'required',
         ]);
 
-        $data_produk = Barang::select(['id', 'kode_barcode'])->where('kode_barcode', $request->barcode)->first();
+        $data_produk = Barang::select(['id', 'kode_barcode', 'nama_barang'])->where('kode_barcode', $request->barcode)->first();
 
         if ($data_produk == NULL) {
-            $pesan_alert = "Produk Dengan Barcode '".$request->barcode."' Tidak Ada!";
+
+          $pesan_alert = 
+             '<div class="container-fluid">
+                  <div class="alert-icon">
+                  <i class="material-icons">warning</i>
+                  </div>
+                  <b>Warning : Produk Dengan Barcode "'.$request->barcode.'" Tidak Ada!</b>
+              </div>';
+
             Session::flash("flash_notification", [
               "level"=>"warning",
               "message"=> $pesan_alert
@@ -281,9 +329,17 @@ class ItemKeluarController extends Controller
               'jumlah_produk' => '1',
           ]);
 
+          $pesan_alert = 
+             '<div class="container-fluid">
+                  <div class="alert-icon">
+                  <i class="material-icons">check</i>
+                  </div>
+                  <b>Sukses : Berhasil Menambah Produk "'.$data_produk->nama_barang.'"</b>
+              </div>';
+
           Session::flash("flash_notification", [
               "level"=>"success",
-              "message"=>"Berhasil Menambah Produk"
+              "message"=> $pesan_alert
               ]);
           return back();
 
@@ -297,9 +353,18 @@ class ItemKeluarController extends Controller
             return redirect()->back();
         }
         else{
+
+          $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">check</i>
+                    </div>
+                    <b>Sukses : Berhasil Menghapus Produk</b>
+                </div>';
+
             Session::flash("flash_notification", [
                 "level"     => "danger",
-                "message"   => "Berhasil Menghapus Produk"
+                "message"   => $pesan_alert
             ]);
         return back();
         }
@@ -307,13 +372,24 @@ class ItemKeluarController extends Controller
 
 //PROSES BATAL TBS ITEM KELUAR
     public function proses_hapus_semua_tbs_item_keluar(){
-        $data_tbs_item_keluar = TbsItemKeluar::all();
+      $session_id = session()->getId();
+      
+        $data_tbs_item_keluar = TbsItemKeluar::where('session_id', $session_id);
         foreach ($data_tbs_item_keluar as $data_tbs_item_keluars) {
             $data_tbs_item_keluars->delete();
         }
+
+        $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">check</i>
+                    </div>
+                    <b>Sukses : Berhasil Membatalkan Item Keluar</b>
+                </div>';
+
             Session::flash("flash_notification", [
                 "level"     => "danger",
-                "message"   => "Berhasil Membatalkan Item Keluar"
+                "message"   => $pesan_alert
             ]);
        return back();
     }

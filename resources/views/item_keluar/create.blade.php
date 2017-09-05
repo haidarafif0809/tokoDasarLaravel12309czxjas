@@ -25,7 +25,7 @@
 				<div class="form-group{{ $errors->has('jumlah_produk') ? ' has-error' : '' }}">
 					{!! Form::label('jumlah_produk', 'Jumlah Produk', ['class'=>'col-md-3 control-label']) !!}
 					<div class="col-md-6">
-						{!! Form::text('jumlah_produk', null, ['class'=>'form-control','placeholder'=>'Jumlah Produk','required','autocomplete'=>'off', 'id'=>'jumlah_produk']) !!}
+						{!! Form::text('jumlah_produk', 1, ['class'=>'form-control','placeholder'=>'Jumlah Produk','required','autocomplete'=>'off', 'id'=>'jumlah_produk']) !!}
 						{!! $errors->first('jumlah_produk', '<p class="help-block">:message</p>') !!}
 					</div>
 				</div>
@@ -58,7 +58,7 @@
 
         {!! Form::open(['url' => route('item-keluar.store'),'method' => 'post', 'class'=>'form-horizontal']) !!}
 	        <div class="modal-body">
-	        	<textarea class="form-control" name="keterangan" placeholder="Keterangan" rows="5">-</textarea>
+	        	<textarea class="form-control" name="keterangan" placeholder="Keterangan" rows="5"></textarea>
 	        </div>
 	        <div class="modal-footer"> 
 			  {!! Form::submit('Simpan', ['class'=>'btn btn-success']) !!}			    
