@@ -177,6 +177,9 @@
 <script src="{{ asset('js/material.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/material-dashboard.js') }}" type="text/javascript"></script>
 
+<!-- SHORTCUT JS -->
+<script src="{{ asset('js/shortcut.js') }}"></script>
+
     <!--  Charts Plugin -->
     <script src="{{ asset('js/chartist.min.js') }}"></script>
 
