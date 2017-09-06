@@ -24,24 +24,11 @@ class SatuanTest extends TestCase
  		
  		$this->seeInDatabase('satuans',['nama_satuan' => 'update satuan']);
 
- 		 Satuan::destroy($satuan->id);
+ 		Satuan::destroy($satuan->id);
  		$satuan = Satuan::find($satuan->id);
  		$this->assertEquals(null,$satuan);
 
 
     }
-
-    public function testCreateSatuan(){
-
-    	//admin
-    	$user = User::find(1); 
-		
-		 $response = $this->actingAs($user)->json('POST', route('master_satuan.store'), ['nama_satuan' => 'Sally']);
-
-		 $response->assertRedirectedTo(route('master_satuan.index'));
-
-         $this->followRedirects($response)->see('');   		
-    }
-
-
+  
 }
