@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHppTable extends Migration
+class CreateHppsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateHppTable extends Migration
      */
     public function up()
     {
-        Schema::create('hpp', function (Blueprint $table) {
+        Schema::create('hpps', function (Blueprint $table) {
             $table->increments('id');
             $table->string('no_faktur');
             $table->string('no_faktur_hpp_masuk')->nullable();
@@ -36,6 +36,6 @@ class CreateHppTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hpp');
+        Schema::dropIfExists('hpps');
     }
 }
