@@ -60,6 +60,7 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
                                 <li><a href="{{ route('item-keluar.index') }}">Item Keluar</a></li> 
                                 <li><a href="{{ route('item-masuk.index') }}">Item Masuk</a></li> 
+                                <li><a href="{{ route('stok-awal.index') }}">Stok Awal</a></li> 
                             </ul>
                         </li>
                     @endif

@@ -35,6 +35,15 @@ Route::group(['middleware' => 'auth'], function()
 	Route::resource('master_gudang', 'GudangController'); 
 	Route::resource('item-masuk', 'ItemMasukController');
 	Route::resource('item-keluar', 'ItemKeluarController');
+	Route::resource('stok-awal', 'StokAwalController');
+
+
+//STOK AWAL 
+	Route::post('/stok-awal/proses-tambah-stok-awal',[
+	'middleware' => ['auth'],
+	'as' => 'stok-awal.proses_tambah_stok_awal',
+	'uses' => 'StokAwalController@proses_tambah_stok_awal'
+	]);
 
 
 //ITEM KELUAR
@@ -61,7 +70,6 @@ Route::group(['middleware' => 'auth'], function()
 	'as' => 'item-keluar.proses_barcode_item_keluar',
 	'uses' => 'ItemKeluarController@proses_barcode_item_keluar'
 	]);
-
 
 //ITEM MASUK
 	Route::post('/item-masuk/proses-tambah-tbs-item-masuk',[
