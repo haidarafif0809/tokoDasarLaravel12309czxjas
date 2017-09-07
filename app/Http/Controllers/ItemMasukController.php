@@ -15,20 +15,20 @@ use Auth;
 
 class ItemMasukController extends Controller
 { 
+    //MENAMPILKAN DATA ITEM MASUK
     public function index(Request $request, Builder $htmlBuilder)
-    {
-        //
-        if ($request->ajax()) {
-            # code...
+    { 
+        if ($request->ajax()) { 
             $item_masuk = ItemMasuk::with(['user_buat','user_edit']);
             return Datatables::of($item_masuk)->addColumn('action', function($itemmasuk){
-                    return view('datatable._action', [
+                    return view('item_masuk._action', [
                         'model'     => $itemmasuk,
+                        'id_item_masuk'     => $itemmasuk->id,
                         'form_url'  => route('item-masuk.destroy', $itemmasuk->id),
                         'edit_url'  => route('item-masuk.edit', $itemmasuk->id),
                         'confirm_message'   => 'Yakin Mau Menghapus Item Masuk dengan nomor faktur ' . $itemmasuk->no_faktur . '?'
                         ]);
-                })->make(true);
+                }) ->make(true);
         }
         $html = $htmlBuilder
         ->addColumn(['data' => 'no_faktur', 'name' => 'no_faktur', 'title' => 'No. Faktur'])  
@@ -37,18 +37,16 @@ class ItemMasukController extends Controller
         ->addColumn(['data' => 'user_buat.name', 'name' => 'user_buat.name', 'title' => 'Petugas']) 
         ->addColumn(['data' => 'user_edit.name', 'name' => 'user_edit.name', 'title' => 'Petugas Edit']) 
         ->addColumn(['data' => 'created_at', 'name' => 'created_at', 'title' => 'Waktu']) 
-        ->addColumn(['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Waktu Edit']) 
-        ->addColumn(['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable'=>false]);
-
+        ->addColumn(['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Waktu Edit'])  
+        ->addColumn(['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable'=>false]); 
         return view('item_masuk.index')->with(compact('html'));
     }
 
 
+    //MENAMPILKAN DATA DI TBS ITEM MASUK
     public function create(Request $request, Builder $htmlBuilder)
     {
-        //
-        if ($request->ajax()) {
-            # code...
+        if ($request->ajax()) { 
             $session_id = session()->getId();
             $tbs_item_masuk = TbsItemMasuk::with(['produk'])->where('session_id', $session_id)->get();
             return Datatables::of($tbs_item_masuk)->addColumn('action', function($tbsitemmasuk){
@@ -72,9 +70,9 @@ class ItemMasukController extends Controller
         return view('item_masuk.create')->with(compact('html'));
     }
  
+    //PROSES TAMBAH TBS ITEM MASUK
     public function proses_tambah_tbs_item_masuk(Request $request)
-    {
-        //
+    { 
         $this->validate($request, [
             'id_produk'     => 'required',
             'jumlah_produk'     => 'required',
@@ -91,7 +89,7 @@ class ItemMasukController extends Controller
         $pesan_alert = "Produk '".$data_barang->nama_barang."' Sudah Ada, Silakan Pilih Produk Lain !";
 
 
-//JIKA PRODUK YG DIPILIH SUDAH ADA DI TBS
+      //JIKA PRODUK YG DIPILIH SUDAH ADA DI TBS
         if ($data_tbs > 0) {
             
             $pesan_alert = 
@@ -134,7 +132,7 @@ class ItemMasukController extends Controller
         }
     }
 
-//PROSES BARCODE TBS ITEM MASUK
+    //PROSES PRODUK DENGAN BARCODE TBS ITEM MASUK
     public function proses_barcode_item_masuk(Request $request){    
         $this->validate($request, [
             'barcode'     => 'required',
@@ -228,7 +226,7 @@ class ItemMasukController extends Controller
       //PROSES MEMBUAT NO. FAKTUR ITEM MASUK
     }
 
-  //PROSES SELESAI TRANSAKSI ITEM MASUK
+    //PROSES SELESAI TRANSAKSI ITEM MASUK
     public function store(Request $request) {
 
         $session_id = session()->getId();
@@ -261,7 +259,7 @@ class ItemMasukController extends Controller
             'user_edit' => $user,
         ]);
         
-      //HAPUS TBS ITEM MASUK
+        //HAPUS TBS ITEM MASUK
         $data_produk_item_masuk->delete();
 
         $pesan_alert = 
@@ -279,50 +277,26 @@ class ItemMasukController extends Controller
 
         return redirect()->route('item-masuk.index');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function show($id)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //PROSES HAPUS ITEM MASUK
     public function destroy($id)
-    {
-        //
+    { 
       $pesan_alert = 
                '<div class="container-fluid">
                     <div class="alert-icon">
@@ -340,9 +314,9 @@ class ItemMasukController extends Controller
         return redirect()->route('item-masuk.index');
     }
 
+    //PROSES HAPUS TBS ITEM MASUK
     public function proses_hapus_tbs_item_masuk($id)
-    {
-        //
+    { 
         if (!TbsItemMasuk::destroy($id)) {
           $pesan_alert = 
                '<div class="container-fluid">
@@ -375,6 +349,7 @@ class ItemMasukController extends Controller
         }
     }
 
+    //PROSES BATAL ITEM MASUK
     public function proses_hapus_semua_tbs_item_masuk()
     { 
         $session_id = session()->getId();

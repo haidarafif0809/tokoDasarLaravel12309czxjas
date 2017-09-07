@@ -10,8 +10,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Produk</h4>
+          <h4 class="modal-title">Daftar Produk</h4>
         </div>
+
         <div class="modal-body">
           {!! Form::open(['url' => route('item-masuk.proses_tambah_tbs_item_masuk'),'method' => 'post', 'class'=>'form-horizontal']) !!}
 	          <div class="form-group{{ $errors->has('id_produk') ? ' has-error' : '' }}">
@@ -30,6 +31,7 @@
 					</div>
 				</div>
         </div>
+
         <div class="modal-footer"> 
 		   {!! Form::submit('Simpan', ['class'=>'btn btn-success']) !!}
 		   {!! Form::close() !!} 
@@ -50,23 +52,24 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">
-				  <div class="alert-icon">
-					<i class="material-icons">info_outline</i> <b>Anda Yakin Ingin Menyelesaikan Transaksi Ini ?</b>
-				</div>
-		</h4>
+			<div class="alert-icon">
+			    <i class="material-icons">info_outline</i> <b>Anda Yakin Ingin Menyelesaikan Transaksi Ini ?</b>
+			 </div>
+		  </h4>
         </div>
 
         {!! Form::open(['url' => route('item-masuk.store'),'method' => 'post', 'class'=>'form-horizontal']) !!}
 	        <div class="modal-body">
 	        	<textarea class="form-control" name="keterangan" placeholder="Keterangan" rows="5">-</textarea>
 	        </div>
+
 	        <div class="modal-footer"> 
 			  {!! Form::submit('Simpan', ['class'=>'btn btn-success']) !!}			    
 	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	        </div>
+
 	    {!! Form::close() !!}
-      </div>
-      
+      </div> 
     </div>
   </div>
 <!-- / MODAL TOMBOL SELESAI -->
@@ -85,8 +88,7 @@
 				</div>
 
 				<div class="panel-body">
-					<div class="row">
-						
+					<div class="row"> 
 						<div class="col-md-6">
 							<!--FORM BARCODE ITEM Masuk -->
 								{!! Form::open(['url' => route('item-masuk.proses_barcode_item_masuk'),'method' => 'post', 'class'=>'form-horizontal']) !!}
@@ -104,24 +106,22 @@
 						</div>
 						
 						<div class="col-md-4"></div>
+
 						<div class="col-md-2">
 							<!-- TOMBOL BATAL -->
 							{!! Form::open(['url' => route('item-masuk.proses_hapus_semua_tbs_item_masuk'),'method' => 'post', 'class' => 'form-group js-confirm', 'data-confirm' => 'Apakah Anda Ingin Membatalkan Item Masuk ?']) !!} 
-						       		{!! Form::submit('Batal (F10}', ['class'=>'btn btn-danger', 'id'=>'btnBatal']) !!}
+						       	{!! Form::submit('Batal (F10}', ['class'=>'btn btn-danger', 'id'=>'btnBatal']) !!}
 						       		
 						    <!--- TOMBOL SELESAI -->
 						       	<button type="button" class="btn btn-primary" id="btnSelesai" data-toggle="modal" data-target="#modal_selesai">Selesai (F8)</button>
 							{!! Form::close() !!}
 						</div>
 
-					<!--TOMBOL SELESAI & BATAL -->
+						<!--TOMBOL SELESAI & BATAL -->
 						<div class="col-md-4">
-								<div class="form-group col-md-3">
-					       			 
-					       			  	
+								<div class="form-group col-md-3"> 
 								</div>
-								<div class="form-group col-md-2">												       			   
-					       			
+								<div class="form-group col-md-2">		 
 								</div>										
 						</div>
 
