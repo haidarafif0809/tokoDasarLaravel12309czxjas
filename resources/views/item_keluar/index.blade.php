@@ -4,6 +4,7 @@
 		<div class="col-md-12">
 			<ul class="breadcrumb">
 				<li><a href="{{ url('/home') }}">Home</a></li>
+				<li style="color: purple">Persediaan</li>
 				<li class="active">Item Keluar</li>
 			</ul>
  
@@ -14,7 +15,7 @@
 				</div>
 
 				<div class="panel-body">
-					<p> <a class="btn btn-primary" href="{{ route('item-keluar.create') }}">Tambah Item Keluar</a> </p>
+					<p> <a class="btn btn-primary" href="{{ route('item-keluar.create') }}"><i class="material-icons">add</i> Item Keluar</a> </p>
 					<div class="table-responsive">
 					{!! $html->table(['class'=>'table-striped table']) !!}
 					</div>

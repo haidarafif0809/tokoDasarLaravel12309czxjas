@@ -55,7 +55,7 @@
                         <li class="active"><a href="{{ url('home') }}"> <p><i class="material-icons">dashboard</i> Beranda</p></a></li>
                  
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons">business center </i> Persediaan <span class="caret"></span>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons">storage</i> Persediaan <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
                                 <li><a href="{{ route('item-keluar.index') }}">Item Keluar</a></li> 

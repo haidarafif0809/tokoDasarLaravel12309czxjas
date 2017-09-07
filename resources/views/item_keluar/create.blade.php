@@ -10,7 +10,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Produk</h4>
+          <h4 class="modal-title">Data Produk</h4>
         </div>
         <div class="modal-body">
           {!! Form::open(['url' => route('item-keluar.proses_tambah_tbs_item_keluar'),'method' => 'post', 'class'=>'form-horizontal']) !!}
@@ -26,14 +26,14 @@
 					{!! Form::label('jumlah_produk', 'Jumlah Produk', ['class'=>'col-md-3 control-label']) !!}
 					<div class="col-md-6">
 						{!! Form::text('jumlah_produk', 1, ['class'=>'form-control','placeholder'=>'Jumlah Produk','required','autocomplete'=>'off', 'id'=>'jumlah_produk']) !!}
-						{!! $errors->first('jumlah_produk', '<p class="help-block">:message</p>') !!}
+						{!! $errors->first('jumlah_produk', '<p class="help-block" id="eror_jumlah_produk">:message</p>') !!}
 					</div>
 				</div>
         </div>
         <div class="modal-footer"> 
-		   {!! Form::submit('Simpan', ['class'=>'btn btn-success']) !!}
-		   {!! Form::close() !!} 
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		   <button type="submit" class="btn btn-success"><i class="material-icons">done</i> Submit Produk</button>
+		 {!! Form::close() !!} 
+          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="material-icons">close</i> Close</button>
         </div>
       </div>
       
@@ -61,8 +61,8 @@
 	        	<textarea class="form-control" name="keterangan" placeholder="Keterangan" rows="5"></textarea>
 	        </div>
 	        <div class="modal-footer"> 
-			  {!! Form::submit('Simpan', ['class'=>'btn btn-success']) !!}			    
-	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	    		<button type="submit" class="btn btn-success"><i class="material-icons">save</i> Simpan</button>
+	    		<button type="button" class="btn btn-default" data-dismiss="modal"><i class="material-icons">close</i> Close</button>
 	        </div>
 	    {!! Form::close() !!}
       </div>
@@ -75,6 +75,7 @@
 		<div class="col-md-12">
 			<ul class="breadcrumb">
 				<li><a href="{{ url('/home') }} ">Home</a></li>
+				<li style="color: purple">Persediaan</li>
 				<li><a href="{{ url('/item-keluar') }}">Item Keluar</a></li>
 				<li class="active">Tambah Item Keluar</li>
 			</ul>
@@ -94,21 +95,24 @@
 											{!! Form::text('barcode', null, ['class'=>'form-control','placeholder'=>'Barcode','required','autocomplete'=>'off', 'id'=>'kode_barcode']) !!}
 											{!! $errors->first('barcode', '<p class="help-block">:message</p>') !!}
 										</div> 
-											{!! Form::submit('Simpan (F2)', ['class'=>'btn btn-success']) !!}
+
+							<!--TOMBOL SUBMIT BARCODE -->
+										<button type="submit" class="btn btn-success mater" id="btnBarcode"><i class="material-icons">done</i> Submit Barcode(F2)</button>
 
 							<!--TOMBOL CARI PRODUK -->										
-										<button type="button" class="btn btn-info" id="cari_produk" data-toggle="modal" data-target="#modal_produk">Cari Produk (F1)</button>
+										<button type="button" class="btn btn-info" id="cari_produk" data-toggle="modal" data-target="#modal_produk"><i class="material-icons">search</i> Cari Produk (F1)</button>
 									</div> 
 								{!! Form::close() !!}
 						</div>
-						<div class="col-md-4"></div>
-						<div class="col-md-2">
+						<div class="col-md-3"></div>
+						<div class="col-md-3">
 							<!-- TOMBOL BATAL -->
-							{!! Form::open(['url' => route('item-keluar.proses_hapus_semua_tbs_item_keluar'),'method' => 'post', 'class' => 'form-group js-confirm', 'data-confirm' => 'Apakah Anda Ingin Membatalkan Item Keluar ?']) !!} 
-						       		{!! Form::submit('Batal (F10}', ['class'=>'btn btn-danger', 'id'=>'btnBatal']) !!}
-						       		
+							{!! Form::open(['url' => route('item-keluar.proses_hapus_semua_tbs_item_keluar'),'method' => 'post', 'class' => 'form-group js-confirm', 'data-confirm' => 'Apakah Anda Ingin Membatalkan Item Keluar ?']) !!} 						       		
 						    <!--- TOMBOL SELESAI -->
-						       	<button type="button" class="btn btn-primary" id="btnSelesai" data-toggle="modal" data-target="#modal_selesai">Selesai (F8)</button>
+						       	<button type="button" class="btn btn-primary" id="btnSelesai" data-toggle="modal" data-target="#modal_selesai"><i class="material-icons">send</i> Selesai (F8)</button>
+
+						       	<button type="submit" class="btn btn-danger" id="btnBatal"><i class="material-icons">cancel</i> Batal (F10)</button>
+
 							{!! Form::close() !!}
 						</div>
 
@@ -140,6 +144,7 @@
     		$("#kode_barcode").focus();
 		});
 	</script>
+
 	<script type="text/javascript">
 	// Konfirmasi Penghapusan
 		$(document.body).on('submit', '.js-confirm', function () {
@@ -150,18 +155,31 @@
 		});  
 	</script>
 
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			var pesan_error = $("#eror_jumlah_produk").text();
+
+			if (pesan_error != "") {				
+				$("#modal_produk").modal('show');
+				$("#jumlah_produk").focus();
+			}
+			else{
+				$("#modal_produk").modal('hide');
+			}
+		});	
+	</script>
 
 
  	<script type="text/javascript">
  	//TOMBOL CARI
  	shortcut.add("f1", function() {
         $("#cari_produk").click();
-    	$("#jumlah_produk").click();
     })
-
- 	//KETERANGAN
- 	shortcut.add("f7", function() {
-        $("#keterangan").focus();
+    
+ 	//TOMBOL SUBMIT BARCODE
+ 	shortcut.add("f2", function() {
+        $("#btnBarcode").click();
     })
     
  	//TOMBOL SELESAI

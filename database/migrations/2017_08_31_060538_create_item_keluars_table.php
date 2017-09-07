@@ -15,9 +15,9 @@ class CreateItemKeluarsTable extends Migration
     {
         Schema::create('item_keluars', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nomor_faktur');
+            $table->string('no_faktur');
             $table->string('keterangan')->nullable();
-            $table->string('total');
+            $table->integer('total');
             $table->string('user_buat');
             $table->string('user_edit')->nullable();
             $table->timestamps();

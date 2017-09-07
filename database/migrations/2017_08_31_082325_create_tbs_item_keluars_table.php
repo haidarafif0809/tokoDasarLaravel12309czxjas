@@ -16,8 +16,8 @@ class CreateTbsItemKeluarsTable extends Migration
         Schema::create('tbs_item_keluars', function (Blueprint $table) {
             $table->increments('id_tbs_item_keluar');
             $table->string('session_id');
-            $table->string('id_produk');
-            $table->string('jumlah_produk'); 
+            $table->integer('id_produk');
+            $table->integer('jumlah_produk');
             $table->timestamps();
         });
     }
