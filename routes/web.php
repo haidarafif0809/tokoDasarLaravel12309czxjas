@@ -96,6 +96,11 @@ Route::group(['middleware' => 'auth'], function()
 	'uses' => 'ItemmasukController@proses_barcode_item_masuk'
 	]);
 
+	Route::post('/item-masuk/proses-barcode-item-masuk-edit/{$id}',[
+	'middleware' => ['auth'],
+	'as' => 'item-masuk.proses_barcode_item_masuk_edit',
+	'uses' => 'ItemmasukController@proses_barcode_item_masuk_edit'
+	]);
 
 	Route::get('/ubah-password',[
 	'middleware' => ['auth'],

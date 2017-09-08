@@ -70,26 +70,26 @@
     </div>
   </div>
 <!-- / MODAL TOMBOL SELESAI -->
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="breadcrumb">
+					<li><a href="{{ url('/home') }} ">Home</a></li>
+					<li>Persedian</li>
+					<li><a href="{{ url('/item-masuk') }}">Item Masuk</a></li>
+					<li class="active">Edit Item Masuk</li>
+				</ul>
 
-	<div class="row">
-		<div class="col-md-12">
-			<ul class="breadcrumb">
-				<li><a href="{{ url('/home') }} ">Home</a></li>
-				<li style="color: purple">Persediaan</li>
-				<li><a href="{{ url('/item-masuk') }}">Item Masuk</a></li>
-				<li class="active">Tambah Item Masuk</li>
-			</ul>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h2 class="panel-title">Tambah Item Masuk</h2>
-				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h2 class="panel-title">Edit Item Masuk <b>{{$item_masuk->no_faktur}}</b></h2>
+					</div>
 
-				<div class="panel-body">
+					<div class="panel-body">
 					<div class="row">
 						
 						<div class="col-md-7">
 							<!--FORM BARCODE ITEM Masuk -->
-								{!! Form::open(['url' => route('item-masuk.proses_barcode_item_masuk'),'method' => 'get', 'class'=>'form-horizontal']) !!}
+								{!! Form::open(['url' => route('item-masuk.proses_barcode_item_masuk_edit',$item_masuk->id),'method' => 'post', 'class'=>'form-horizontal']) !!}
 									<div class="form-group{{ $errors->has('barcode') ? ' has-error' : '' }}"> 
 										<div class="col-md-6">				
 											{!! Form::text('barcode', null, ['class'=>'form-control','placeholder'=>'Barcode','required','autocomplete'=>'off', 'id'=>'kode_barcode']) !!}
@@ -107,7 +107,7 @@
 						<div class="col-md-2"></div>
 						<div class="col-md-3">
 							<!-- TOMBOL BATAL -->
-							{!! Form::open(['url' => route('item-masuk.proses_hapus_semua_tbs_item_masuk'),'method' => 'post', 'class' => 'form-group js-confirm', 'data-confirm' => 'Apakah Anda Ingin Membatalkan Item masuk ?']) !!} 						       		
+							{!! Form::open(['url' => route('item-masuk.destroy',$item_masuk->id),'method' => 'post', 'class' => 'form-group js-confirm', 'data-confirm' => 'Apakah Anda Ingin Membatalkan Item masuk ?']) !!} 						       		
 						    <!--- TOMBOL SELESAI -->
 						       	<button type="button" class="btn btn-primary" id="btnSelesai" data-toggle="modal" data-target="#modal_selesai"><i class="material-icons">send</i> Selesai (F8)</button>
 
@@ -130,12 +130,14 @@
 					</div>
 					<!--TABEL TBS ITEM 	MASUK -->
 			         {!! $html->table(['class'=>'table-striped table']) !!} 
-				</div><!-- / PANEL BODY -->
+		 			
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-@endsection
 
+@endsection
+	
 @section('scripts')
 	{!! $html->scripts() !!}
 

@@ -204,6 +204,75 @@ class ItemMasukController extends Controller
         }
     }
 
+//PROSES BARCODE TBS ITEM KELUAR EDIT
+    public function proses_barcode_item_masuk_edit(Request $request,$id){
+        $session_id = session()->getId();
+
+        $this->validate($request, [
+            'barcode'     => 'required',
+        ]);
+
+        $data_produk = Barang::select(['id', 'kode_barcode', 'nama_barang'])->where('kode_barcode', $request->barcode)->first();
+
+
+//LOGIKA JIKA BARCODE YG DIINPUT TIDAK ADA
+        if ($data_produk == NULL) {
+
+          $pesan_alert = 
+             '<div class="container-fluid">
+                  <div class="alert-icon">
+                  <i class="material-icons">warning</i>
+                  </div>
+                  <b>Warning : Produk Dengan Barcode "'.$request->barcode.'" Tidak Ada!</b>
+              </div>';
+
+            Session::flash("flash_notification", [
+              "level"=>"warning",
+              "message"=> $pesan_alert
+            ]); 
+
+            return redirect()->route('item-keluar.create');
+        }
+        else{
+
+        $item_masuk = ItemMasuk::find($id); 
+          $data_tbs = DetailItemMasuk::select('jumlah_produk')->where('id_produk', $data_produk->id)->where('no_faktur', $item_masuk->no_faktur);
+
+//JIKA BARCODE PRODUK YG SAMA, MAKA JUMLAH PRODUKNYA BERTAMBAH
+
+            if ($data_tbs->count() > 0) {
+          //UPDATE TBS
+              $data_tbs->update([
+                'jumlah_produk' => $data_tbs->first()->jumlah_produk + 1
+              ]);
+            }
+            else{
+          //INSERT TBS
+              $tbsitemkeluar = TbsItemMasuk::create([
+                  'id_produk' =>$data_produk->id,
+                  'session_id' => $session_id,
+                  'jumlah_produk' => 1,
+              ]);
+
+            }
+
+          $pesan_alert = 
+             '<div class="container-fluid">
+                  <div class="alert-icon">
+                  <i class="material-icons">check</i>
+                  </div>
+                  <b>Sukses : Berhasil Menambah Produk "'.$data_produk->nama_barang.'"</b>
+              </div>';
+
+          Session::flash("flash_notification", [
+              "level"=>"success",
+              "message"=> $pesan_alert
+              ]);
+          
+          return redirect()->route('item-masuk.create');
+
+        }
+    }
     public function no_faktur(){
       //PROSES MEMBUAT NO. FAKTUR ITEM MASUK
         $tahun_sekarang = date('Y');
@@ -304,12 +373,34 @@ class ItemMasukController extends Controller
     {
         //
     }
- 
-    public function edit($id)
+  
+    //MENAMPILKAN DATA DI TBS ITEM MASUK
+    public function edit(Request $request, Builder $htmlBuilder,$id)
     {
-        //
-    }
+        if ($request->ajax()) {  
+            $item_masuk = ItemMasuk::find($id); 
+            $tbs_item_masuk = DetailItemMasuk::with(['produk'])->where('no_faktur', $item_masuk->no_faktur)->get();
+            return Datatables::of($tbs_item_masuk)->addColumn('action', function($tbsitemmasuk){
+                    return view('item_masuk._hapus_produk', [
+                        'model'     => $tbsitemmasuk,
+                        'form_url'  => route('item-masuk.proses_hapus_tbs_item_masuk', $tbsitemmasuk->id_tbs_item_masuk),  
+                        'confirm_message'   => 'Yakin Mau Menghapus Produk ?'
+                        ]);
+                })->addColumn('data_produk_tbs', function($data_produk_tbs){ 
+                    $barang = Barang::find($data_produk_tbs->id_produk);
+                    $data_barang = $barang->kode_barang ." - ". $barang->nama_barang;          
+                    return $data_barang;   
+            })->make(true);
+        }
 
+        $html = $htmlBuilder 
+        ->addColumn(['data' => 'data_produk_tbs', 'name' => 'data_produk_tbs', 'title' => 'Produk', 'orderable' => false, 'searchable'=>false ]) 
+        ->addColumn(['data' => 'jumlah_produk', 'name' => 'jumlah_produk', 'title' => 'Jumlah'])
+        ->addColumn(['data' => 'action', 'name' => 'action', 'title' => 'Hapus', 'orderable' => false, 'searchable'=>false]);
+
+        $item_masuk = ItemMasuk::find($id); 
+        return view('item_masuk.edit')->with(compact('html','item_masuk'));
+    }
  
     public function update(Request $request, $id)
     {
