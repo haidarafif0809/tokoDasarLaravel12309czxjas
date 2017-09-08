@@ -1,12 +1,12 @@
 {!! Form::model($model, ['url' => $form_url, 'method' => 'delete', 'class' => 'form-inline js-confirm', 'data-confirm' => $confirm_message]) !!}
 
-<button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#myModal{{$id_item_masuk}}">Detail</button>  |
+<button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#myModal{{$id_item_keluar}}">Detail</button>  |
 <a href="{{ $edit_url }}" class="btn btn-sm btn-success">Ubah</a> |
 
 {!! Form::submit('Hapus',['class'=>'btn btn-sm btn-danger js-confirm']) !!}
 {!! Form::close() !!}
 <!-- MODAL PILIH PRODUK -->
-  <div class="modal " id="myModal{{$id_item_masuk}}" role="dialog" data-backdrop="">
+  <div class="modal " id="myModal{{$id_item_keluar}}" role="dialog" data-backdrop="">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -27,10 +27,10 @@
             </thead>
             <tbody> 
                 <tr>
-                  @foreach($data_detail_item_masuk as $data_detail_item_masuks)
-                  <td>{{  $data_detail_item_masuks->no_faktur }}</td>
-                  <td>{{  $data_detail_item_masuks->produk->nama_barang }}</td>
-                  <td>{{  $data_detail_item_masuks->jumlah_produk }}</td>  
+                  @foreach($data_detail_item_keluar as $data_detail_item_keluars)
+                  <td>{{  $data_detail_item_keluars->no_faktur }}</td>
+                  <td>{{  $data_detail_item_keluars->produk->nama_barang }}</td>
+                  <td>{{  $data_detail_item_keluars->jumlah_produk }}</td>  
                   @endforeach
                 </tr>
             </tbody>
