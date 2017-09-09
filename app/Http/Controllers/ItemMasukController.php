@@ -222,7 +222,7 @@ class ItemMasukController extends Controller
          }
       
       //ambil bulan dan no_faktur dari tanggal item_masuk terakhir
-         $item_masuk = ItemMasuk::select([DB::raw('MONTH(created_at) bulan'), 'no_faktur'])->first();
+         $item_masuk = ItemMasuk::select([DB::raw('MONTH(created_at) bulan'), 'no_faktur'])->orderBy('id','DESC')->first();
 
          if ($item_masuk != NULL) {
           $ambil_nomor = substr($item_masuk->no_faktur, 0, -8);
@@ -237,7 +237,7 @@ class ItemMasukController extends Controller
       maka nomor nya kembali mulai dari 1, jika tidak maka nomor terakhir ditambah dengan 1
       */
         if ($bulan_akhir != $bulan_sekarang) {
-          $no_faktur = "1/IK/".$data_bulan_terakhir."/".$tahun_terakhir;
+          $no_faktur = "1/IM/".$data_bulan_terakhir."/".$tahun_terakhir;
         }
         else {
           $nomor = 1 + $ambil_nomor ;

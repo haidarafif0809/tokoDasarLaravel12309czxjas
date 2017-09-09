@@ -15,7 +15,7 @@
 				</div>
 
 				<div class="panel-body">
-					<p> <a class="btn btn-primary" href="{{ route('item-masuk.create') }}"><i class="material-icons">add</i> Item Masuk</a> </p>
+					<p> <a class="btn btn-primary" href="{{ route('item-masuk.create') }}" id="link-tambah-item-masuk"><i class="material-icons">add</i> Item Masuk</a> </p>
 					<div class="table-responsive">
 					{!! $html->table(['class'=>'table-striped table']) !!}
 					</div>
