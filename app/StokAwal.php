@@ -29,12 +29,35 @@ class StokAwal extends Model
 	public static function boot() {
 		parent::boot();
 			
-		self::deleting(function($stokAwal) {
+		self::creating(function($StokAwal) {
 
+			$data_barang = Barang::select(['golongan_barang', 'kode_barang','harga_beli'])->where('id', $StokAwal->id_produk)->first();
+			$jumlah_produk = $StokAwal->jumlah_produk;
+			$harga_beli = $data_barang->harga_beli;
+
+			$total_nilai = $harga_beli * $jumlah_produk;
+//ambil data BARANG YG DI CREATING KE HPP
+
+				while ($jumlah_produk > 0) {
+
+					Hpp::create([
+			            'no_faktur' => $StokAwal->no_faktur,
+			            'no_faktur_hpp_masuk' =>$hpp_masuk->no_faktur_hpp_masuk,
+			            'no_faktur_hpp_keluar' =>$StokAwal->no_faktur,
+			            'kode_barang' => $data_barang->kode_barang,
+			            'jenis_transaksi' =>'Item Keluar',
+			            'jumlah_kuantitas' => $StokAwal->jumlah_produk,
+			            'sisa_harga' => 0,
+			            'harga_unit' => $harga_beli,
+			            'total_nilai' => $total_nilai,
+			            'jenis_hpp' => 0
+
+			        ]);
+
+			       	$jumlah_produk = 0;
+
+				}
 			
-
-			return true;
-		
 		});
 	}
 
