@@ -87,7 +87,7 @@
 				<div class="panel-body">
 					<div class="row">
 						
-						<div class="col-md-6">
+						<div class="col-md-7">
 							<!--FORM BARCODE ITEM KELUAR -->
 								{!! Form::open(['url' => route('item-keluar.proses_barcode_item_keluar'),'method' => 'post', 'class'=>'form-horizontal']) !!}
 									<div class="form-group{{ $errors->has('barcode') ? ' has-error' : '' }}"> 
@@ -104,7 +104,7 @@
 									</div> 
 								{!! Form::close() !!}
 						</div>
-						<div class="col-md-3"></div>
+						<div class="col-md-2"></div>
 						<div class="col-md-3">
 							<!-- TOMBOL BATAL -->
 							{!! Form::open(['url' => route('item-keluar.proses_hapus_semua_tbs_item_keluar'),'method' => 'post', 'class' => 'form-group js-confirm', 'data-confirm' => 'Apakah Anda Ingin Membatalkan Item Keluar ?']) !!} 						       		

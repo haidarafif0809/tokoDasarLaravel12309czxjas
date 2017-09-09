@@ -28,8 +28,11 @@ class ItemKeluarController extends Controller
         if ($request->ajax()) {
             $item_keluar = ItemKeluar::with(['user_buat', 'user_edit']);
             return Datatables::of($item_keluar)->addColumn('action', function($itemkeluar){
-                return view('datatable._action', [
+              $detail_item_keluar = DetailItemKeluar::with(['produk'])->where('no_faktur',$itemkeluar->no_faktur)->get();
+                return view('item_keluar._action', [
                     'model'             => $itemkeluar,
+                    'id_item_keluar'     => $itemkeluar->id,
+                    'data_detail_item_keluar'     => $detail_item_keluar,
                     'form_url'          => route('item-keluar.destroy', $itemkeluar->id),
                     'edit_url'          => route('item-keluar.edit', $itemkeluar->id),
                     'confirm_message'   => 'Anda Yakin Ingin Menghapus Item Keluar '.$itemkeluar->no_faktur.'?'
