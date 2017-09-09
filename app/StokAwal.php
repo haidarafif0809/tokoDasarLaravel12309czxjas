@@ -8,7 +8,7 @@ use App\StokAwal;
 class StokAwal extends Model
 {
     //
-        protected $fillable = ['id','nomor_faktur','id_produk','jumlah_produk','keterangan','user_buat','user_edit','created_at','updated_at'];
+        protected $fillable = ['nomor_faktur','id_produk','jumlah_produk','keterangan','user_buat','user_edit'];
 
 
     	public function produk()
@@ -31,7 +31,7 @@ class StokAwal extends Model
 			
 		self::deleting(function($stokAwal) {
 
-			StokAwal::where('no_faktur', $stokAwal->nomor_faktur)->delete();
+			
 
 			return true;
 		
