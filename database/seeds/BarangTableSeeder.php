@@ -25,7 +25,7 @@ class BarangTableSeeder extends Seeder
             $barang->harga_jual5 = "0";
             $barang->harga_jual6 = "0";
             $barang->harga_jual7 = "0";
-            $barang->satuans_id = "1";
+            $barang->satuans_id = "8";
             $barang->kategori_barangs_id = "1";
             $barang->status = "Aktif"; 
             $barang->limit_stok = "0";
