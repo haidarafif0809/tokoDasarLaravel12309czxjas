@@ -17,7 +17,7 @@ class CreateItemMasuksTable extends Migration
             $table->increments('id');
             $table->string('no_faktur');
             $table->string('keterangan');
-            $table->string('total');
+            $table->decimal('total');
             $table->string('user_buat');
             $table->string('user_edit');
             $table->timestamps();

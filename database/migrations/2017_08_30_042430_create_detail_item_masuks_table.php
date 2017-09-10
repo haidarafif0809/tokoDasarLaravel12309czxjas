@@ -17,7 +17,7 @@ class CreateDetailItemMasuksTable extends Migration
             $table->increments('id_detail_item_masuk');
             $table->string('no_faktur');
             $table->string('id_produk');
-            $table->string('jumlah_produk'); 
+            $table->decimal('jumlah_produk'); 
             $table->timestamps();
         });
     }

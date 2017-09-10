@@ -17,7 +17,7 @@ class CreateTbsItemMasuksTable extends Migration
             $table->increments('id_tbs_item_masuk');
             $table->string('session_id');
             $table->string('id_produk');
-            $table->string('jumlah_produk'); 
+            $table->decimal('jumlah_produk'); 
             $table->timestamps();
         });
     }
