@@ -62,7 +62,24 @@ class ItemMasukTest extends DuskTestCase
 
     public function testSelesai(){
 
-           $this->browse(function ($first, $second) {
+      $bulan_sekarang = date('m');
+
+      $tahun_sekarang = date('Y');
+      $tahun_terakhir = substr($tahun_sekarang, 2);
+       //mengecek jumlah karakter dari bulan sekarang
+        $cek_jumlah_bulan = strlen($bulan_sekarang);
+
+      //jika jumlah karakter dari bulannya sama dengan 1 maka di tambah 0 di depannya
+        if ($cek_jumlah_bulan == 1) {
+          $bulan_terakhir = "0".$bulan_sekarang;
+         }
+        else{
+          $bulan_terakhir = $bulan_sekarang;
+         }
+
+      $no_faktur = '1/IM/'.$bulan_terakhir.'/'.$tahun_terakhir;
+
+           $this->browse(function ($first, $second) use ($no_faktur){
             
                 $browser =  $first->loginAs(User::find(1))
                   ->visit('/home')
@@ -86,7 +103,37 @@ class ItemMasukTest extends DuskTestCase
                 ->assertSee('Anda Yakin Ingin Menyelesaikan Transaksi Ini')
                 ->type('#keterangan','keterangan testing')
                 ->press('#btn-simpan-item-masuk')
-                ->assertSee('SUKSES : BERHASIL MELAKUKAN TRANSAKSI ITEM MASUK');
+                ->assertSee('SUKSES : BERHASIL MELAKUKAN TRANSAKSI ITEM MASUK')
+                ->whenAvailable('.js-confirm', function ($table) {})
+                ->with('.table', function ($table) use ($no_faktur) {
+                          $table->assertSee('55000.00'
+
+                            )->assertSee($no_faktur
+
+                            );
+                      });
+                  
+        });  
+    }  
+
+ public function testSelesaiBelumAdaProduk(){
+
+           $this->browse(function ($first, $second) {
+            
+                $browser =  $first->loginAs(User::find(1))
+                  ->visit('/home')
+                  ->clickLink('Item Masuk')
+                  ->assertVisible('#link-tambah-item-masuk')
+                    ->visit(
+                        $first->attribute('#link-tambah-item-masuk', 'href')
+                    )
+                
+                  ->assertSee('Tambah Item Masuk') 
+                  ->click('#btnSelesai')
+                  ->assertSee('Anda Yakin Ingin Menyelesaikan Transaksi Ini')
+                  ->type('#keterangan','keterangan testing')
+                  ->press('#btn-simpan-item-masuk')
+                  ->assertSee('GAGAL : BELUM ADA PRODUK YANG DI INPUTKAN');
                   
         });  
     }  
@@ -164,6 +211,51 @@ class ItemMasukTest extends DuskTestCase
                   );
                   
         });  
+    } 
+    public function testHapusItemMasuk(){
+
+      $bulan_sekarang = date('m');
+
+      $tahun_sekarang = date('Y');
+      $tahun_terakhir = substr($tahun_sekarang, 2);
+       //mengecek jumlah karakter dari bulan sekarang
+        $cek_jumlah_bulan = strlen($bulan_sekarang);
+
+      //jika jumlah karakter dari bulannya sama dengan 1 maka di tambah 0 di depannya
+        if ($cek_jumlah_bulan == 1) {
+          $bulan_terakhir = "0".$bulan_sekarang;
+         }
+        else{
+          $bulan_terakhir = $bulan_sekarang;
+         }
+
+      $no_faktur = '1/IM/'.$bulan_terakhir.'/'.$tahun_terakhir;
+
+           $this->browse(function ($first, $second) use ($no_faktur) {
+            
+                $browser =  $first->loginAs(User::find(1))
+                  ->visit('/home')
+                  ->clickLink('Item Masuk');
+
+                  $browser->whenAvailable('.js-confirm', function ($table) {
+                         
+
+                                ;
+                      })
+                  ->with('.table', function ($table) use ($no_faktur){
+                          $table->assertSee($no_faktur)
+                                ->press('Hapus');
+                      })
+                  //untuk menclick tombol oke di alert dialog javascript
+                  ->driver->switchTo()->alert()->accept()
+                  ;
+
+                  $browser->assertDontSee($no_faktur
+                  )->assertSee('SUKSES : ITEM MASUK BERHASIL DIHAPUS');
+                  
+        });  
     }
+
+
 
 }
