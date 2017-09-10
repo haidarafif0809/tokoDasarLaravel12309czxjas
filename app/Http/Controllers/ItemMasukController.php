@@ -257,6 +257,26 @@ class ItemMasukController extends Controller
 
       //INSERT DETAIL ITEM MASUK
         $data_produk_item_masuk = TbsItemMasuk::where('session_id', $session_id);
+
+        if ($data_produk_item_masuk->count() == 0) {
+
+           $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">error</i>
+                    </div>
+                    <b>Gagal : Belum ada Produk Yang Di inputkan</b>
+                </div>';
+
+        Session::flash("flash_notification", [
+            "level"     => "danger",
+            "message"   => $pesan_alert
+        ]);
+
+          
+          return redirect()->back();
+        }
+
         foreach ($data_produk_item_masuk->get() as $data_tbs) {
             $detail_item_masuk = DetailItemMasuk::create([
                 'id_produk' =>$data_tbs->id_produk,              
@@ -276,10 +296,13 @@ class ItemMasukController extends Controller
         $itemmasuk = ItemMasuk::create([
             'no_faktur' => $no_faktur,
             'keterangan' =>$keterangan,
-            'total' => '85000',
             'user_buat' => $user,
             'user_edit' => $user,
         ]);
+
+        if (!$itemmasuk) {
+          return back();
+        }
         
         //HAPUS TBS ITEM MASUK
         $data_produk_item_masuk->delete();
