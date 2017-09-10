@@ -20,7 +20,8 @@ class CreateHppTable extends Migration
             $table->string('no_faktur_hpp_keluar')->nullable();
             $table->integer('id_barang');
             $table->string('jenis_transaksi');
-            $table->decimal('jumlah_kuantitas');
+            $table->decimal('jumlah_masuk')->default(0);
+            $table->decimal('jumlah_keluar')->default(0);
             $table->decimal('harga_unit');
             $table->decimal('total_nilai');
             $table->integer('jenis_hpp');
