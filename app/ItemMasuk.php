@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Input;
 
 class ItemMasuk extends Model
 {
@@ -24,9 +26,25 @@ class ItemMasuk extends Model
     self::deleting(function($itemMasuk) {
 
       DetailItemMasuk::where('no_faktur', $itemMasuk->no_faktur)->delete();
+      Hpp::where('no_faktur', $itemMasuk->no_faktur)->delete();
 
       return true;
     
-    });
+    });   
+
+    self::creating(function($itemMasuk) {
+
+
+      $total_nilai_item_keluar = Hpp::where('no_faktur', $itemMasuk->no_faktur)->sum('total_nilai');
+
+     $itemMasuk->total = $total_nilai_item_keluar;
+
+      return true;
+    
+    });  
+
+
+
+
   }
 }
