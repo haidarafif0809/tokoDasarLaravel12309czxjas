@@ -241,7 +241,7 @@ class ItemMasukController extends Controller
         }
         else {
           $nomor = 1 + $ambil_nomor ;
-          $no_faktur = $nomor."/IK/".$data_bulan_terakhir."/".$tahun_terakhir;
+          $no_faktur = $nomor."/IM/".$data_bulan_terakhir."/".$tahun_terakhir;
         }
 
         return $no_faktur;
@@ -350,7 +350,9 @@ class ItemMasukController extends Controller
                     <b>Sukses : Item Masuk Berhasil Dihapus</b>
                 </div>';
 
-        ItemMasuk::destroy($id);
+        if (!ItemMasuk::destroy($id)) {
+          return redirect()->back();
+        }
 
         Session:: flash("flash_notification", [
             "level"=>"danger",

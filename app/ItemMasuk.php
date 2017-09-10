@@ -25,10 +25,33 @@ class ItemMasuk extends Model
       
     self::deleting(function($itemMasuk) {
 
-      DetailItemMasuk::where('no_faktur', $itemMasuk->no_faktur)->delete();
-      Hpp::where('no_faktur', $itemMasuk->no_faktur)->delete();
+     
 
-      return true;
+      $hpp_terpakai =  Hpp::where('no_faktur_hpp_masuk', $itemMasuk->no_faktur)->count();
+      
+      if ($hpp_terpakai > 0) {
+
+         $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">error</i>
+                    </div>
+                    <b>Gagal : Item Masuk Sudah Terpakai Tidak Boleh Di Hapus</b>
+                </div>';
+
+          Session:: flash("flash_notification", [
+            "level"=>"danger",
+            "message"=> $pesan_alert
+            ]);
+        return false;
+      }
+      else {
+        DetailItemMasuk::where('no_faktur', $itemMasuk->no_faktur)->delete();
+        Hpp::where('no_faktur', $itemMasuk->no_faktur)->delete();
+
+        return true;
+      }
+ 
     
     });   
 
