@@ -167,6 +167,11 @@ return [
          * Package Service Providers...
          */
 
+        Jenssegers\Agent\AgentServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class, 
+        Laratrust\LaratrustServiceProvider::class,
+
         //
 
         /*
@@ -177,9 +182,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
-        Yajra\Datatables\DatatablesServiceProvider::class, 
-        Laratrust\LaratrustServiceProvider::class,
+     
 
     ],
 
@@ -230,6 +233,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Laratrust' => Laratrust\LaratrustFacade::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
 
 
 
