@@ -624,9 +624,9 @@ class ItemMasukController extends Controller
           $pesan_alert = 
                '<div class="container-fluid">
                     <div class="alert-icon">
-                    <i class="material-icons">check</i>
+                    <i class="material-icons">error</i>
                     </div>
-                    <b>Sukses : Tidak Berhasil Menghapus Produk</b>
+                    <b>Gagal : Produk Sudah Terpakai Tidak Boleh Di Hapus</b>
                 </div>';
 
             Session::flash("flash_notification", [
