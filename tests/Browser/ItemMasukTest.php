@@ -193,16 +193,16 @@ class ItemMasukTest extends DuskTestCase
                 ->assertVisible('#btn-submit-produk-modal')
                 ->press('#btn-submit-produk-modal')
                 ->assertSee('SUKSES')
-                ->whenAvailable('.js-confirm', function ($table) {
-                       
-
-                              ;
-                    })
+                ->waitFor('.js-confirm')
                 ->with('.table', function ($table) {
                         $table->assertSee('KECAP ASIN ABC')
-                              ->press('Hapus');
+                        //cari tombol hapus tbs item masuk dan scroll ke sana
+                        ->element('.btn-hapus-tbs')->getLocationOnScreenOnceScrolledIntoView();
+                        //form hapus tbs item masuknya di submit
+                        $table->element('.form-hapus-tbs')->submit();
+                      
                     })
-                //untuk menclick tombol oke di alert dialog javascript
+                //untuk menclick tombol oke di alert dialog javascript untuk menghapus tbs item masuk
                 ->driver->switchTo()->alert()->accept()
                 ;
 
