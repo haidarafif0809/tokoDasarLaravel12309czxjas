@@ -62,7 +62,7 @@ class SuplierController extends Controller
          $this->validate($request, [
             'nama_suplier'     => 'required', 
             'alamat'   => 'max:225',
-            'no_telpon'=> 'max:225'
+            'no_telpon'=> 'max:20'
             ]);
 
          $suplier = Suplier::create([
@@ -114,7 +114,7 @@ class SuplierController extends Controller
          $this->validate($request, [
             'nama_suplier'     => 'required', 
             'alamat'   => 'max:225',
-            'no_telpon'=> 'max:225'
+            'no_telpon'=> 'max:20'
             ]);
 
         Suplier::where('id', $id)->update([

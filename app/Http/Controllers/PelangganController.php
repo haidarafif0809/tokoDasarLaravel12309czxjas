@@ -65,12 +65,12 @@ class PelangganController extends Controller
     {
         //
          $this->validate($request, [
-            'kode_pelanggan'     => 'required|unique:pelanggans,kode_pelanggan,',
-            'nama_pelanggan'     => 'required|unique:pelanggans,nama_pelanggan,',
+            'kode_pelanggan'     => 'required|max:191|unique:pelanggans,kode_pelanggan,',
+            'nama_pelanggan'     => 'required|max:191|unique:pelanggans,nama_pelanggan,',
             'level_harga'     => 'required',
-            'tanggal_lahir'     => 'required',
-            'no_telpon'     => 'required',
-            'alamat'     => 'required'
+            'tanggal_lahir'     => 'required|max:191',
+            'no_telpon'     => 'required|max:20',
+            'alamat'     => 'required|max:191'
             ]);
 
          $pelanggan = Pelanggan::create([
@@ -123,13 +123,13 @@ class PelangganController extends Controller
     public function update(Request $request, $id)
     {
         //
-         $this->validate($request, [
-            'kode_pelanggan'     => 'required|unique:pelanggans,kode_pelanggan,' .$id,
-            'nama_pelanggan'     => 'required|unique:pelanggans,nama_pelanggan,' .$id,
+         $this->validate($request, [ 
+            'kode_pelanggan'     => 'required|max:191|unique:pelanggans,kode_pelanggan,' .$id,
+            'nama_pelanggan'     => 'required|max:191|unique:pelanggans,nama_pelanggan,' .$id,
             'level_harga'     => 'required',
-            'tanggal_lahir'     => 'required',
-            'no_telpon'     => 'required',
-            'alamat'     => 'required'
+            'tanggal_lahir'     => 'required|max:191',
+            'no_telpon'     => 'required|max:20',
+            'alamat'     => 'required|max:191'
             ]);
 
         Pelanggan::where('id', $id)->update([
