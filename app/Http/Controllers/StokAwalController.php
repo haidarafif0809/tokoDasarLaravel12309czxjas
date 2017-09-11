@@ -69,10 +69,11 @@ class StokAwalController extends Controller
          }
       
       //ambil bulan dan no_faktur dari tanggal stok_awal terakhir
-         $stok_awal = StokAwal::select([DB::raw('MONTH(created_at) bulan'), 'nomor_faktur'])->first();
+         $stok_awal = StokAwal::select([DB::raw('MONTH(created_at) bulan'), 'nomor_faktur'])->orderBy('id','DESC')->first();
 
          if ($stok_awal != NULL) {
-          $ambil_nomor = substr($stok_awal->nomor_faktur, 0, -8);
+          $pisah_nomor = explode("/", $stok_awal->nomor_faktur);
+          $ambil_nomor = $pisah_nomor[0];
           $bulan_akhir = $stok_awal->bulan;
          }
          else{
@@ -150,7 +151,10 @@ class StokAwalController extends Controller
         //menghapus data dengan pengecekan alert /peringatan
         $stokawal = StokAwal::where('id',$id); 
  
-        StokAwal::destroy($id);
+        if (!StokAwal::destroy($id)) {
+          return redirect()->back();
+        }
+
         Session:: flash("flash_notification", [
             "level"=>"danger",
             "message"=>"Stok Awal Berhasil Di Hapus"

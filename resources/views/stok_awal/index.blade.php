@@ -15,7 +15,7 @@
 				</div>
 
 				<div class="panel-body">
-					<p> <button type="button" data-toggle="modal" data-target="#cari_produk" data-backdrop="" class="btn btn-primary" >Tambah Stok Awal</button> </p>
+					<p> <button type="button" data-toggle="modal" data-target="#cari_produk" data-backdrop="" class="btn btn-primary" ><i class="material-icons">add</i>  Tambah Stok Awal</button> </p>
 					<div class="table-responsive">
 					{!! $html->table(['class'=>'table-striped table']) !!}
 					</div>
@@ -65,7 +65,7 @@
         </div>
 
          <div class="modal-footer"> 
-		   {!! Form::submit('Simpan', ['class'=>'btn btn-success']) !!}
+                   <button type="submit" class="btn btn-success" ><i class="material-icons">save</i> Simpan</button>
 		   {!! Form::close() !!} 
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>

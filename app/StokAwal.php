@@ -3,7 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\StokAwal;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Input;
+
+
 
 class StokAwal extends Model
 {
@@ -24,42 +27,65 @@ class StokAwal extends Model
 			return $this->hasOne('App\User','id','user_edit');
 		}
 
-
 		//MODEL EVENT DELETE ITEM KELUAR -> DETAIL ITEM KELUAR
 	public static function boot() {
 		parent::boot();
-			
-		self::creating(function($StokAwal) {
 
-			$data_barang = Barang::select(['golongan_barang', 'kode_barang','harga_beli'])->where('id', $StokAwal->id_produk)->first();
+				self::creating(function($StokAwal) {
+
 			$jumlah_produk = $StokAwal->jumlah_produk;
-			$harga_beli = $data_barang->harga_beli;
+			$harga_beli = $StokAwal->produk->harga_beli;
 
 			$total_nilai = $harga_beli * $jumlah_produk;
 //ambil data BARANG YG DI CREATING KE HPP
 
-				while ($jumlah_produk > 0) {
-
 					Hpp::create([
-			            'no_faktur' => $StokAwal->no_faktur,
-			            'no_faktur_hpp_masuk' =>$hpp_masuk->no_faktur_hpp_masuk,
-			            'no_faktur_hpp_keluar' =>$StokAwal->no_faktur,
-			            'kode_barang' => $data_barang->kode_barang,
-			            'jenis_transaksi' =>'Item Keluar',
-			            'jumlah_kuantitas' => $StokAwal->jumlah_produk,
-			            'sisa_harga' => 0,
+			            'no_faktur' => $StokAwal->nomor_faktur,
+			            'id_barang' => $StokAwal->id_produk,
+			            'jenis_transaksi' =>'Stok Awal',
+			            'jumlah_masuk' => $jumlah_produk,
 			            'harga_unit' => $harga_beli,
 			            'total_nilai' => $total_nilai,
-			            'jenis_hpp' => 0
+			            'jenis_hpp' => 1
 
 			        ]);
-
-			       	$jumlah_produk = 0;
-
-				}
 			
-		});
-	}
+			
+		});//end CREATING data masuk ke hpp 
+
+
+    self::deleting(function($StokAwal) {
+
+      $hpp_terpakai =  Hpp::where('no_faktur_hpp_masuk', $StokAwal->nomor_faktur)->count();
+      
+      if ($hpp_terpakai > 0) {
+
+         $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">error</i>
+                    </div>
+                    <b>Gagal : Stok Awal Sudah Terpakai Tidak Boleh Di Hapus</b>
+                </div>';
+
+          Session:: flash("flash_notification", [
+            "level"=>"danger",
+            "message"=> $pesan_alert
+            ]);
+        return false;
+      }
+      else {
+
+        Hpp::where('no_faktur', $StokAwal->nomor_faktur)->delete();
+        return true;
+      }
+ 
+    
+    });  
+
+
+
+	}// end boot() function event
 
 
 
