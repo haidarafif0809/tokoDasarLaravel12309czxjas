@@ -85,26 +85,24 @@ class BarangController extends Controller
     {
         //validate
         $this->validate($request, [
-          'kode_barcode'        => 'unique:barangs,kode_barcode',
-          'kode_barcode'         => 'unique:barangs,kode_barang',
-          'kode_barang'        => 'required|unique:barangs,kode_barang',
-          'kode_barang'         => 'required|unique:barangs,kode_barcode',
-          'nama_barang'         => 'required',
+          'kode_barcode'        => 'unique:barangs,kode_barcode|max:191', 
+          'kode_barang'         => 'required|unique:barangs,kode_barcode|max:191',
+          'nama_barang'         => 'required|max:191',
           'golongan_barang'     => 'required',
           'kategori_barangs_id' => 'required|exists:kategori_barangs,id',
-          'harga_beli'          => 'required|numeric',
-          'harga_jual'          => 'numeric',
-          'harga_jual1'         => 'numeric',
-          'harga_jual2'         => 'numeric',
-          'harga_jual3'         => 'numeric',
-          'harga_jual4'         => 'numeric',
-          'harga_jual5'         => 'numeric',
-          'harga_jual6'         => 'numeric',
-          'harga_jual7'         => 'numeric',
+          'harga_beli'          => 'required|numeric|digits_between:1,11',
+          'harga_jual'          => 'numeric|digits_between:1,11',
+          'harga_jual1'         => 'numeric|digits_between:1,11',
+          'harga_jual2'         => 'numeric|digits_between:1,11',
+          'harga_jual3'         => 'numeric|digits_between:1,11',
+          'harga_jual4'         => 'numeric|digits_between:1,11',
+          'harga_jual5'         => 'numeric|digits_between:1,11',
+          'harga_jual6'         => 'numeric|digits_between:1,11',
+          'harga_jual7'         => 'numeric|digits_between:1,11',
           'satuans_id'          => 'required|exists:satuans,id',
           'status'              => 'required', 
-          'limit_stok'          => 'numeric',
-          'over_stok'           => 'numeric'
+          'limit_stok'          => 'numeric|digits_between:1,11',
+          'over_stok'           => 'numeric|digits_between:1,11'
         ]);
 
         if ($request->harga_jual2 == '') {
@@ -147,13 +145,19 @@ class BarangController extends Controller
             $request->over_stok = 0;
 
         }
+        if ($request->golongan_barang == 'Barang') {
+          $golongan_barang = 1;
+        }
+        else{
+          $golongan_barang = 0;
+        }
 
         //insert
         $barang = Barang::create([
             'kode_barcode'          =>$request->kode_barcode,
             'kode_barang'           =>$request->kode_barang,
             'nama_barang'           =>$request->nama_barang,
-            'golongan_barang'       =>$request->golongan_barang,
+            'golongan_barang'       =>$golongan_barang,
             'kategori_barangs_id'   =>$request->kategori_barangs_id,
             'harga_beli'            =>$request->harga_beli,
             'harga_jual'            =>$request->harga_jual,
@@ -214,26 +218,24 @@ class BarangController extends Controller
 
                 //validate
         $this->validate($request, [
-          'kode_barcode'        => 'unique:barangs,kode_barcode,' . $id,
-          'kode_barcode'         => 'unique:barangs,kode_barang,' . $id,
-          'kode_barang'        => 'required|unique:barangs,kode_barang,'. $id,
-          'kode_barang'         => 'required|unique:barangs,kode_barcode,'. $id,
-          'nama_barang'         => 'required',
+          'kode_barcode'        => 'unique:barangs,kode_barcode|max:191' .$id, 
+          'kode_barang'         => 'required|unique:barangs,kode_barcode|max:191' .$id,
+          'nama_barang'         => 'required|max:191',
           'golongan_barang'     => 'required',
           'kategori_barangs_id' => 'required|exists:kategori_barangs,id',
-          'harga_beli'          => 'required|numeric',
-          'harga_jual'          => 'numeric',
-          'harga_jual1'         => 'numeric',
-          'harga_jual2'         => 'numeric',
-          'harga_jual3'         => 'numeric',
-          'harga_jual4'         => 'numeric',
-          'harga_jual5'         => 'numeric',
-          'harga_jual6'         => 'numeric',
-          'harga_jual7'         => 'numeric',
+          'harga_beli'          => 'required|numeric|digits_between:1,11',
+          'harga_jual'          => 'numeric|digits_between:1,11',
+          'harga_jual1'         => 'numeric|digits_between:1,11',
+          'harga_jual2'         => 'numeric|digits_between:1,11',
+          'harga_jual3'         => 'numeric|digits_between:1,11',
+          'harga_jual4'         => 'numeric|digits_between:1,11',
+          'harga_jual5'         => 'numeric|digits_between:1,11',
+          'harga_jual6'         => 'numeric|digits_between:1,11',
+          'harga_jual7'         => 'numeric|digits_between:1,11',
           'satuans_id'          => 'required|exists:satuans,id',
           'status'              => 'required', 
-          'limit_stok'          => 'numeric',
-          'over_stok'           => 'numeric'
+          'limit_stok'          => 'numeric|digits_between:1,11',
+          'over_stok'           => 'numeric|digits_between:1,11'
         ]);
 
         if ($request->harga_jual2 == '') {
@@ -277,12 +279,19 @@ class BarangController extends Controller
 
         }
 
+        if ($request->golongan_barang == 'Barang') {
+          $golongan_barang = 1;
+        }
+        else{
+          $golongan_barang = 0;
+        }
+
         //insert
         $barang = Barang::where('id',$id)->update([
             'kode_barcode'          =>$request->kode_barcode,
             'kode_barang'           =>$request->kode_barang,
             'nama_barang'           =>$request->nama_barang,
-            'golongan_barang'       =>$request->golongan_barang,
+            'golongan_barang'       =>$golongan_barang,
             'kategori_barangs_id'   =>$request->kategori_barangs_id,
             'harga_beli'            =>$request->harga_beli,
             'harga_jual'            =>$request->harga_jual,

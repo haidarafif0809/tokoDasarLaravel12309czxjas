@@ -26,13 +26,13 @@
                 </tr>
             </thead>
             <tbody> 
-                <tr>
                   @foreach($data_detail_item_keluar as $data_detail_item_keluars)
+                <tr>
                   <td>{{  $data_detail_item_keluars->no_faktur }}</td>
                   <td>{{  $data_detail_item_keluars->produk->nama_barang }}</td>
                   <td>{{  $data_detail_item_keluars->jumlah_produk }}</td>  
-                  @endforeach
                 </tr>
+                  @endforeach
             </tbody>
           </table>
         </div>  

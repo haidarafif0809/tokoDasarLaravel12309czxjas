@@ -16,8 +16,8 @@ class CreateTbsItemMasuksTable extends Migration
         Schema::create('tbs_item_masuks', function (Blueprint $table) {
             $table->increments('id_tbs_item_masuk');
             $table->string('session_id');
-            $table->string('id_produk');
-            $table->decimal('jumlah_produk'); 
+            $table->integer('id_produk');
+            $table->decimal('jumlah_produk', 65,2); 
             $table->timestamps();
         });
     }
