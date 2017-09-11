@@ -24,9 +24,20 @@ class ItemKeluar extends Model
 		self::deleting(function($itemKeluar) {
 
 			DetailItemKeluar::where('no_faktur', $itemKeluar->no_faktur)->delete();
+			Hpp::where('no_faktur', $itemKeluar->no_faktur)->delete();
 
 			return true;
 		
 		});
+
+//AMBIL NILAI TOTAL ITEM KELUAR
+		self::creating(function($itemKeluar) {
+
+			$total_nilai_item_keluar = Hpp::where('no_faktur', $itemKeluar->no_faktur)->sum('total_nilai');
+			$itemKeluar->total = $total_nilai_item_keluar;
+
+			return true;
+	    
+	    });  
 	}
 }

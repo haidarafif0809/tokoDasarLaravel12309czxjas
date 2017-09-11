@@ -17,7 +17,7 @@ class CreateTbsItemKeluarsTable extends Migration
             $table->increments('id_tbs_item_keluar');
             $table->string('session_id');
             $table->integer('id_produk');
-            $table->integer('jumlah_produk');
+            $table->decimal('jumlah_produk', 65, 2);
             $table->timestamps();
         });
     }
