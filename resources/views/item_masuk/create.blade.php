@@ -129,8 +129,11 @@
 
 					</div>
 					<!--TABEL TBS ITEM 	MASUK -->
+					<div class="table-responsive">
 			         {!! $html->table(['class'=>'table-striped table']) !!} 
+					</div>
 				</div><!-- / PANEL BODY -->
+
 			</div>
 		</div>
 	</div>
