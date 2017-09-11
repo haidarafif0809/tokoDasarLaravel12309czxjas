@@ -13,7 +13,7 @@
           <h4 class="modal-title">Data Produk</h4>
         </div>
         <div class="modal-body">
-          {!! Form::open(['url' => route('item-masuk.proses_tambah_tbs_item_masuk'),'method' => 'post', 'class'=>'form-horizontal']) !!}
+          {!! Form::open(['url' => route('item-masuk.proses_tambah_edit_tbs_item_masuk', $item_masuk->id),'method' => 'post', 'class'=>'form-horizontal']) !!}
 	          <div class="form-group{{ $errors->has('id_produk') ? ' has-error' : '' }}">
 					{!! Form::label('id_produk', 'Pilih Produk', ['class'=>'col-md-3 control-label']) !!}
 					<div class="col-md-6">
@@ -56,9 +56,9 @@
 		</h4>
         </div>
 
-        {!! Form::open(['url' => route('item-masuk.store'),'method' => 'post', 'class'=>'form-horizontal']) !!}
+        {!! Form::open(['url' => route('item-masuk.proses_edit_item_masuk',$item_masuk->id),'method' => 'post', 'class'=>'form-horizontal']) !!}
 	        <div class="modal-body">
-	        	<textarea class="form-control" name="keterangan" placeholder="Keterangan" rows="5"></textarea>
+	        	<textarea class="form-control" name="keterangan" placeholder="Keterangan" rows="5">{{ $item_masuk->keterangan }}</textarea>
 	        </div>
 	        <div class="modal-footer"> 
 	    		<button type="submit" class="btn btn-success"><i class="material-icons">save</i> Simpan</button>
@@ -89,7 +89,7 @@
 						
 						<div class="col-md-7">
 							<!--FORM BARCODE ITEM Masuk -->
-								{!! Form::open(['url' => route('item-masuk.proses_barcode_item_masuk_edit',$item_masuk->id),'method' => 'post', 'class'=>'form-horizontal']) !!}
+								{!! Form::open(['url' => route('item-masuk.proses_barcode_edit_item_masuk',$item_masuk->id),'method' => 'post', 'class'=>'form-horizontal']) !!}
 									<div class="form-group{{ $errors->has('barcode') ? ' has-error' : '' }}"> 
 										<div class="col-md-6">				
 											{!! Form::text('barcode', null, ['class'=>'form-control','placeholder'=>'Barcode','required','autocomplete'=>'off', 'id'=>'kode_barcode']) !!}
@@ -107,7 +107,7 @@
 						<div class="col-md-2"></div>
 						<div class="col-md-3">
 							<!-- TOMBOL BATAL -->
-							{!! Form::open(['url' => route('item-masuk.destroy',$item_masuk->id),'method' => 'post', 'class' => 'form-group js-confirm', 'data-confirm' => 'Apakah Anda Ingin Membatalkan Item masuk ?']) !!} 						       		
+							{!! Form::open(['url' => route('item-masuk.proses_hapus_semua_edit_tbs_item_masuk',$item_masuk->id),'method' => 'post', 'class' => 'form-group js-confirm', 'data-confirm' => 'Apakah Anda Ingin Membatalkan Item masuk ?']) !!} 						       		
 						    <!--- TOMBOL SELESAI -->
 						       	<button type="button" class="btn btn-primary" id="btnSelesai" data-toggle="modal" data-target="#modal_selesai"><i class="material-icons">send</i> Selesai (F8)</button>
 

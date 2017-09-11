@@ -89,7 +89,7 @@
 						
 						<div class="col-md-7">
 							<!--FORM BARCODE ITEM Masuk -->
-								{!! Form::open(['url' => route('item-masuk.proses_barcode_item_masuk'),'method' => 'get', 'class'=>'form-horizontal']) !!}
+								{!! Form::open(['url' => route('item-masuk.proses_barcode_item_masuk'),'method' => 'post', 'class'=>'form-horizontal']) !!}
 									<div class="form-group{{ $errors->has('barcode') ? ' has-error' : '' }}"> 
 										<div class="col-md-6">				
 											{!! Form::text('barcode', null, ['class'=>'form-control','placeholder'=>'Barcode','required','autocomplete'=>'off', 'id'=>'kode_barcode']) !!}

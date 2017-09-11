@@ -72,10 +72,22 @@ Route::group(['middleware' => 'auth'], function()
 	]);
 
 //ITEM MASUK
+	Route::get('/item-masuk/proses-form-edit/{id}',[
+	'middleware' => ['auth'],
+	'as' => 'item-masuk.proses_form_edit',
+	'uses' => 'ItemMasukController@proses_form_edit'
+	]);
+
 	Route::post('/item-masuk/proses-tambah-tbs-item-masuk',[
 	'middleware' => ['auth'],
 	'as' => 'item-masuk.proses_tambah_tbs_item_masuk',
 	'uses' => 'ItemMasukController@proses_tambah_tbs_item_masuk'
+	]);
+
+	Route::post('/item-masuk/proses-tambah-edit-tbs-item-masuk/{id}',[
+	'middleware' => ['auth'],
+	'as' => 'item-masuk.proses_tambah_edit_tbs_item_masuk',
+	'uses' => 'ItemMasukController@proses_tambah_edit_tbs_item_masuk'
 	]);
 
 	Route::post('/item-masuk/proses-hapus-tbs-item-masuk/{id}',[
@@ -84,10 +96,28 @@ Route::group(['middleware' => 'auth'], function()
 	'uses' => 'ItemMasukController@proses_hapus_tbs_item_masuk'
 	]);
 
+	Route::post('/item-masuk/proses-hapus-edit-tbs-item-masuk/{id}',[
+	'middleware' => ['auth'],
+	'as' => 'item-masuk.proses_hapus_edit_tbs_item_masuk',
+	'uses' => 'ItemMasukController@proses_hapus_edit_tbs_item_masuk'
+	]);
+
 	Route::post('/item-masuk/proses-hapus-semua-tbs-item-masuk/',[
 	'middleware' => ['auth'],
 	'as' => 'item-masuk.proses_hapus_semua_tbs_item_masuk',
 	'uses' => 'ItemMasukController@proses_hapus_semua_tbs_item_masuk'
+	]);
+
+	Route::post('/item-masuk/proses-hapus-semua-edit-tbs-item-masuk/{id}',[
+	'middleware' => ['auth'],
+	'as' => 'item-masuk.proses_hapus_semua_edit_tbs_item_masuk',
+	'uses' => 'ItemMasukController@proses_hapus_semua_edit_tbs_item_masuk'
+	]);
+
+	Route::post('/item-masuk/proses-edit-item-masuk/{id}',[
+	'middleware' => ['auth'],
+	'as' => 'item-masuk.proses_edit_item_masuk',
+	'uses' => 'ItemMasukController@proses_edit_item_masuk'
 	]);
 
 	Route::post('/item-masuk/proses-barcode-item-masuk',[
@@ -96,10 +126,10 @@ Route::group(['middleware' => 'auth'], function()
 	'uses' => 'ItemmasukController@proses_barcode_item_masuk'
 	]);
 
-	Route::post('/item-masuk/proses-barcode-item-masuk-edit/{$id}',[
+	Route::post('/item-masuk/proses-barcode-edit-item-masuk/{id}',[
 	'middleware' => ['auth'],
-	'as' => 'item-masuk.proses_barcode_item_masuk_edit',
-	'uses' => 'ItemmasukController@proses_barcode_item_masuk_edit'
+	'as' => 'item-masuk.proses_barcode_edit_item_masuk',
+	'uses' => 'ItemmasukController@proses_barcode_edit_item_masuk'
 	]);
 
 	Route::get('/ubah-password',[

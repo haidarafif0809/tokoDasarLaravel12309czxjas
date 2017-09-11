@@ -8,7 +8,8 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB; 
 use App\ItemMasuk;  
 use App\TbsItemMasuk;  
-use App\DetailItemMasuk;  
+use App\DetailItemMasuk;
+use App\EditTbsItemMasuk;  
 use App\Barang;  
 use Session;
 use Auth;
@@ -27,7 +28,7 @@ class ItemMasukController extends Controller
                         'id_item_masuk'     => $itemmasuk->id,
                         'data_detail_item_masuk'     => $detail_item_masuk,
                         'form_url'  => route('item-masuk.destroy', $itemmasuk->id),
-                        'edit_url'  => route('item-masuk.edit', $itemmasuk->id),
+                        'edit_url'  => route('item-masuk.proses_form_edit', $itemmasuk->id),
                         'confirm_message'   => 'Yakin Mau Menghapus Item Masuk dengan nomor faktur ' . $itemmasuk->no_faktur . '?'
                         ]);
                 }) ->make(true);
@@ -76,8 +77,8 @@ class ItemMasukController extends Controller
     public function proses_tambah_tbs_item_masuk(Request $request)
     { 
         $this->validate($request, [
-            'id_produk'     => 'required|numeric',
-            'jumlah_produk' => 'required|numeric',
+            'id_produk'     => 'required|max:11|numeric',
+            'jumlah_produk' => 'required|max:8|numeric',
             ]);
 
         $session_id = session()->getId();
@@ -134,13 +135,78 @@ class ItemMasukController extends Controller
         }
     }
 
+    //PROSES TAMBAH EDIT TBS ITEM MASUK
+    public function proses_tambah_edit_tbs_item_masuk(Request $request,$id)
+    { 
+        $this->validate($request, [
+            'id_produk'     => 'required|max:11|numeric',
+            'jumlah_produk' => 'required|max:8|numeric',
+            ]);
 
-//PROSES BARCODE TBS ITEM KELUAR
+        $data_item_masuk = ItemMasuk::find($id);    
+        $session_id = session()->getId();
+
+        $data_tbs = EditTbsItemMasuk::select('id_produk')
+        ->where('id_produk', $request->id_produk)
+        ->where('no_faktur', $data_item_masuk->no_faktur)
+        ->where('session_id', $session_id)
+        ->count();
+
+        $data_barang = Barang::select('nama_barang')->where('id', $request->id_produk)->first();
+        $pesan_alert = "Produk '".$data_barang->nama_barang."' Sudah Ada, Silakan Pilih Produk Lain !";
+
+
+      //JIKA PRODUK YG DIPILIH SUDAH ADA DI TBS
+        if ($data_tbs > 0) {
+            
+            $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">warning</i>
+                    </div>
+                    <b>Warning : Produk "'.$data_barang->nama_barang.'" Sudah Ada, Silakan Pilih Produk Lain !</b>
+                </div>';
+
+            Session::flash("flash_notification", [
+              "level"=>"warning",
+              "message"=> $pesan_alert
+            ]); 
+
+            return back();
+        }
+        else{
+
+           $pesan_alert = 
+             '<div class="container-fluid">
+                  <div class="alert-icon">
+                  <i class="material-icons">check</i>
+                  </div>
+                  <b>Sukses : Berhasil Menambah Produk "'.$data_barang->nama_barang.'"</b>
+              </div>';
+
+            $tbsitemmasuk = EditTbsItemMasuk::create([
+                'id_produk' =>$request->id_produk,    
+                'no_faktur' =>$data_item_masuk->no_faktur,                    
+                'session_id' => $session_id,
+                'jumlah_produk' =>$request->jumlah_produk,
+            ]);
+
+            Session::flash("flash_notification", [
+                "level"=>"success",
+                "message"=> $pesan_alert
+            ]);
+            return back();
+
+        }
+    }
+
+
+//PROSES BARCODE TBS ITEM MASUK
     public function proses_barcode_item_masuk(Request $request){
         $session_id = session()->getId();
 
         $this->validate($request, [
-            'barcode'     => 'required',
+            'barcode'     => 'required|max:191',
         ]);
 
         $data_produk = Barang::select(['id', 'kode_barcode', 'nama_barang'])->where('kode_barcode', $request->barcode)->first();
@@ -162,7 +228,7 @@ class ItemMasukController extends Controller
               "message"=> $pesan_alert
             ]); 
 
-            return redirect()->route('item-keluar.create');
+            return redirect()->route('item-masuk.create');
         }
         else{
 
@@ -178,7 +244,7 @@ class ItemMasukController extends Controller
             }
             else{
           //INSERT TBS
-              $tbsitemkeluar = TbsItemMasuk::create([
+              $tbsitemmasuk = TbsItemMasuk::create([
                   'id_produk' =>$data_produk->id,
                   'session_id' => $session_id,
                   'jumlah_produk' => 1,
@@ -204,12 +270,12 @@ class ItemMasukController extends Controller
         }
     }
 
-//PROSES BARCODE TBS ITEM KELUAR EDIT
-    public function proses_barcode_item_masuk_edit(Request $request,$id){
+//PROSES BARCODE TBS ITEM MASUK EDIT
+    public function proses_barcode_edit_item_masuk(Request $request,$id){
         $session_id = session()->getId();
 
         $this->validate($request, [
-            'barcode'     => 'required',
+            'barcode'     => 'required|max:191',
         ]);
 
         $data_produk = Barang::select(['id', 'kode_barcode', 'nama_barang'])->where('kode_barcode', $request->barcode)->first();
@@ -231,12 +297,12 @@ class ItemMasukController extends Controller
               "message"=> $pesan_alert
             ]); 
 
-            return redirect()->route('item-keluar.create');
+            return redirect()->route('item-masuk.create');
         }
         else{
 
-        $item_masuk = ItemMasuk::find($id); 
-          $data_tbs = DetailItemMasuk::select('jumlah_produk')->where('id_produk', $data_produk->id)->where('no_faktur', $item_masuk->no_faktur);
+          $data_item_masuk = ItemMasuk::find($id);  
+          $data_tbs = EditTbsItemMasuk::select('jumlah_produk')->where('id_produk', $data_produk->id)->where('no_faktur', $data_item_masuk->no_faktur);
 
 //JIKA BARCODE PRODUK YG SAMA, MAKA JUMLAH PRODUKNYA BERTAMBAH
 
@@ -248,8 +314,9 @@ class ItemMasukController extends Controller
             }
             else{
           //INSERT TBS
-              $tbsitemkeluar = TbsItemMasuk::create([
+              $tbsitemmasuk = EditTbsItemMasuk::create([
                   'id_produk' =>$data_produk->id,
+                  'no_faktur' =>  $data_item_masuk->no_faktur,
                   'session_id' => $session_id,
                   'jumlah_produk' => 1,
               ]);
@@ -269,10 +336,11 @@ class ItemMasukController extends Controller
               "message"=> $pesan_alert
               ]);
           
-          return redirect()->route('item-masuk.create');
+          return redirect()->back();
 
         }
     }
+
     public function no_faktur(){
       //PROSES MEMBUAT NO. FAKTUR ITEM MASUK
         $tahun_sekarang = date('Y');
@@ -392,21 +460,118 @@ class ItemMasukController extends Controller
         return redirect()->route('item-masuk.index');
     }
  
+
+    //PROSES SELESAI TRANSAKSI EDIT ITEM MASUK
+    public function proses_edit_item_masuk(Request $request,$id) {
+
+        $data_item_masuk = ItemMasuk::find($id);  
+        $session_id = session()->getId();
+        $user = Auth::user()->id; 
+
+        $hapus_detail_tbs_item_masuk = DetailItemMasuk::where('no_faktur', $data_item_masuk->no_faktur)->delete(); 
+
+      //INSERT DETAIL ITEM MASUK
+        $data_produk_item_masuk = EditTbsItemMasuk::where('no_faktur', $data_item_masuk->no_faktur);
+
+        if ($data_produk_item_masuk->count() == 0) {
+
+           $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">error</i>
+                    </div>
+                    <b>Gagal : Belum ada Produk Yang Di inputkan</b>
+                </div>';
+
+        Session::flash("flash_notification", [
+            "level"     => "danger",
+            "message"   => $pesan_alert
+        ]);
+
+          
+          return redirect()->back();
+        }
+
+        foreach ($data_produk_item_masuk->get() as $data_tbs) {
+            $detail_item_masuk = DetailItemMasuk::create([
+                'id_produk' =>$data_tbs->id_produk,              
+                'no_faktur' => $data_item_masuk->no_faktur,
+                'jumlah_produk' =>$data_tbs->jumlah_produk,
+            ]);
+        }
+
+      //INSERT ITEM MASUK
+        if ($request->keterangan == "") {
+          $keterangan = "-";
+        }
+        else{
+          $keterangan = $request->keterangan;
+        }
+
+        $itemmasuk = ItemMasuk::find($id)->update([ 
+            'keterangan' =>$keterangan, 
+            'user_edit' => $user,
+        ]);
+
+        $hapus_edit_tbs_item_masuk = EditTbsItemMasuk::where('no_faktur', $data_item_masuk->no_faktur)->delete(); 
+
+
+        if (!$itemmasuk) {
+          return back();
+        }
+         
+        $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">check</i>
+                    </div>
+                    <b>Sukses : Berhasil Melakukan Edit Transaksi Item Masuk Faktur "'.$data_item_masuk->no_faktur.'"</b>
+                </div>';
+
+        Session::flash("flash_notification", [
+            "level"     => "success",
+            "message"   => $pesan_alert
+        ]);
+
+        return redirect()->route('item-masuk.index');
+    }
+ 
     public function show($id)
     {
         //
+
     }
   
+    public function proses_form_edit($id)
+    {
+        //
+        $session_id = session()->getId();
+        $data_item_masuk = ItemMasuk::find($id);  
+        $data_produk_item_masuk = DetailItemMasuk::where('no_faktur', $data_item_masuk->no_faktur);
+
+        $hapus_semua_edit_tbs_item_masuk = EditTbsItemMasuk::where('no_faktur', $data_item_masuk->no_faktur)->delete();
+        foreach ($data_produk_item_masuk->get() as $data_tbs) {
+            $detail_item_masuk = EditTbsItemMasuk::create([
+                'id_produk' =>$data_tbs->id_produk,              
+                'no_faktur' => $data_tbs->no_faktur,
+                'jumlah_produk' =>$data_tbs->jumlah_produk,          
+                'session_id' => $session_id,
+            ]);
+        }
+
+        return redirect()->route('item-masuk.edit',$id);
+    }
+
     //MENAMPILKAN DATA DI TBS ITEM MASUK
     public function edit(Request $request, Builder $htmlBuilder,$id)
-    {
+    {   
         if ($request->ajax()) {  
             $item_masuk = ItemMasuk::find($id); 
-            $tbs_item_masuk = DetailItemMasuk::with(['produk'])->where('no_faktur', $item_masuk->no_faktur)->get();
+            $tbs_item_masuk = EditTbsItemMasuk::with(['produk'])->where('no_faktur', $item_masuk->no_faktur)->get();
             return Datatables::of($tbs_item_masuk)->addColumn('action', function($tbsitemmasuk){
                     return view('item_masuk._hapus_produk', [
                         'model'     => $tbsitemmasuk,
-                        'form_url'  => route('item-masuk.proses_hapus_tbs_item_masuk', $tbsitemmasuk->id_tbs_item_masuk),  
+                        'form_url'  => route('item-masuk.proses_hapus_edit_tbs_item_masuk', $tbsitemmasuk->id_edit_tbs_item_masuk),  
                         'confirm_message'   => 'Yakin Mau Menghapus Produk ?'
                         ]);
                 })->addColumn('data_produk_tbs', function($data_produk_tbs){ 
@@ -417,7 +582,7 @@ class ItemMasukController extends Controller
         }
 
         $html = $htmlBuilder 
-        ->addColumn(['data' => 'data_produk_tbs', 'name' => 'data_produk_tbs', 'title' => 'Produk', 'orderable' => false, 'searchable'=>false ]) 
+        ->addColumn(['data' => 'data_produk_tbs', 'name' => 'data_produk_tbs', 'title' => 'Produk', 'searchable'=>false ]) 
         ->addColumn(['data' => 'jumlah_produk', 'name' => 'jumlah_produk', 'title' => 'Jumlah'])
         ->addColumn(['data' => 'action', 'name' => 'action', 'title' => 'Hapus', 'orderable' => false, 'searchable'=>false]);
 
@@ -450,6 +615,41 @@ class ItemMasukController extends Controller
             "message"=> $pesan_alert
             ]);
         return redirect()->route('item-masuk.index');
+    }
+
+    //PROSES HAPUS EDIT TBS ITEM MASUK
+    public function proses_hapus_edit_tbs_item_masuk($id)
+    { 
+        if (!EditTbsItemMasuk::destroy($id)) {
+          $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">check</i>
+                    </div>
+                    <b>Sukses : Tidak Berhasil Menghapus Produk</b>
+                </div>';
+
+            Session::flash("flash_notification", [
+                "level"     => "danger",
+                "message"   => $pesan_alert
+            ]);
+        return back();
+        }
+        else{
+          $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">check</i>
+                    </div>
+                    <b>Sukses : Berhasil Menghapus Produk</b>
+                </div>';
+
+            Session::flash("flash_notification", [
+                "level"     => "danger",
+                "message"   => $pesan_alert
+            ]);
+        return back();
+        }
     }
 
     //PROSES HAPUS TBS ITEM MASUK
@@ -491,7 +691,29 @@ class ItemMasukController extends Controller
     public function proses_hapus_semua_tbs_item_masuk()
     { 
         $session_id = session()->getId();
-        $data_tbs_item_keluar = TbsItemMasuk::where('session_id', $session_id)->delete();; 
+        $data_tbs_item_masuk = TbsItemMasuk::where('session_id', $session_id)->delete(); 
+        $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">check</i>
+                    </div>
+                    <b>Sukses : Berhasil Membatalkan Item Masuk</b>
+                </div>';
+
+            Session::flash("flash_notification", [
+                "level"     => "danger",
+                "message"   => $pesan_alert
+            ]);
+       return redirect()->route('item-masuk.index');
+    }
+
+    //PROSES BATAL EDIT ITEM MASUK
+    public function proses_hapus_semua_edit_tbs_item_masuk($id)
+    {   
+        //MENGAMBIL ID ITEM MASUK
+        $data_item_masuk = ItemMasuk::find($id); 
+        //PROSES MENGHAPUS SEMUA EDTI TBS SESUAI NO FAKTUR YANG DI AMBIL 
+        $data_tbs_item_masuk = EditTbsItemMasuk::where('no_faktur', $data_item_masuk->no_faktur)->delete(); 
         $pesan_alert = 
                '<div class="container-fluid">
                     <div class="alert-icon">

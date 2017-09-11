@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDetailItemMasuksTable extends Migration
+class CreateEditTbsItemMasuksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateDetailItemMasuksTable extends Migration
      */
     public function up()
     {
-        Schema::create('detail_item_masuks', function (Blueprint $table) {
-            $table->increments('id_detail_item_masuk');
+        Schema::create('edit_tbs_item_masuks', function (Blueprint $table) {
+            $table->increments('id_edit_tbs_item_masuk');
             $table->string('no_faktur');
             $table->integer('id_produk');
             $table->decimal('jumlah_produk', 65,2); 
+            $table->string('session_id');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateDetailItemMasuksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detail_item_masuks');
+        Schema::dropIfExists('edit_tbs_item_masuks');
     }
 }
