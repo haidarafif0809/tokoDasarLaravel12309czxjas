@@ -73,10 +73,12 @@ class ItemKeluarController extends Controller
          }
       
       //ambil bulan dan no_faktur dari tanggal item_keluar terakhir
-         $item_keluar = ItemKeluar::select([DB::raw('MONTH(created_at) bulan'), 'no_faktur'])->first();
+         $item_keluar = ItemKeluar::select([DB::raw('MONTH(created_at) bulan'), 'no_faktur'])->orderBy('id','DESC')->first();
+
 
          if ($item_keluar != NULL) {
-          $ambil_nomor = substr($item_keluar->no_faktur, 0, -8);
+          $pisah_nomor = explode("/", $item_keluar->no_faktur);
+          $ambil_nomor = $pisah_nomor[0];
           $bulan_akhir = $item_keluar->bulan;
          }
          else{
@@ -143,18 +145,52 @@ class ItemKeluarController extends Controller
   //PROSES SELESAI TRANSAKSI ITEM KELUAR
     public function store(Request $request) {
 
+      //START TRANSAKSI
+      DB::beginTransaction();
+
+
         $session_id = session()->getId();
         $user = Auth::user()->id;
         $no_faktur = $this->no_faktur();
 
       //INSERT DETAIL ITEM KELUAR
         $data_produk_item_keluar = TbsItemKeluar::where('session_id', $session_id);
+
+        if ($data_produk_item_keluar->count() == 0) {
+
+           $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">error</i>
+                    </div>
+                    <b>Gagal : Belum Ada Produk Yang Diinputkan</b>
+                </div>';
+
+        Session::flash("flash_notification", [
+            "level"     => "danger",
+            "message"   => $pesan_alert
+        ]);
+
+          
+          return redirect()->back();
+        }
+
+        $data_produk_item_keluar = TbsItemKeluar::where('session_id', $session_id);
         foreach ($data_produk_item_keluar->get() as $data_tbs) {
+          $detail_item_keluar = new DetailItemKeluar();
+          if (!$detail_item_keluar->stok_produk($data_tbs->id_produk, $data_tbs->jumlah_produk)) {
+            //DI BATALKAN PROSES NYA
+            DB::rollBack();
+            return redirect()->route('item-keluar.create');            
+          }
+          else{
             $detail_item_keluar = DetailItemKeluar::create([
                 'id_produk' =>$data_tbs->id_produk,              
                 'no_faktur' => $no_faktur,
                 'jumlah_produk' =>$data_tbs->jumlah_produk,
             ]);
+
+          }
         }
 
       //INSERT ITEM KELUAR
@@ -168,7 +204,6 @@ class ItemKeluarController extends Controller
         $itemkeluar = ItemKeluar::create([
             'no_faktur' => $no_faktur,
             'keterangan' =>$keterangan,
-            'total' => '85000',
             'user_buat' => $user,
             'user_edit' => $user,
         ]);
@@ -189,6 +224,7 @@ class ItemKeluarController extends Controller
             "message"   => $pesan_alert
         ]);
 
+        DB::commit();
         return redirect()->route('item-keluar.index');
     }
 
@@ -256,8 +292,8 @@ class ItemKeluarController extends Controller
 //PROSES TAMBAH TBS ITEM KELUAR
     public function proses_tambah_tbs_item_keluar(Request $request){
         $this->validate($request, [
-            'id_produk'     => 'required|numeric',
-            'jumlah_produk' => 'required|numeric',
+            'id_produk'     => 'required|numeric|max:9999999999',
+            'jumlah_produk' => 'required|numeric|max:9999999999',
         ]);
 
         $session_id = session()->getId();
@@ -315,7 +351,7 @@ class ItemKeluarController extends Controller
         $session_id = session()->getId();
 
         $this->validate($request, [
-            'barcode'     => 'required',
+            'barcode'     => 'required|max:255',
         ]);
 
         $data_produk = Barang::select(['id', 'kode_barcode', 'nama_barang'])->where('kode_barcode', $request->barcode)->first();

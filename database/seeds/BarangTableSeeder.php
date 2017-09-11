@@ -30,7 +30,7 @@ class BarangTableSeeder extends Seeder
             $barang->status = "Aktif"; 
             $barang->limit_stok = "0";
             $barang->over_stok = "10";
-            $barang->golongan_barang = "Barang";
+            $barang->golongan_barang = "1";
             $barang->save();
 
         // sample barang 2
@@ -51,7 +51,7 @@ class BarangTableSeeder extends Seeder
             $barang->status = "Aktif"; 
             $barang->limit_stok = "0";
             $barang->over_stok = "10";
-            $barang->golongan_barang = "Barang";
+            $barang->golongan_barang = "1";
             $barang->save();
 
         // sample barang 3
@@ -72,7 +72,7 @@ class BarangTableSeeder extends Seeder
             $barang->status = "Aktif"; 
             $barang->limit_stok = "0";
             $barang->over_stok = "10";
-            $barang->golongan_barang = "Barang";
+            $barang->golongan_barang = "1";
             $barang->save();
 
     }

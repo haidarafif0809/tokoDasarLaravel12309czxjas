@@ -17,7 +17,7 @@ class CreateDetailItemKeluarsTable extends Migration
             $table->increments('id_detail_item_keluar');
             $table->string('no_faktur');
             $table->integer('id_produk');
-            $table->integer('jumlah_produk'); 
+            $table->decimal('jumlah_produk', 65, 2); 
             $table->timestamps();
         });
     }
