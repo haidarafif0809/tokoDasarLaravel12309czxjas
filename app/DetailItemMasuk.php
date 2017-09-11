@@ -14,4 +14,20 @@ class DetailItemMasuk extends Model
 		  {
 		  	return $this->hasOne('App\Barang','id','id_produk');
 		  }
+
+
+	public static function boot() {
+		parent::boot();
+			
+		self::created(function($itemKeluar) {
+
+			$total_nilai = $itemKeluar->jumlah_produk *  $itemKeluar->produk->harga_beli;
+
+
+			Hpp::create(['no_faktur' => $itemKeluar->no_faktur, 'id_barang' => $itemKeluar->id_produk, 'jenis_transaksi' => 'Item Masuk', 'jumlah_masuk' => $itemKeluar->jumlah_produk, 'harga_unit' => $itemKeluar->produk->harga_beli, 'total_nilai' => $total_nilai, 'jenis_hpp' => '1']);
+
+			return true;
+		
+		});
+	}
 }

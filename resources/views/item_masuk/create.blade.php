@@ -31,7 +31,7 @@
 				</div>
         </div>
         <div class="modal-footer"> 
-		   <button type="submit" class="btn btn-success"><i class="material-icons">done</i> Submit Produk</button>
+		   <button type="submit" class="btn btn-success" id="btn-submit-produk-modal"><i class="material-icons">done</i> Submit Produk</button>
 		 {!! Form::close() !!} 
           <button type="button" class="btn btn-default" data-dismiss="modal"><i class="material-icons">close</i> Close</button>
         </div>
@@ -58,10 +58,10 @@
 
         {!! Form::open(['url' => route('item-masuk.store'),'method' => 'post', 'class'=>'form-horizontal']) !!}
 	        <div class="modal-body">
-	        	<textarea class="form-control" name="keterangan" placeholder="Keterangan" rows="5"></textarea>
+	        	<textarea class="form-control" name="keterangan" id="keterangan" placeholder="Keterangan" rows="5"></textarea>
 	        </div>
 	        <div class="modal-footer"> 
-	    		<button type="submit" class="btn btn-success"><i class="material-icons">save</i> Simpan</button>
+	    		<button type="submit"  id="btn-simpan-item-masuk" class="btn btn-success"><i class="material-icons">save</i> Simpan</button>
 	    		<button type="button" class="btn btn-default" data-dismiss="modal"><i class="material-icons">close</i> Close</button>
 	        </div>
 	    {!! Form::close() !!}
@@ -129,8 +129,11 @@
 
 					</div>
 					<!--TABEL TBS ITEM 	MASUK -->
+					<div class="table-responsive">
 			         {!! $html->table(['class'=>'table-striped table']) !!} 
+					</div>
 				</div><!-- / PANEL BODY -->
+
 			</div>
 		</div>
 	</div>

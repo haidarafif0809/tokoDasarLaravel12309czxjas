@@ -164,6 +164,7 @@ class StokAwalController extends Controller
     public function edit($id)
     {//
         $stokawal = StokAwal::find($id);
+
         return view('stok_awal.edit')->with(compact('stokawal')); 
     }
 
@@ -171,14 +172,13 @@ class StokAwalController extends Controller
     {
        //
         $this->validate($request, [
-            'id_produk'     => 'required',
+            
             'jumlah_produk' => 'required',
         ]);
 
          $user = Auth::user()->id;
 
         StokAwal::where('id', $id)->update([
-                'id_produk' =>$request->id_produk,              
                 'jumlah_produk' =>$request->jumlah_produk,
                 'keterangan' =>$request->keterangan,
                 'user_edit' =>$user,

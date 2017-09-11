@@ -291,7 +291,7 @@ class ItemMasukController extends Controller
          }
       
       //ambil bulan dan no_faktur dari tanggal item_masuk terakhir
-         $item_masuk = ItemMasuk::select([DB::raw('MONTH(created_at) bulan'), 'no_faktur'])->first();
+         $item_masuk = ItemMasuk::select([DB::raw('MONTH(created_at) bulan'), 'no_faktur'])->orderBy('id','DESC')->first();
 
          if ($item_masuk != NULL) {
           $ambil_nomor = substr($item_masuk->no_faktur, 0, -8);
@@ -306,11 +306,11 @@ class ItemMasukController extends Controller
       maka nomor nya kembali mulai dari 1, jika tidak maka nomor terakhir ditambah dengan 1
       */
         if ($bulan_akhir != $bulan_sekarang) {
-          $no_faktur = "1/IK/".$data_bulan_terakhir."/".$tahun_terakhir;
+          $no_faktur = "1/IM/".$data_bulan_terakhir."/".$tahun_terakhir;
         }
         else {
           $nomor = 1 + $ambil_nomor ;
-          $no_faktur = $nomor."/IK/".$data_bulan_terakhir."/".$tahun_terakhir;
+          $no_faktur = $nomor."/IM/".$data_bulan_terakhir."/".$tahun_terakhir;
         }
 
         return $no_faktur;
@@ -326,6 +326,26 @@ class ItemMasukController extends Controller
 
       //INSERT DETAIL ITEM MASUK
         $data_produk_item_masuk = TbsItemMasuk::where('session_id', $session_id);
+
+        if ($data_produk_item_masuk->count() == 0) {
+
+           $pesan_alert = 
+               '<div class="container-fluid">
+                    <div class="alert-icon">
+                    <i class="material-icons">error</i>
+                    </div>
+                    <b>Gagal : Belum ada Produk Yang Di inputkan</b>
+                </div>';
+
+        Session::flash("flash_notification", [
+            "level"     => "danger",
+            "message"   => $pesan_alert
+        ]);
+
+          
+          return redirect()->back();
+        }
+
         foreach ($data_produk_item_masuk->get() as $data_tbs) {
             $detail_item_masuk = DetailItemMasuk::create([
                 'id_produk' =>$data_tbs->id_produk,              
@@ -345,10 +365,13 @@ class ItemMasukController extends Controller
         $itemmasuk = ItemMasuk::create([
             'no_faktur' => $no_faktur,
             'keterangan' =>$keterangan,
-            'total' => '85000',
             'user_buat' => $user,
             'user_edit' => $user,
         ]);
+
+        if (!$itemmasuk) {
+          return back();
+        }
         
         //HAPUS TBS ITEM MASUK
         $data_produk_item_masuk->delete();
@@ -418,7 +441,9 @@ class ItemMasukController extends Controller
                     <b>Sukses : Item Masuk Berhasil Dihapus</b>
                 </div>';
 
-        ItemMasuk::destroy($id);
+        if (!ItemMasuk::destroy($id)) {
+          return redirect()->back();
+        }
 
         Session:: flash("flash_notification", [
             "level"=>"danger",

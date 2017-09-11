@@ -17,13 +17,6 @@
 
 					<div class="panel-body">
 						{!! Form::model($stokawal, ['url' => route('stok-awal.update', $stokawal->id), 'method' => 'put', 'files'=>'true','class'=>'form-horizontal']) !!}
-						<div class="form-group{{ $errors->has('id_produk') ? ' has-error' : '' }}">
-							{!! Form::label('id_produk', 'Nomor Faktur', ['class'=>'col-md-3 control-label']) !!}
-								<div class="col-md-6">
-								{!! Form::text('id_produk', null, ['class'=>'form-control','placeholder'=>'id_produk','required','readonly','autocomplete'=>'off', 'id'=>'id_produk']) !!}
-							{!! $errors->first('id_produk', '<p class="help-block">:message</p>') !!}
-						</div>
-						</div>   
 	  
 						<div class="form-group{{ $errors->has('jumlah_produk') ? ' has-error' : '' }}">
 							{!! Form::label('jumlah_produk', 'Jumlah Produk', ['class'=>'col-md-3 control-label']) !!}
