@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Input;
 
 class EditTbsItemMasuk extends Model
 {
@@ -14,4 +16,29 @@ class EditTbsItemMasuk extends Model
 		  {
 		  	return $this->hasOne('App\Barang','id','id_produk');
 		  }
+
+
+	//MODEL EVENT DELETE ITEM MASUK -> EDIT TBS ITEM MASUK
+  	public static function boot() {
+    parent::boot();
+      
+    self::deleting(function($itemMasuk) {
+
+     
+
+      $hpp_terpakai =  Hpp::where('no_faktur_hpp_masuk', $itemMasuk->no_faktur)->count();
+      
+      if ($hpp_terpakai > 0) { 
+        return false;
+      }
+      else {
+        DetailItemMasuk::where('no_faktur', $itemMasuk->no_faktur)->delete();
+        Hpp::where('no_faktur', $itemMasuk->no_faktur)->delete();
+
+        return true;
+      }
+ 
+    
+    });  
+    } 
 }
