@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\DB;
 use App\Role; //Modal
 use App\Otoritas; //Modal 
 use Auth;
+use App\Permission;
 use Session;
+use App\PermissionRole;
 
 class OtoritasController extends Controller
 {
@@ -23,10 +25,11 @@ class OtoritasController extends Controller
         if ($request->ajax()) {
             $master_otoritas = Role::select(['id','name','display_name','description']);
             return Datatables::of($master_otoritas)->addColumn('action', function($master_otoritas){
-                return view('datatable._action', [
+                return view('master_otoritas._action', [
                     'model'             => $master_otoritas,
                     'form_url'          => route('master_otoritas.destroy', $master_otoritas->id),
                     'edit_url'          => route('master_otoritas.edit', $master_otoritas->id),
+                    'permission_url'          => route('otoritas.permission', $master_otoritas->id),
                     'confirm_message'   => 'Apakah Anda Yakin Ingin Menghapus Block' .$master_otoritas->nama_block. '?'
                 ]);
             })->make(true);
@@ -166,5 +169,46 @@ class OtoritasController extends Controller
             ]);
         return redirect()->route('master_otoritas.index');
         }
+    }
+
+
+    public function setting_permission($id){
+
+        $permission = Permission::all();
+        $master_otoritas = Role::find($id);
+        return view('master_otoritas.permission',['permission' => $permission,'master_otoritas' => $master_otoritas]);
+    }
+
+
+    public function proses_setting_permission(Request $request,$id){
+         $permission = Permission::all();
+         $role = Role::find($id);
+
+         foreach ($permission as $permissions ) {
+
+            $permission_name = $permissions->name;
+            //jika checkbox nya di centang
+             if (isset($request->$permission_name)) {
+                //jika permission role nya belum ada maka di kaitkan role dengen pemissionya
+                if(PermissionRole::where('role_id',$id)->where('permission_id',$permissions->id)->count() == 0) {
+                     $role->attachPermission($permissions);
+                } 
+              
+             }
+             //jika checkbox nya tidak di centang
+             else {
+                //jika permission role nya ada maka di hilangkan permissionnya 
+                if(PermissionRole::where('role_id',$id)->where('permission_id',$permissions->id)->count() == 1) {
+                     $role->detachPermission($permissions);
+                } 
+             }
+         }
+
+          Session:: flash("flash_notification", [
+            "level"=>"success",
+            "message"=>"Setting Permission <b> $role->display_name </b> Berhasil Dirubah"
+            ]);
+        return redirect()->route('master_otoritas.index');
+
     }
 }

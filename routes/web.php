@@ -206,3 +206,19 @@ Route::group(['middleware' => 'auth'], function()
 	]);
 
 });
+
+Route::group(['middleware' => 'auth'], function()
+{
+
+	Route::get('otoritas/permission/{id}',[
+	'middleware' => ['auth'],
+	'as' => 'otoritas.permission',
+	'uses' => 'OtoritasController@setting_permission'
+	]);
+	Route::put('otoritas/permission/{id}',[
+	'middleware' => ['auth'],
+	'as' => 'otoritas.permission.edit',
+	'uses' => 'OtoritasController@proses_setting_permission'
+	]);
+
+});

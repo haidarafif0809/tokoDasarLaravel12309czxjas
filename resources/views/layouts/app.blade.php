@@ -43,26 +43,49 @@
             -->
 
             <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text">
-                    ANDAGLOS
+                <a href="http://andaglos.id" class="simple-text">
+                    ANDAGLOS.ID
                 </a>
             </div>
 
             <div class="sidebar-wrapper">
+
+          
+                
+                   
                 <ul class="nav" style="text-align: right;">
+              
 
                      @if (!Auth::guest())
                         <li class="active"><a href="{{ url('home') }}"> <p><i class="material-icons">dashboard</i> Beranda</p></a></li>
+                     <div class="clearfix"></div>
                  
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons">storage</i> Persediaan <span class="caret"></span>
+                        <li class="">
+                            <a href="#collapsePersediaan" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false"><p><i class="material-icons">storage</i> Persediaan <span class="caret"></span> </p>
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
-                                <li><a href="{{ route('item-keluar.index') }}">Item Keluar</a></li> 
-                                <li><a href="{{ route('item-masuk.index') }}">Item Masuk</a></li> 
-                                <li><a href="{{ route('stok-awal.index') }}">Stok Awal</a></li> 
-                            </ul>
                         </li>
+                           <div class="collapse" id="collapsePersediaan">
+                            <ul class="nav ">
+                                <li>
+                                    <a href="{{ route('item-keluar.index') }}">
+                                        <span class="sidebar-mini">IK</span>
+                                        <span class="sidebar-normal">Item Keluar</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('item-masuk.index') }}">
+                                        <span class="sidebar-mini">IM</span>
+                                        <span class="sidebar-normal">Item Masuk</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('stok-awal.index') }}">
+                                        <span class="sidebar-mini">SA</span>
+                                        <span class="sidebar-normal">Stok Awal</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     @endif
                   
                 </ul>
