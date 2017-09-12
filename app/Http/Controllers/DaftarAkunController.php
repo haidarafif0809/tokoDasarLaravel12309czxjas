@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\DaftarAkun;  
 use Session;
 use Auth;
+use Laratrust;
 
 class DaftarAkunController extends Controller
 {
@@ -28,7 +29,9 @@ class DaftarAkunController extends Controller
                         'model'     => $daftar_akun,
                         'form_url'  => route('master_daftar_akun.destroy', $daftar_akun->id),
                         'edit_url'  => route('master_daftar_akun.edit', $daftar_akun->id),
-                        'confirm_message'   => 'Yakin Mau Menghapus Daftar Akun ' . $daftar_akun->nama_daftar_akun . '?'
+                        'confirm_message'   => 'Yakin Mau Menghapus Daftar Akun ' . $daftar_akun->nama_daftar_akun . '?',
+                        'permission_ubah' => Laratrust::can('edit_daftar_akun'),
+                        'permission_hapus' => Laratrust::can('hapus_daftar_akun'),
                         ]);
                 })->make(true);
         }

@@ -64,7 +64,7 @@
                             <a href="#collapsePersediaan" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false"><p><i class="material-icons">storage</i> Persediaan <span class="caret"></span> </p>
                             </a>
                         </li>
-                           <div class="collapse" id="collapsePersediaan">
+                        <div class="collapse" id="collapsePersediaan">
                             <ul class="nav ">
                                 <li>
                                     <a href="{{ route('item-keluar.index') }}">
@@ -84,6 +84,36 @@
                                         <span class="sidebar-normal">Stok Awal</span>
                                     </a>
                                 </li>
+                            </ul>
+                        </div>
+ 
+                        <li class="">
+                            <a href="#collapseAkuntasi" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false"><p><i class="material-icons">storage</i> Akuntasi <span class="caret"></span> </p>
+                            </a>
+                        </li>
+                        <div class="collapse" id="collapseAkuntasi">
+                            <ul class="nav ">
+                                @if(Laratrust::can('lihat_daftar_akun'))
+                                <li>
+                                    <a href="{{ route('master_daftar_akun.index') }}">
+                                        <span class="sidebar-mini">DA</span>
+                                        <span class="sidebar-normal">Daftar Akun</span>
+                                    </a>
+                                </li>
+                                @endif
+                                <li>
+                                    <a href="{{ route('master_group_akun.index') }}">
+                                        <span class="sidebar-mini">GA</span>
+                                        <span class="sidebar-normal">Group Akun</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('master_setting_akun.index') }}">
+                                        <span class="sidebar-mini">SA</span>
+                                        <span class="sidebar-normal">Setting Akun</span>
+                                    </a>
+                                </li>
+
                             </ul>
                         </div>
                     @endif
@@ -136,9 +166,6 @@
                                  <li><a href="{{ route('master_barang.index') }}">Produk</a></li> 
                                 @endif
                                
-                                <li><a href="{{ route('master_daftar_akun.index') }}">Daftar Akun</a></li> 
-                                <li><a href="{{ route('master_group_akun.index') }}">Group Akun</a></li> 
-                                <li><a href="{{ route('master_setting_akun.index') }}">Setting Akun</a></li> 
                               </ul>
                             </li>
                         @endif
