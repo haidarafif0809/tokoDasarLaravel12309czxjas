@@ -39,4 +39,84 @@ class UserTest extends TestCase
  		$user = User::find($user->id);
  		$this->assertEquals(null,$user);
     }
+
+    public function testHTTPHapusUser(){
+        
+        $user = App\User::find(1);
+
+        $response = $this->actingAs($user)->json('POST', route('master_users.destroy',2), ['_method' => 'DELETE']);
+
+        $response->assertStatus(302)
+                 ->assertRedirect(route('master_users.index'));
+        
+        $response2 = $this->get($response->headers->get('location'))->assertSee('User Berhasil Di Hapus');
+
+        $this->assertDatabaseMissing('users', ['id'=> 2]);
+    }
+    public function testHTTPUbahUser(){
+        
+        $user = App\User::find(1);
+
+        $response = $this->actingAs($user)->json('POST', route('master_users.update',2), [
+            'name'   => 'usertesting',
+            'email'     => 'usertesting@gmail.com' , 
+            'alamat'    => 'alamattesting',
+            'role_id'    => '1',
+            'role_lama'    => '2',
+            '_method' => 'PUT'
+            ]);
+
+        $response->assertStatus(302)
+                 ->assertRedirect(route('master_users.index'));
+        
+        $response2 = $this->get($response->headers->get('location'))->assertSee("Berhasil Mengubah User usertesting");
+        $this->assertDatabaseHas('users', [ 'name'   => 'usertesting',
+            'email'     => 'usertesting@gmail.com' , 
+            'alamat'    => 'alamattesting',]);
+
+
+    } 
+    public function testHTTPResetPasswordUser(){
+        
+        $user = App\User::find(1);
+
+        $response = $this->actingAs($user)->get( route('master_users.reset',2));
+
+        $response->assertStatus(302)
+                 ->assertRedirect(route('master_users.index'));
+        
+        $response2 = $this->get($response->headers->get('location'))->assertSee("Password Berhasil Di Reset");
+
+
+    }  
+
+    public function testHTTPKonfirmasiUser(){
+        
+        $user = App\User::find(1);
+
+        $response = $this->actingAs($user)->get( route('master_users.konfirmasi',2));
+
+        $response->assertStatus(302)
+                 ->assertRedirect(route('master_users.index'));
+        
+        $response2 = $this->get($response->headers->get('location'))->assertSee("User Berhasil Di konfirmasi");
+
+        $this->assertDatabaseHas('users',['id' => 2,'status' => 1]);
+
+
+    }  public function testHTTPTidakJadiKonfirmasiUser(){
+        
+        $user = App\User::find(1);
+
+        $response = $this->actingAs($user)->get( route('master_users.no_konfirmasi',2));
+
+        $response->assertStatus(302)
+                 ->assertRedirect(route('master_users.index'));
+        
+        $response2 = $this->get($response->headers->get('location'))->assertSee("User Tidak Di konfirmasi");
+
+         $this->assertDatabaseHas('users',['id' => 2,'status' => 0]);
+
+
+    }
 }
