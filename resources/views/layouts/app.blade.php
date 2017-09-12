@@ -88,7 +88,7 @@
                         </div>
  
                         <li class="">
-                            <a href="#collapseAkuntasi" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false"><p><i class="material-icons">storage</i> Akuntasi <span class="caret"></span> </p>
+                            <a href="#collapseAkuntasi" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false"><p><i class="material-icons">account_balance_wallet</i> Akuntasi <span class="caret"></span> </p>
                             </a>
                         </li>
                         <div class="collapse" id="collapseAkuntasi">
@@ -101,12 +101,14 @@
                                     </a>
                                 </li>
                                 @endif
+                                @if(Laratrust::can('lihat_group_akun'))
                                 <li>
                                     <a href="{{ route('master_group_akun.index') }}">
                                         <span class="sidebar-mini">GA</span>
                                         <span class="sidebar-normal">Group Akun</span>
                                     </a>
                                 </li>
+                                @endif
                                 <li>
                                     <a href="{{ route('master_setting_akun.index') }}">
                                         <span class="sidebar-mini">SA</span>

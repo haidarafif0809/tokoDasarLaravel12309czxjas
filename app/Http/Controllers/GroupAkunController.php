@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\GroupAkun;  
 use Session;
 use Auth;
+use Laratrust;
 
 class GroupAkunController extends Controller
 {
@@ -28,7 +29,9 @@ class GroupAkunController extends Controller
                         'model'     => $group_akun,
                         'form_url'  => route('master_group_akun.destroy', $group_akun->id),
                         'edit_url'  => route('master_group_akun.edit', $group_akun->id),
-                        'confirm_message'   => 'Yakin Mau Menghapus Group Akun ' . $group_akun->nama_group_akun . '?'
+                        'confirm_message'   => 'Yakin Mau Menghapus Group Akun ' . $group_akun->nama_group_akun . '?',
+                        'permission_ubah' => Laratrust::can('edit_group_akun'),
+                        'permission_hapus' => Laratrust::can('hapus_group_akun'),
                         ]);
                 })->make(true);
         }

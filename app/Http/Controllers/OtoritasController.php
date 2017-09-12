@@ -187,6 +187,7 @@ class OtoritasController extends Controller
         $permission_pelanggan = Permission::where('grup','pelanggan')->get();
         $permission_produk = Permission::where('grup','produk')->get();
         $permission_daftar_akun = Permission::where('grup','daftar_akun')->get();
+        $permission_group_akun = Permission::where('grup','group_akun')->get();
 
         return view('master_otoritas.permission',
             ['master_otoritas' => $master_otoritas,
@@ -197,7 +198,8 @@ class OtoritasController extends Controller
             'permission_kategori_produk' => $permission_kategori_produk,
             'permission_pelanggan' => $permission_pelanggan,
             'permission_produk' => $permission_produk,
-            'permission_daftar_akun' => $permission_daftar_akun]);
+            'permission_daftar_akun' => $permission_daftar_akun,
+            'permission_group_akun' => $permission_group_akun]);
     }
 
 

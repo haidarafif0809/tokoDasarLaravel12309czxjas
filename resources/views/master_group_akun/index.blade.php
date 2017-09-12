@@ -15,7 +15,9 @@
 				</div>
 
 				<div class="panel-body">
-					<p> <a class="btn btn-primary" href="{{ route('master_group_akun.create') }}">Tambah Group Akun</a> </p>
+					@if(Laratrust::can('tambah_group_akun'))
+						<p> <a class="btn btn-primary" href="{{ route('master_group_akun.create') }}">Tambah Group Akun</a> </p>
+					@endif
 					<div class="table-responsive">
 					{!! $html->table(['class'=>'table-striped table']) !!}
 					</div>

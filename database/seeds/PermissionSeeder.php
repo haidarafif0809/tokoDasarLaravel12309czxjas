@@ -55,6 +55,11 @@ class PermissionSeeder extends Seeder
         Permission::create(['name'=> 'edit_daftar_akun','display_name' => 'Edit Daftar Akun','grup'=>'daftar_akun']);
         Permission::create(['name'=> 'hapus_daftar_akun','display_name' => 'Hapus Daftar Akun','grup'=>'daftar_akun']);
         Permission::create(['name'=> 'lihat_daftar_akun','display_name' => 'Lihat Daftar Akun','grup'=>'daftar_akun']);
+        // GROUP AKUN        
+        Permission::create(['name'=> 'tambah_group_akun','display_name' => 'Tambah Group Akun','grup'=>'group_akun']);
+        Permission::create(['name'=> 'edit_group_akun','display_name' => 'Edit Group Akun','grup'=>'group_akun']);
+        Permission::create(['name'=> 'hapus_group_akun','display_name' => 'Hapus Group Akun','grup'=>'group_akun']);
+        Permission::create(['name'=> 'lihat_group_akun','display_name' => 'Lihat Group Akun','grup'=>'group_akun']);
 
     } 
 }
