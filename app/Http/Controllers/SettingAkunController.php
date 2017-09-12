@@ -203,7 +203,7 @@ class SettingAkunController extends Controller
             "message"=>"Berhasil Mengubah Setting Akun $request->display_nama_setting_akun"
             ]);
 
-        return view('master_setting_akun.index');
+        return redirect()->route('master_setting_akun.index');
     }
  
 }

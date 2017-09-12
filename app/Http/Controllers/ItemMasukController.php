@@ -645,7 +645,7 @@ class ItemMasukController extends Controller
                 </div>';
 
             Session::flash("flash_notification", [
-                "level"     => "danger",
+                "level"     => "success",
                 "message"   => $pesan_alert
             ]);
         return back();
@@ -661,7 +661,7 @@ class ItemMasukController extends Controller
                     <div class="alert-icon">
                     <i class="material-icons">check</i>
                     </div>
-                    <b>Sukses : Tidak Berhasil Menghapus Produk</b>
+                    <b>Gagal : Menghapus Produk</b>
                 </div>';
 
             Session::flash("flash_notification", [
@@ -680,7 +680,7 @@ class ItemMasukController extends Controller
                 </div>';
 
             Session::flash("flash_notification", [
-                "level"     => "danger",
+                "level"     => "success",
                 "message"   => $pesan_alert
             ]);
         return back();
@@ -701,7 +701,7 @@ class ItemMasukController extends Controller
                 </div>';
 
             Session::flash("flash_notification", [
-                "level"     => "danger",
+                "level"     => "success",
                 "message"   => $pesan_alert
             ]);
        return redirect()->route('item-masuk.index');
@@ -723,7 +723,7 @@ class ItemMasukController extends Controller
                 </div>';
 
             Session::flash("flash_notification", [
-                "level"     => "danger",
+                "level"     => "success",
                 "message"   => $pesan_alert
             ]);
        return redirect()->route('item-masuk.index');

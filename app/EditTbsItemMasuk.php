@@ -26,7 +26,7 @@ class EditTbsItemMasuk extends Model
 
      
 
-      $hpp_terpakai =  Hpp::where('no_faktur_hpp_masuk', $itemMasuk->no_faktur)->count();
+      $hpp_terpakai =  Hpp::where('no_faktur_hpp_masuk', $itemMasuk->no_faktur)->where('id_barang',$itemMasuk->id_produk)->count();
       
       if ($hpp_terpakai > 0) { 
         return false;
