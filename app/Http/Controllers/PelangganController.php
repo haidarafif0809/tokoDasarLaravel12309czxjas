@@ -8,6 +8,7 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use App\Pelanggan;  
 use Session;
+use Laratrust;
 
 class PelangganController extends Controller
 {
@@ -27,7 +28,9 @@ class PelangganController extends Controller
                         'model'     => $pelanggan,
                         'form_url'  => route('master_pelanggan.destroy', $pelanggan->id),
                         'edit_url'  => route('master_pelanggan.edit', $pelanggan->id),
-                        'confirm_message'   => 'Yakin Mau Menghapus Pelanggan ' . $pelanggan->nama_pelanggan . '?'
+                        'confirm_message'   => 'Yakin Mau Menghapus Pelanggan ' . $pelanggan->nama_pelanggan . '?',
+                        'permission_ubah' => Laratrust::can('edit_pelanggan'),
+                        'permission_hapus' => Laratrust::can('hapus_pelanggan'),
                         ]);
                 })->make(true);
         }

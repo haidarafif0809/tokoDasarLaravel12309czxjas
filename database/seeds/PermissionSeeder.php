@@ -40,6 +40,11 @@ class PermissionSeeder extends Seeder
         Permission::create(['name'=> 'edit_kategori_produk','display_name' => 'Edit Kategori Produk','grup'=>'kategori_produk']);
         Permission::create(['name'=> 'hapus_kategori_produk','display_name' => 'Hapus Kategori Produk','grup'=>'kategori_produk']);
         Permission::create(['name'=> 'lihat_kategori_produk','display_name' => 'Lihat Kategori Produk','grup'=>'kategori_produk']);
+        // Pelanggan        
+        Permission::create(['name'=> 'tambah_pelanggan','display_name' => 'Tambah Pelanggan','grup'=>'pelanggan']);
+        Permission::create(['name'=> 'edit_pelanggan','display_name' => 'Edit Pelanggan','grup'=>'pelanggan']);
+        Permission::create(['name'=> 'hapus_pelanggan','display_name' => 'Hapus Pelanggan','grup'=>'pelanggan']);
+        Permission::create(['name'=> 'lihat_pelanggan','display_name' => 'Lihat Pelanggan','grup'=>'pelanggan']);
 
     } 
 }

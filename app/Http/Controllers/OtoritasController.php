@@ -184,8 +184,16 @@ class OtoritasController extends Controller
         $permission_otoritas = Permission::where('grup','otoritas')->get();
         $permission_suplier = Permission::where('grup','suplier')->get();
         $permission_kategori_produk = Permission::where('grup','kategori_produk')->get();
+        $permission_pelanggan = Permission::where('grup','pelanggan')->get();
 
-        return view('master_otoritas.permission',['master_otoritas' => $master_otoritas,'permission_satuan' => $permission_satuan,'permission_user' => $permission_user,'permission_otoritas' => $permission_otoritas,'permission_suplier' => $permission_suplier,'permission_kategori_produk' => $permission_kategori_produk,]);
+        return view('master_otoritas.permission',
+            ['master_otoritas' => $master_otoritas,
+            'permission_satuan' => $permission_satuan,
+            'permission_user' => $permission_user,
+            'permission_otoritas' => $permission_otoritas,
+            'permission_suplier' => $permission_suplier,
+            'permission_kategori_produk' => $permission_kategori_produk,
+            'permission_pelanggan' => $permission_pelanggan]);
     }
 
 
