@@ -30,6 +30,16 @@ class PermissionSeeder extends Seeder
         Permission::create(['name'=> 'hapus_otoritas','display_name' => 'Hapus Otoritas','grup'=>'otoritas']);
         Permission::create(['name'=> 'lihat_otoritas','display_name' => 'Lihat Otoritas','grup'=>'otoritas']);
         Permission::create(['name'=> 'permission_otoritas','display_name' => 'Permission Otoritas','grup'=>'otoritas']);
+        // SUPLIER        
+        Permission::create(['name'=> 'tambah_suplier','display_name' => 'Tambah Suplier','grup'=>'suplier']);
+        Permission::create(['name'=> 'edit_suplier','display_name' => 'Edit Suplier','grup'=>'suplier']);
+        Permission::create(['name'=> 'hapus_suplier','display_name' => 'Hapus Suplier','grup'=>'suplier']);
+        Permission::create(['name'=> 'lihat_suplier','display_name' => 'Lihat Suplier','grup'=>'suplier']);
+        // KATEGORI PRODUK        
+        Permission::create(['name'=> 'tambah_kategori_produk','display_name' => 'Tambah Kategori Produk','grup'=>'kategori_produk']);
+        Permission::create(['name'=> 'edit_kategori_produk','display_name' => 'Edit Kategori Produk','grup'=>'kategori_produk']);
+        Permission::create(['name'=> 'hapus_kategori_produk','display_name' => 'Hapus Kategori Produk','grup'=>'kategori_produk']);
+        Permission::create(['name'=> 'lihat_kategori_produk','display_name' => 'Lihat Kategori Produk','grup'=>'kategori_produk']);
 
     } 
 }

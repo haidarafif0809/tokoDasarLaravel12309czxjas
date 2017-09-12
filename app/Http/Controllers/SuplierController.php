@@ -8,6 +8,7 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use App\Suplier;  
 use Session;
+use Laratrust;
 
 class SuplierController extends Controller
 {
@@ -27,7 +28,9 @@ class SuplierController extends Controller
                         'model'     => $suplier,
                         'form_url'  => route('master_suplier.destroy', $suplier->id),
                         'edit_url'  => route('master_suplier.edit', $suplier->id),
-                        'confirm_message'   => 'Yakin Mau Menghapus Suplier ' . $suplier->nama_suplier . '?'
+                        'confirm_message'   => 'Yakin Mau Menghapus Suplier ' . $suplier->nama_suplier . '?',
+                        'permission_ubah' => Laratrust::can('edit_suplier'),
+                        'permission_hapus' => Laratrust::can('hapus_suplier'),
                         ]);
                 })->make(true);
         }

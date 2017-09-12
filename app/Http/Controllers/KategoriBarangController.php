@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\KategoriBarang;  
 use App\Barang;  
 use Session;
+use Laratrust;
 
 class KategoriBarangController extends Controller
 {
@@ -28,7 +29,9 @@ class KategoriBarangController extends Controller
                         'model'     => $kategori_barang,
                         'form_url'  => route('master_kategori_barang.destroy', $kategori_barang->id),
                         'edit_url'  => route('master_kategori_barang.edit', $kategori_barang->id),
-                        'confirm_message'   => 'Yakin Mau Menghapus Kategori Produk ' . $kategori_barang->nama_kategori_barang . '?'
+                        'confirm_message'   => 'Yakin Mau Menghapus Kategori Produk ' . $kategori_barang->nama_kategori_barang . '?',
+                        'permission_ubah' => Laratrust::can('edit_kategori_produk'),
+                        'permission_hapus' => Laratrust::can('hapus_kategori_produk'),
                         ]);
                 })->make(true);
         }

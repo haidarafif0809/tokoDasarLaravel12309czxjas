@@ -15,7 +15,9 @@
 				</div>
 
 				<div class="panel-body">
-					<p> <a class="btn btn-primary" href="{{ route('master_suplier.create') }}">Tambah Suplier</a> </p>
+					@if(Laratrust::can('tambah_suplier'))
+						<p> <a class="btn btn-primary" href="{{ route('master_suplier.create') }}">Tambah Suplier</a> </p>
+					@endif
 					<div class="table-responsive">
 					{!! $html->table(['class'=>'table-striped table']) !!}
 					</div>

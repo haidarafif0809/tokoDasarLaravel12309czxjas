@@ -62,5 +62,48 @@
 	@endforeach	 
 </div>
 
+<div class="col-sm-2">
+	<b>Suplier</b>
+	@foreach($permission_suplier as $permissions) 
+		<div class="checkbox">
+			<label>
+			@if(App\PermissionRole::where('role_id',$master_otoritas->id)->where('permission_id',$permissions->id)->count() == 1) 
+
+				{!! Form::checkbox($permissions->name, '1',['checked' => '']) !!} 
+
+			@else  
+
+				{!! Form::checkbox($permissions->name, '1') !!} 
+
+			@endif
+			{{ $permissions->display_name }}
+
+			</label>
+		</div> 
+	@endforeach	 
+</div>
+
+<div class="col-sm-2">
+	<b>Kategoir Produk</b>
+	@foreach($permission_kategori_produk as $permissions) 
+		<div class="checkbox">
+			<label>
+			@if(App\PermissionRole::where('role_id',$master_otoritas->id)->where('permission_id',$permissions->id)->count() == 1) 
+
+				{!! Form::checkbox($permissions->name, '1',['checked' => '']) !!} 
+
+			@else  
+
+				{!! Form::checkbox($permissions->name, '1') !!} 
+
+			@endif
+			{{ $permissions->display_name }}
+
+			</label>
+		</div> 
+	@endforeach	 
+</div>
+
+
 </div>
 {!! Form::submit('Submit',['class'=>'btn btn-lg btn-default']) !!}
