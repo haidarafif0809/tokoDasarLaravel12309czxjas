@@ -18,5 +18,17 @@ class Barang extends Model
    	public function kategoribarang(){
    		return $this->belongsTo('App\KategoriBarang','kategori_barangs_id','id');
    	}
+
+
+      public function getStokAttribute()
+    {
+        $jumlah_masuk = Hpp::where('id_barang',$this->id)->sum('jumlah_masuk');
+        $jumlah_keluar = Hpp::where('id_barang',$this->id)->sum('jumlah_keluar');
+
+        $stok = $jumlah_masuk - $jumlah_keluar;
+
+        return $stok;
+        
+    }
  
 }
