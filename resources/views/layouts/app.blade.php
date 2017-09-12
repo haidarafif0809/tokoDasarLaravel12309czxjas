@@ -114,7 +114,9 @@
                                        Master Data <span class="caret"></span>
                                     </a>
                               <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
+                                @if(Laratrust::can('lihat_user'))
                                 <li><a href="{{ route('master_users.index') }}">User</a></li> 
+                                @endif
                                 <li><a href="{{ route('master_otoritas.index') }}">Otoritas</a></li> 
                                 <li><a href="{{ route('master_suplier.index') }}">Suplier</a></li> 
                                 @if(Laratrust::can('lihat_satuan'))

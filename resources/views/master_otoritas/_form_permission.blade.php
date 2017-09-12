@@ -1,23 +1,45 @@
+<div class="row">
+<div class="col-sm-2">
+	<b>Satuan</b>
+	@foreach($permission_satuan as $permissions) 
+		<div class="checkbox">
+			<label>
+			@if(App\PermissionRole::where('role_id',$master_otoritas->id)->where('permission_id',$permissions->id)->count() == 1) 
 
-@foreach($permission as $permissions)
+				{!! Form::checkbox($permissions->name, '1',['checked' => '']) !!} 
 
+			@else  
 
-<div class="checkbox">
-	<label>
-	@if(App\PermissionRole::where('role_id',$master_otoritas->id)->where('permission_id',$permissions->id)->count() == 1) 
+				{!! Form::checkbox($permissions->name, '1') !!} 
 
-	{!! Form::checkbox($permissions->name, '1',['checked' => '']) !!}
+			@endif
+			{{ $permissions->display_name }}
 
-	@else 
-
-	{!! Form::checkbox($permissions->name, '1') !!}
-
-	@endif
-	{{ $permissions->display_name }}
-	</label>
+			</label>
+		</div> 
+	@endforeach	 
 </div>
 
+<div class="col-sm-2">
+	<b>User</b>
+	@foreach($permission_user as $permissions) 
+		<div class="checkbox">
+			<label>
+			@if(App\PermissionRole::where('role_id',$master_otoritas->id)->where('permission_id',$permissions->id)->count() == 1) 
 
-@endforeach
+				{!! Form::checkbox($permissions->name, '1',['checked' => '']) !!} 
 
+			@else  
+
+				{!! Form::checkbox($permissions->name, '1') !!} 
+
+			@endif
+			{{ $permissions->display_name }}
+
+			</label>
+		</div> 
+	@endforeach	 
+</div>
+
+</div>
 {!! Form::submit('Submit',['class'=>'btn btn-lg btn-default']) !!}

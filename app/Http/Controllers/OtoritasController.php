@@ -174,9 +174,10 @@ class OtoritasController extends Controller
 
     public function setting_permission($id){
 
-        $permission = Permission::all();
+        $permission_satuan = Permission::where('grup','satuan')->get();
+        $permission_user = Permission::where('grup','user')->get();
         $master_otoritas = Role::find($id);
-        return view('master_otoritas.permission',['permission' => $permission,'master_otoritas' => $master_otoritas]);
+        return view('master_otoritas.permission',['permission_satuan' => $permission_satuan,'permission_user' => $permission_user,'master_otoritas' => $master_otoritas]);
     }
 
 

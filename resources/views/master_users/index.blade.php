@@ -15,6 +15,9 @@
 				</div>
 
 				<div class="panel-body"> 
+				@if(Laratrust::can('tambah_user'))
+					<p> <a class="btn btn-primary" href="{{ route('master_users.create') }}">Tambah User</a> </p>
+				@endif
 					<div class="table-responsive">
 					{!! $html->table(['class'=>'table-striped table']) !!}
 					</div>

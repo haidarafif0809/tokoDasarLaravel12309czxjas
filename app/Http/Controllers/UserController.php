@@ -11,6 +11,7 @@ use App\Role;
 use App\Otoritas;
 use Auth;
 use Session;
+use Laratrust;
 
 class UserController extends Controller
 {
@@ -31,7 +32,9 @@ class UserController extends Controller
                         'model'     => $master_user,
                         'form_url'  => route('master_users.destroy', $master_user->id),
                         'edit_url'  => route('master_users.edit', $master_user->id),
-                        'confirm_message'   => 'Yakin Mau Menghapus User ' . $master_user->name . '?'
+                        'confirm_message'   => 'Yakin Mau Menghapus User ' . $master_user->name . '?',
+                        'permission_ubah' => Laratrust::can('edit_user'),
+                        'permission_hapus' => Laratrust::can('hapus_user'),
                         ]);
                 })
             ->addColumn('konfirmasi', function($user_konfirmasi){
@@ -41,6 +44,7 @@ class UserController extends Controller
                         'no_confirm_message'   => 'Apakah Anda Yakin Tidak Meng Konfirmasi User ' . $user_konfirmasi->name . '?',
                         'konfirmasi_url' => route('master_users.konfirmasi', $user_konfirmasi->id),
                         'no_konfirmasi_url' => route('master_users.no_konfirmasi', $user_konfirmasi->id),
+                        'permission_konfirmasi' => Laratrust::can('konfirmasi_user'),
                         ]);
                 })//Konfirmasi User Apabila Bila Status User 1 Maka User sudah di konfirmasi oleh admin dan apabila status user 0 maka user belum di konfirmasi oleh admin
 
@@ -49,6 +53,7 @@ class UserController extends Controller
                         'model'     => $reset,
                         'confirm_message'   => 'Apakah Anda Yakin Ingin Me Reset Password User ' . $reset->name . '?',
                         'reset_url' => route('master_users.reset', $reset->id),
+                        'permission_reset_Password' => Laratrust::can('reset_password_user'),
                         ]);
                 })//Reset Password apabila di klik tombol reset password maka password menjadi 123456
             ->addColumn('role', function($user){
@@ -112,12 +117,40 @@ class UserController extends Controller
  
         return redirect()->route('master_users.index');
     } 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+     
+    public function create()
+    { 
+        return view('master_users.create'); 
+    }
+
+    public function store(Request $request)
+    {
+        //
+         $this->validate($request, [
+            'name'   => 'required',
+            'email'     => 'required|unique:users,email', 
+            'alamat'    => 'required',
+            'role_id'    => 'required', 
+            ]);
+
+         $user_baru = User::create([ 
+            'name' =>$request->name,
+            'email'=>$request->email, 
+            'alamat'=>$request->alamat,  
+            'password' => bcrypt('123456')]);
+
+        $role_baru = Role::where('id',$request->role_id)->first();
+        $user_baru->attachRole($role_baru->id);
+
+        Session::flash("flash_notification", [
+            "level"=>"success",
+            "message"=>"Berhasil Menambah User $request->name"
+            ]);
+
+        return redirect()->route('master_users.index');
+    }
+
+
     public function edit($id)
     {
         //
@@ -125,14 +158,7 @@ class UserController extends Controller
 
         return view('master_users.edit')->with(compact('master_users'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function update(Request $request, $id)
     {
         //
@@ -165,13 +191,7 @@ class UserController extends Controller
 
         return redirect()->route('master_users.index');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function destroy($id)
     {
         //
