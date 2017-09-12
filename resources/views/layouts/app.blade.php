@@ -117,7 +117,9 @@
                                 @if(Laratrust::can('lihat_user'))
                                 <li><a href="{{ route('master_users.index') }}">User</a></li> 
                                 @endif
-                                <li><a href="{{ route('master_otoritas.index') }}">Otoritas</a></li> 
+                                @if(Laratrust::can('lihat_otoritas'))
+                                <li><a href="{{ route('master_otoritas.index') }}">Otoritas</a></li>
+                                @endif 
                                 <li><a href="{{ route('master_suplier.index') }}">Suplier</a></li> 
                                 @if(Laratrust::can('lihat_satuan'))
                                 <li><a href="{{ route('master_satuan.index') }}">Satuan</a></li> 

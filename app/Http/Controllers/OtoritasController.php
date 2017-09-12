@@ -12,6 +12,7 @@ use Auth;
 use App\Permission;
 use Session;
 use App\PermissionRole;
+use Laratrust;
 
 class OtoritasController extends Controller
 {
@@ -30,7 +31,10 @@ class OtoritasController extends Controller
                     'form_url'          => route('master_otoritas.destroy', $master_otoritas->id),
                     'edit_url'          => route('master_otoritas.edit', $master_otoritas->id),
                     'permission_url'          => route('otoritas.permission', $master_otoritas->id),
-                    'confirm_message'   => 'Apakah Anda Yakin Ingin Menghapus Block' .$master_otoritas->nama_block. '?'
+                    'confirm_message'   => 'Apakah Anda Yakin Ingin Menghapus Block' .$master_otoritas->nama_block. '?',
+                    'permission_ubah' => Laratrust::can('edit_otoritas'),
+                    'permission_hapus' => Laratrust::can('hapus_otoritas'),
+                    'permission_otoritas' => Laratrust::can('permission_otoritas'),
                 ]);
             })->make(true);
         }
@@ -176,8 +180,9 @@ class OtoritasController extends Controller
 
         $permission_satuan = Permission::where('grup','satuan')->get();
         $permission_user = Permission::where('grup','user')->get();
+        $permission_otoritas = Permission::where('grup','otoritas')->get();
         $master_otoritas = Role::find($id);
-        return view('master_otoritas.permission',['permission_satuan' => $permission_satuan,'permission_user' => $permission_user,'master_otoritas' => $master_otoritas]);
+        return view('master_otoritas.permission',['permission_satuan' => $permission_satuan,'permission_user' => $permission_user,'permission_otoritas' => $permission_otoritas,'master_otoritas' => $master_otoritas]);
     }
 
 
