@@ -11,6 +11,7 @@ use App\Suplier;
 use App\KategoriBarang;
 use App\Barang;
 use Session;
+use Laratrust;
 
 class BarangController extends Controller
 {
@@ -49,7 +50,9 @@ class BarangController extends Controller
                         'model'             => $barang,
                         'form_url'          => route('master_barang.destroy',$barang->id),
                         'edit_url'          => route('master_barang.edit',$barang->id),
-                        'confirm_message'   => 'Anda Yakin Mau Menghapus ' .$barang->nama_barang .' ?' 
+                        'confirm_message'   => 'Anda Yakin Mau Menghapus ' .$barang->nama_barang .' ?' ,
+                        'permission_ubah' => Laratrust::can('edit_produk'),
+                        'permission_hapus' => Laratrust::can('hapus_produk'),
 
                     ]); 
             })->make(true);

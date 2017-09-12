@@ -132,8 +132,10 @@
                                 @if(Laratrust::can('lihat_pelanggan'))
                                  <li><a href="{{ route('master_pelanggan.index') }}">Pelanggan</a></li> 
                                 @endif
+                                @if(Laratrust::can('lihat_produk'))
+                                 <li><a href="{{ route('master_barang.index') }}">Produk</a></li> 
+                                @endif
                                
-                                <li><a href="{{ route('master_barang.index') }}">Produk</a></li> 
                                 <li><a href="{{ route('master_daftar_akun.index') }}">Daftar Akun</a></li> 
                                 <li><a href="{{ route('master_group_akun.index') }}">Group Akun</a></li> 
                                 <li><a href="{{ route('master_setting_akun.index') }}">Setting Akun</a></li> 
