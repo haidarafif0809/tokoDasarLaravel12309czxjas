@@ -1,5 +1,68 @@
 <div class="row">
 	<div class="col-sm-2">
+		<b>Master Data</b>
+		@foreach($permission_master_data as $permissions) 
+			<div class="checkbox">
+				<label>
+				@if(App\PermissionRole::where('role_id',$master_otoritas->id)->where('permission_id',$permissions->id)->count() == 1) 
+
+					{!! Form::checkbox($permissions->name, '1',['checked' => '']) !!} 
+
+				@else  
+
+					{!! Form::checkbox($permissions->name, '1') !!} 
+
+				@endif
+				{{ $permissions->display_name }}
+
+				</label>
+			</div> 
+		@endforeach	 
+	</div>
+	<div class="col-sm-2">
+		<b>Persediaan</b>
+		@foreach($permission_persediaan as $permissions) 
+			<div class="checkbox">
+				<label>
+				@if(App\PermissionRole::where('role_id',$master_otoritas->id)->where('permission_id',$permissions->id)->count() == 1) 
+
+					{!! Form::checkbox($permissions->name, '1',['checked' => '']) !!} 
+
+				@else  
+
+					{!! Form::checkbox($permissions->name, '1') !!} 
+
+				@endif
+				{{ $permissions->display_name }}
+
+				</label>
+			</div> 
+		@endforeach	 
+	</div>
+	<div class="col-sm-2">
+		<b>Akuntasi</b>
+		@foreach($permission_akuntasi as $permissions) 
+			<div class="checkbox">
+				<label>
+				@if(App\PermissionRole::where('role_id',$master_otoritas->id)->where('permission_id',$permissions->id)->count() == 1) 
+
+					{!! Form::checkbox($permissions->name, '1',['checked' => '']) !!} 
+
+				@else  
+
+					{!! Form::checkbox($permissions->name, '1') !!} 
+
+				@endif
+				{{ $permissions->display_name }}
+
+				</label>
+			</div> 
+		@endforeach	 
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-2">
 		<b>Satuan</b>
 		@foreach($permission_satuan as $permissions) 
 			<div class="checkbox">
@@ -172,6 +235,90 @@
 	<div class="col-sm-2">
 		<b>Group Akun</b>
 		@foreach($permission_group_akun as $permissions) 
+			<div class="checkbox">
+				<label>
+				@if(App\PermissionRole::where('role_id',$master_otoritas->id)->where('permission_id',$permissions->id)->count() == 1) 
+
+					{!! Form::checkbox($permissions->name, '1',['checked' => '']) !!} 
+
+				@else  
+
+					{!! Form::checkbox($permissions->name, '1') !!} 
+
+				@endif
+				{{ $permissions->display_name }}
+
+				</label>
+			</div> 
+		@endforeach	 
+	</div>
+
+	<div class="col-sm-2">
+		<b>Setting Akun</b>
+		@foreach($permission_setting_akun as $permissions) 
+			<div class="checkbox">
+				<label>
+				@if(App\PermissionRole::where('role_id',$master_otoritas->id)->where('permission_id',$permissions->id)->count() == 1) 
+
+					{!! Form::checkbox($permissions->name, '1',['checked' => '']) !!} 
+
+				@else  
+
+					{!! Form::checkbox($permissions->name, '1') !!} 
+
+				@endif
+				{{ $permissions->display_name }}
+
+				</label>
+			</div> 
+		@endforeach	 
+	</div>
+
+	<div class="col-sm-2">
+		<b>Item Keluar</b>
+		@foreach($permission_item_keluar as $permissions) 
+			<div class="checkbox">
+				<label>
+				@if(App\PermissionRole::where('role_id',$master_otoritas->id)->where('permission_id',$permissions->id)->count() == 1) 
+
+					{!! Form::checkbox($permissions->name, '1',['checked' => '']) !!} 
+
+				@else  
+
+					{!! Form::checkbox($permissions->name, '1') !!} 
+
+				@endif
+				{{ $permissions->display_name }}
+
+				</label>
+			</div> 
+		@endforeach	 
+	</div>
+
+	<div class="col-sm-2">
+		<b>Item Masuk</b>
+		@foreach($permission_item_masuk as $permissions) 
+			<div class="checkbox">
+				<label>
+				@if(App\PermissionRole::where('role_id',$master_otoritas->id)->where('permission_id',$permissions->id)->count() == 1) 
+
+					{!! Form::checkbox($permissions->name, '1',['checked' => '']) !!} 
+
+				@else  
+
+					{!! Form::checkbox($permissions->name, '1') !!} 
+
+				@endif
+				{{ $permissions->display_name }}
+
+				</label>
+			</div> 
+		@endforeach	 
+	</div>
+
+	<div class="col-sm-2">
+		<b>Stok Awal</b>
+		@foreach($permission_stok_awal as $permissions) 
 			<div class="checkbox">
 				<label>
 				@if(App\PermissionRole::where('role_id',$master_otoritas->id)->where('permission_id',$permissions->id)->count() == 1) 

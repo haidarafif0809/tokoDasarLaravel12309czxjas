@@ -12,6 +12,7 @@ use App\DetailItemKeluar;
 use App\Barang;  
 use Session;
 use Auth;
+use Laratrust;
 
 class ItemKeluarController extends Controller
 {
@@ -35,7 +36,9 @@ class ItemKeluarController extends Controller
                     'data_detail_item_keluar'     => $detail_item_keluar,
                     'form_url'          => route('item-keluar.destroy', $itemkeluar->id),
                     'edit_url'          => route('item-keluar.edit', $itemkeluar->id),
-                    'confirm_message'   => 'Anda Yakin Ingin Menghapus Item Keluar '.$itemkeluar->no_faktur.'?'
+                    'confirm_message'   => 'Anda Yakin Ingin Menghapus Item Keluar '.$itemkeluar->no_faktur.'?',
+                    'permission_ubah' => Laratrust::can('edit_item_keluar'),
+                    'permission_hapus' => Laratrust::can('hapus_item_keluar'),
                 ]);
             })->make(true);
         }

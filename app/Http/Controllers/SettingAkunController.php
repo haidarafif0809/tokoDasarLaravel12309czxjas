@@ -10,6 +10,7 @@ use App\SettingAkun;
 use App\DaftarAkun;  
 use Session;
 use Auth;
+use Laratrust;
 
 class SettingAkunController extends Controller
 { 
@@ -20,10 +21,9 @@ class SettingAkunController extends Controller
     public function table_data_item(Request $request){
         $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','data_item');
         return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
-                    return view('master_setting_akun._action', [ 
-                        'model'     => $setting_akun,
-                        'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
+                    return view('master_setting_akun._action', [  
                         'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
+                        'permission_ubah' => Laratrust::can('edit_setting_akun'),
                         ]);                
                 })->addColumn('akun', function($data_setting_akun){
 
@@ -45,9 +45,8 @@ class SettingAkunController extends Controller
         $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','akun_pembelian');
         return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
                     return view('master_setting_akun._action', [ 
-                        'model'     => $setting_akun,
-                        'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
                         'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
+                        'permission_ubah' => Laratrust::can('edit_setting_akun'),
                         ]);                
                 })->addColumn('akun', function($data_setting_akun){
 
@@ -69,9 +68,8 @@ class SettingAkunController extends Controller
         $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','akun_retur_pembelian');
         return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
                     return view('master_setting_akun._action', [ 
-                        'model'     => $setting_akun,
-                        'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
                         'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
+                        'permission_ubah' => Laratrust::can('edit_setting_akun'),
                         ]);                
                 })->addColumn('akun', function($data_setting_akun){
 
@@ -92,9 +90,8 @@ class SettingAkunController extends Controller
         $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','akun_penjualan');
         return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
                     return view('master_setting_akun._action', [ 
-                        'model'     => $setting_akun,
-                        'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
                         'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
+                        'permission_ubah' => Laratrust::can('edit_setting_akun'),
                         ]);                
                 })->addColumn('akun', function($data_setting_akun){
 
@@ -115,9 +112,8 @@ class SettingAkunController extends Controller
         $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','akun_retur_penjualan');
         return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
                     return view('master_setting_akun._action', [ 
-                        'model'     => $setting_akun,
-                        'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
                         'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
+                        'permission_ubah' => Laratrust::can('edit_setting_akun'),
                         ]);                
                 })->addColumn('akun', function($data_setting_akun){
 
@@ -138,9 +134,8 @@ class SettingAkunController extends Controller
         $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','akun_hutang_piutang');
         return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
                     return view('master_setting_akun._action', [ 
-                        'model'     => $setting_akun,
-                        'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
                         'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
+                        'permission_ubah' => Laratrust::can('edit_setting_akun'),
                         ]);                
                 })->addColumn('akun', function($data_setting_akun){
 
@@ -161,9 +156,8 @@ class SettingAkunController extends Controller
         $master_setting_akun = SettingAkun::with(['daftar_akun'])->where('group_setting_akun','modal_dan_laba');
         return Datatables::of($master_setting_akun)->addColumn('action', function($setting_akun){ 
                     return view('master_setting_akun._action', [ 
-                        'model'     => $setting_akun,
-                        'form_url'  => route('master_setting_akun.destroy', $setting_akun->id),
                         'edit_url'  => route('master_setting_akun.edit', $setting_akun->id),
+                        'permission_ubah' => Laratrust::can('edit_setting_akun'),
                         ]);                
                 })->addColumn('akun', function($data_setting_akun){
 

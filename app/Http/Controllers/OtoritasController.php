@@ -188,6 +188,13 @@ class OtoritasController extends Controller
         $permission_produk = Permission::where('grup','produk')->get();
         $permission_daftar_akun = Permission::where('grup','daftar_akun')->get();
         $permission_group_akun = Permission::where('grup','group_akun')->get();
+        $permission_setting_akun = Permission::where('grup','setting_akun')->get();
+        $permission_master_data = Permission::where('grup','master_data')->get();
+        $permission_akuntasi = Permission::where('grup','akuntasi')->get();
+        $permission_persediaan = Permission::where('grup','persediaan')->get();
+        $permission_item_keluar = Permission::where('grup','item_keluar')->get();
+        $permission_item_masuk = Permission::where('grup','item_masuk')->get();
+        $permission_stok_awal = Permission::where('grup','stok_awal')->get();
 
         return view('master_otoritas.permission',
             ['master_otoritas' => $master_otoritas,
@@ -199,7 +206,14 @@ class OtoritasController extends Controller
             'permission_pelanggan' => $permission_pelanggan,
             'permission_produk' => $permission_produk,
             'permission_daftar_akun' => $permission_daftar_akun,
-            'permission_group_akun' => $permission_group_akun]);
+            'permission_group_akun' => $permission_group_akun,
+            'permission_setting_akun' => $permission_setting_akun,
+            'permission_master_data' => $permission_master_data,
+            'permission_akuntasi' => $permission_akuntasi,
+            'permission_persediaan' => $permission_persediaan,
+            'permission_item_keluar' => $permission_item_keluar,
+            'permission_item_masuk' => $permission_item_masuk,
+            'permission_stok_awal' => $permission_stok_awal]);
     }
 
 

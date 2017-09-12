@@ -15,7 +15,9 @@
 				</div>
 
 				<div class="panel-body">
-					<p> <button type="button" data-toggle="modal" data-target="#cari_produk" data-backdrop="" class="btn btn-primary" ><i class="material-icons">add</i>  Tambah Stok Awal</button> </p>
+					@if(Laratrust::can('tambah_stok_awal'))
+						<p> <button type="button" data-toggle="modal" data-target="#cari_produk" data-backdrop="" class="btn btn-primary" ><i class="material-icons">add</i>  Tambah Stok Awal</button> </p>
+					@endif
 					<div class="table-responsive">
 					{!! $html->table(['class'=>'table-striped table']) !!}
 					</div>

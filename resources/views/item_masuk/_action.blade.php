@@ -1,10 +1,14 @@
 {!! Form::model($model, ['url' => $form_url, 'method' => 'delete', 'class' => 'form-inline js-confirm', 'data-confirm' => $confirm_message]) !!}
 
-<button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#myModal{{$id_item_masuk}}">Detail</button>  |
-<a href="{{ $edit_url }}" class="btn btn-sm btn-success">Ubah</a> |
+<button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#myModal{{$id_item_masuk}}">Detail</button>
+@if(isset($permission_ubah) && $permission_ubah == TRUE)
+|<a href="{{ $edit_url }}" class="btn btn-sm btn-success">Ubah</a> |
+@endif
 
+@if(isset($permission_ubah) && $permission_hapus == TRUE)
 {!! Form::submit('Hapus',['class'=>'btn btn-sm btn-danger js-confirm']) !!}
 {!! Form::close() !!}
+@endif
 <!-- MODAL PILIH PRODUK -->
   <div class="modal " id="myModal{{$id_item_masuk}}" role="dialog" data-backdrop="">
     <div class="modal-dialog">

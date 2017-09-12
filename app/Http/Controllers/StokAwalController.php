@@ -10,6 +10,7 @@ use App\StokAwal;
 use App\Barang;    
 use Auth;
 use Session;
+use Laratrust;
 
 class StokAwalController extends Controller
 {
@@ -23,7 +24,9 @@ class StokAwalController extends Controller
                     'model'             => $stokawal,
                     'form_url'          => route('stok-awal.destroy', $stokawal->id),
                     'edit_url'          => route('stok-awal.edit', $stokawal->id),
-                    'confirm_message'   => 'Anda Yakin Ingin Menghapus Stok Awal '.$stokawal->nomor_faktur.'?'
+                    'confirm_message'   => 'Anda Yakin Ingin Menghapus Stok Awal '.$stokawal->nomor_faktur.'?',
+                    'permission_ubah' => Laratrust::can('edit_stok_awal'),
+                    'permission_hapus' => Laratrust::can('hapus_stok_awal'), 
                 ]);
             })->addColumn('data_barang', function($data_stok_awal){
  

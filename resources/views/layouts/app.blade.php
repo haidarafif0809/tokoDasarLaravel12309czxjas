@@ -60,33 +60,42 @@
                         <li class="active"><a href="{{ url('home') }}"> <p><i class="material-icons">dashboard</i> Beranda</p></a></li>
                      <div class="clearfix"></div>
                  
+                        @if(Laratrust::can('lihat_persediaan'))
                         <li class="">
                             <a href="#collapsePersediaan" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false"><p><i class="material-icons">storage</i> Persediaan <span class="caret"></span> </p>
                             </a>
                         </li>
                         <div class="collapse" id="collapsePersediaan">
                             <ul class="nav ">
+                                @if(Laratrust::can('lihat_item_keluar'))
                                 <li>
                                     <a href="{{ route('item-keluar.index') }}">
                                         <span class="sidebar-mini">IK</span>
                                         <span class="sidebar-normal">Item Keluar</span>
                                     </a>
                                 </li>
+                                @endif
+                                @if(Laratrust::can('lihat_item_masuk'))
                                 <li>
                                     <a href="{{ route('item-masuk.index') }}">
                                         <span class="sidebar-mini">IM</span>
                                         <span class="sidebar-normal">Item Masuk</span>
                                     </a>
                                 </li>
+                                @endif
+                                @if(Laratrust::can('lihat_stok_awal'))
                                 <li>
                                     <a href="{{ route('stok-awal.index') }}">
                                         <span class="sidebar-mini">SA</span>
                                         <span class="sidebar-normal">Stok Awal</span>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </div>
- 
+                        @endif
+
+                        @if(Laratrust::can('lihat_daftar_akun'))
                         <li class="">
                             <a href="#collapseAkuntasi" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false"><p><i class="material-icons">account_balance_wallet</i> Akuntasi <span class="caret"></span> </p>
                             </a>
@@ -109,15 +118,18 @@
                                     </a>
                                 </li>
                                 @endif
+                                @if(Laratrust::can('lihat_setting_akun'))
                                 <li>
                                     <a href="{{ route('master_setting_akun.index') }}">
                                         <span class="sidebar-mini">SA</span>
                                         <span class="sidebar-normal">Setting Akun</span>
                                     </a>
                                 </li>
-
+                                @endif
                             </ul>
                         </div>
+
+                        @endif
                     @endif
                   
                 </ul>

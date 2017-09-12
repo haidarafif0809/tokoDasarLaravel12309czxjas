@@ -15,7 +15,9 @@
 				</div>
 
 				<div class="panel-body">
-					<p> <a class="btn btn-primary" href="{{ route('item-masuk.create') }}" id="link-tambah-item-masuk"><i class="material-icons">add</i> Item Masuk</a> </p>
+					@if(Laratrust::can('tambah_item_masuk'))
+						<p> <a class="btn btn-primary" href="{{ route('item-masuk.create') }}" id="link-tambah-item-masuk"><i class="material-icons">add</i> Item Masuk</a> </p>
+					@endif
 					<div class="table-responsive">
 					{!! $html->table(['class'=>'table-striped table']) !!}
 					</div>

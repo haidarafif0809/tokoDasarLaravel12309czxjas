@@ -1,3 +1,10 @@
 {!! Form::model($model, ['url' => $form_url, 'method' => 'delete', 'class' => 'form-inline js-confirm', 'data-confirm' => $confirm_message]) !!}
-<a href="{{ $edit_url }}" class="btn btn-sm btn-warning">Ubah</a> {!! Form::submit('Hapus',['class'=>'btn btn-sm btn-danger js-confirm']) !!}
+
+@if(isset($permission_ubah) && $permission_ubah == TRUE)
+<a href="{{ $edit_url }}" class="btn btn-sm btn-success">Ubah</a>
+@endif 
+
+@if(isset($permission_ubah) && $permission_hapus == TRUE)
+{!! Form::submit('Hapus',['class'=>'btn btn-sm btn-danger js-confirm']) !!}
 {!! Form::close() !!}
+@endif

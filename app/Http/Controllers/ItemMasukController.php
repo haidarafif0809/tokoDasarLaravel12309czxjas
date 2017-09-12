@@ -13,6 +13,7 @@ use App\EditTbsItemMasuk;
 use App\Barang;  
 use Session;
 use Auth;
+use Laratrust;
 
 class ItemMasukController extends Controller
 { 
@@ -29,7 +30,9 @@ class ItemMasukController extends Controller
                         'data_detail_item_masuk'     => $detail_item_masuk,
                         'form_url'  => route('item-masuk.destroy', $itemmasuk->id),
                         'edit_url'  => route('item-masuk.proses_form_edit', $itemmasuk->id),
-                        'confirm_message'   => 'Yakin Mau Menghapus Item Masuk dengan nomor faktur ' . $itemmasuk->no_faktur . '?'
+                        'confirm_message'   => 'Yakin Mau Menghapus Item Masuk dengan nomor faktur ' . $itemmasuk->no_faktur . '?',
+                        'permission_ubah' => Laratrust::can('edit_item_masuk'),
+                        'permission_hapus' => Laratrust::can('hapus_item_masuk'), 
                         ]);
                 }) ->make(true);
         }
