@@ -178,8 +178,7 @@ class UserController extends Controller
         //
         
         $user_role = User::find($id);
-        $otoritas = User_otoritas::where('user_id',$id)->first();
-        $user_role->detachRole($otoritas->role_id);
+        $user_role->detachRole($user_role->role->role_id);
 
         if (!User::destroy($id)) {
             return redirect()->back();
