@@ -15,7 +15,10 @@
 				</div>
 
 				<div class="panel-body">
+				@if(Laratrust::can('tambah_satuan'))
 					<p> <a class="btn btn-primary" href="{{ route('master_satuan.create') }}">Tambah Satuan</a> </p>
+				@endif
+				
 					<div class="table-responsive">
 					{!! $html->table(['class'=>'table-striped table']) !!}
 					</div>

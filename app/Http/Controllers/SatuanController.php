@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Satuan;  
 use App\Barang;  
 use Session;
+use Laratrust;
 
 class SatuanController extends Controller
 {
@@ -28,7 +29,10 @@ class SatuanController extends Controller
                         'model'     => $satuan,
                         'form_url'  => route('master_satuan.destroy', $satuan->id),
                         'edit_url'  => route('master_satuan.edit', $satuan->id),
-                        'confirm_message'   => 'Yakin Mau Menghapus Satuan ' . $satuan->nama_satuan . '?'
+                        'confirm_message'   => 'Yakin Mau Menghapus Satuan ' . $satuan->nama_satuan . '?',
+                        'permission_ubah' => Laratrust::can('edit_satuan'),
+                        'permission_hapus' => Laratrust::can('hapus_satuan'),
+
                         ]);
                 })->make(true);
         }
