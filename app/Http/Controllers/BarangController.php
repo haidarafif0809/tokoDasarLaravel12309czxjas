@@ -65,6 +65,7 @@ class BarangController extends Controller
         ->addColumn(['data' => 'harga_jual_baru', 'name' => 'harga_jual_baru', 'title' => 'Harga Jual 1']) 
         ->addColumn(['data' => 'semua_data_harga', 'name' => 'semua_data_harga', 'title' => 'Harga Jual 2 - 7']) 
         ->addColumn(['data' => 'satuan.nama_satuan', 'name' => 'satuan.nama_satuan', 'title' => 'Satuan']) 
+        ->addColumn(['data' => 'status', 'name' => 'status', 'title' => 'Status']) 
         ->addColumn(['data' => 'stok', 'name' => 'stok', 'title' => 'Stok', 'orderable' => false, 'searchable'=>false])        
         ->addColumn(['data' => 'kategoribarang.nama_kategori_barang', 'name' => 'kategoribarang.nama_kategori_barang', 'title' => 'Kategori'])
         ->addColumn(['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable'=>false]);
@@ -225,8 +226,8 @@ class BarangController extends Controller
 
                 //validate
         $this->validate($request, [
-          'kode_barcode'        => 'unique:barangs,kode_barcode|max:191' .$id, 
-          'kode_barang'         => 'required|unique:barangs,kode_barcode|max:191' .$id,
+          'kode_barcode'        => 'unique:barangs,kode_barcode|max:191,' .$id, 
+          'kode_barang'         => 'required|unique:barangs,kode_barcode|max:191,' .$id,
           'nama_barang'         => 'required|max:191',
           'golongan_barang'     => 'required',
           'kategori_barangs_id' => 'required|exists:kategori_barangs,id',
