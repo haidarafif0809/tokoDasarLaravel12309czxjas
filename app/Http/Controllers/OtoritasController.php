@@ -150,7 +150,7 @@ class OtoritasController extends Controller
     public function destroy($id)
     { 
         //menghapus data dengan pengecekan alert /peringatan
-        $user = User_otoritas::where('role_id',$id); 
+        $user = Otoritas::where('role_id',$id); 
  
     if ($user->count() > 0) {
         // menyiapkan pesan error
