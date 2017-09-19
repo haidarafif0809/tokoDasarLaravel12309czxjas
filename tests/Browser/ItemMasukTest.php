@@ -47,8 +47,7 @@ class ItemMasukTest extends DuskTestCase
                 
                   ->assertSee('Tambah Item Masuk')
                   ->click('#cari_produk')
-                  ->assertSee('Data Produk')
-                  ;
+                  ->assertSee('Data Produk');
                 $browser->script("document.getElementById('pilih_produk').selectize.setValue('1');");
 
                 $browser->assertSee('KECAP ASIN ABC')

@@ -32,6 +32,39 @@ class PelangganController extends Controller
                         'permission_ubah' => Laratrust::can('edit_pelanggan'),
                         'permission_hapus' => Laratrust::can('hapus_pelanggan'),
                         ]);
+                })
+            //MENAMPILKAN LEVEL HARGA
+            ->addColumn('level_harga',function($level_harga){
+                $data_level_harga = "level_harga";
+                if ($level_harga->level_harga == 'level_1' ) {
+                    # code...
+                    $data_level_harga = "Level 1";
+                }
+                elseif ($level_harga->level_harga == 'level_2') {
+                    # code...
+                     $data_level_harga = "Level 2";
+                }
+                elseif ($level_harga->level_harga == 'level_3') {
+                    # code...
+                     $data_level_harga = "Level 3";
+                } 
+                elseif ($level_harga->level_harga == 'level_4') {
+                    # code...
+                     $data_level_harga = "Level 4";
+                } 
+                elseif ($level_harga->level_harga == 'level_5') {
+                    # code...
+                     $data_level_harga = "Level 5";
+                } 
+                elseif ($level_harga->level_harga == 'level_6') {
+                    # code...
+                     $data_level_harga = "Level 6";
+                } 
+                elseif ($level_harga->level_harga == 'level_7') {
+                    # code...
+                     $data_level_harga = "Level 7";
+                } 
+                return $data_level_harga;
                 })->make(true);
         }
         $html = $htmlBuilder
@@ -69,7 +102,7 @@ class PelangganController extends Controller
         //
          $this->validate($request, [
             'kode_pelanggan'     => 'required|max:191|unique:pelanggans,kode_pelanggan,',
-            'nama_pelanggan'     => 'required|max:191|unique:pelanggans,nama_pelanggan,',
+            'nama_pelanggan'     => 'required|max:191',
             'level_harga'     => 'required',
             'tanggal_lahir'     => 'required|max:191',
             'no_telpon'     => 'required|max:20',
@@ -128,7 +161,7 @@ class PelangganController extends Controller
         //
          $this->validate($request, [ 
             'kode_pelanggan'     => 'required|max:191|unique:pelanggans,kode_pelanggan,' .$id,
-            'nama_pelanggan'     => 'required|max:191|unique:pelanggans,nama_pelanggan,' .$id,
+            'nama_pelanggan'     => 'required|max:191',
             'level_harga'     => 'required',
             'tanggal_lahir'     => 'required|max:191',
             'no_telpon'     => 'required|max:20',
