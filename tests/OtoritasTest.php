@@ -44,7 +44,7 @@ class OtoritasTest extends TestCase
     public function testHTTPTambahOtoritas (){
  
         $user = App\User::find(1); 
-        $response = $this->actingAs($user)->json('POST', route('master_otoritas.store'), ['name' => 'abc','display_name'=>'ABC']);
+        $response = $this->actingAs($user)->json('POST', route('master_otoritas.store'), ['name' => 'abc_tambah','display_name'=>'ABC TAMBAH']);
 
         $response->assertStatus(302)
                  ->assertRedirect(route('master_otoritas.index'));
@@ -57,7 +57,7 @@ class OtoritasTest extends TestCase
 
     public function testHTTPUpdateOtoritas (){
 
-        $otoritas = Role::create(['name' => 'abc','display_name'=>'ABC']); 
+        $otoritas = Role::create(['name' => 'abc_update','display_name'=>'ABC UPDATE']); 
         $user = App\User::find(1); 
         $response = $this->actingAs($user)->get(route('master_otoritas.edit',$otoritas->id)); 
         $response->assertStatus(200)
@@ -67,9 +67,9 @@ class OtoritasTest extends TestCase
 
     public function testHTTPEditSatuan (){
  
-        $satuan = Role::create(['name' => 'abc','display_name'=>'ABC']); 
+        $satuan = Role::create(['name' => 'abc_edit','display_name'=>'ABC EDIT']); 
         $user = App\User::find(1); 
-        $response = $this->actingAs($user)->json('POST', route('master_otoritas.update',$satuan->id), ['_method' => 'PUT','name' => 'abc_update','display_name'=>'ABC UPDATE']); 
+        $response = $this->actingAs($user)->json('POST', route('master_otoritas.update',$satuan->id), ['_method' => 'PUT','name' => 'abc_update','display_name'=>'ABC UPDATE BARU']); 
         $response->assertStatus(302)
                  ->assertRedirect(route('master_otoritas.index'));
         
@@ -79,7 +79,7 @@ class OtoritasTest extends TestCase
 
 
     public function testHTTPHapusOtoritas(){ 
-        $otoritas = Role::create(['name' => 'abc','display_name'=>'ABC']); 
+        $otoritas = Role::create(['name' => 'abc_hapus','display_name'=>'ABC Hapus']); 
         $user = App\User::find(1);
 
         $response = $this->actingAs($user)->json('POST', route('master_otoritas.destroy',$otoritas->id), ['_method' => 'DELETE']);
