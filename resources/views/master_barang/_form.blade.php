@@ -22,23 +22,36 @@
 	</div>
 </div>
 
+@if (isset($barang) && $barang)  
 <div class="form-group{{ $errors->has('golongan_barang') ? ' has-error' : '' }}">
 	{!! Form::label('golongan_barang', 'Golongan Produk', ['class'=>'col-md-2 control-label']) !!}
 	<div class="col-md-4">
 		{!! Form::select('golongan_barang', 
 		['Barang'=>'Barang',
 		'Jasa'=>'Jasa'], 
-		null, ['class'=>'form-control js-selectize-reguler', 'placeholder' => 'Silahkan Pilih']) !!}
+		$golongan_barang, ['class'=>'form-control js-selectize-reguler', 'placeholder' => 'Silahkan Pilih','id'=>'pilih_golongan_barang']) !!}
 		{!! $errors->first('golongan_barang', '<p class="help-block">:message</p>') !!}
 	</div>
-</div>
+</div> 
+@else
+<div class="form-group{{ $errors->has('golongan_barang') ? ' has-error' : '' }}">
+	{!! Form::label('golongan_barang', 'Golongan Produk', ['class'=>'col-md-2 control-label']) !!}
+	<div class="col-md-4">
+		{!! Form::select('golongan_barang', 
+		['Barang'=>'Barang',
+		'Jasa'=>'Jasa'], 
+		null, ['class'=>'form-control js-selectize-reguler', 'placeholder' => 'Silahkan Pilih','id'=>'pilih_golongan_barang']) !!}
+		{!! $errors->first('golongan_barang', '<p class="help-block">:message</p>') !!}
+	</div>
+</div> 
+@endif
 
 <div class="form-group{{ $errors->has('kategori_barangs_id') ? ' has-error' : '' }}">
 	{!! Form::label('kategori_barangs_id', 'Kategori Produk', ['class'=>'col-md-2 control-label']) !!}
 	<div class="col-md-4">
 		{!! Form::select('kategori_barangs_id', 
 		[''=>'']+App\KategoriBarang::pluck('nama_kategori_barang','id')->all(),
-		null, ['class'=>'form-control js-selectize-reguler', 'placeholder' => 'Silahkan Pilih']) !!}
+		null, ['class'=>'form-control js-selectize-reguler', 'placeholder' => 'Silahkan Pilih','id'=>'pilih_kategori_barang']) !!}
 		{!! $errors->first('kategori_barangs_id', '<p class="help-block">:message</p>') !!}
 	</div>
 </div>
@@ -104,7 +117,7 @@
 	<div class="col-md-4">
 		{!! Form::select('satuans_id', 
 		[''=>'']+App\Satuan::pluck('nama_satuan','id')->all(),
-		null, ['class'=>'form-control js-selectize-reguler', 'placeholder' => 'Silahkan Pilih']) !!}
+		null, ['class'=>'form-control js-selectize-reguler', 'placeholder' => 'Silahkan Pilih','id'=>'pilih_satuan']) !!}
 		{!! $errors->first('satuans_id', '<p class="help-block">:message</p>') !!}
 	</div>
 </div>
@@ -115,7 +128,7 @@
 		{!! Form::select('status', 
 		['Aktif'=>'Aktif',
 		'Tidak Aktif'=>'Tidak Aktif'], 
-		null, ['class'=>'form-control js-selectize-reguler', 'placeholder' => 'Silahkan Pilih']) !!}
+		null, ['class'=>'form-control js-selectize-reguler', 'placeholder' => 'Silahkan Pilih','id'=>'pilih_status']) !!}
 		{!! $errors->first('status', '<p class="help-block">:message</p>') !!}
 	</div>
 </div>

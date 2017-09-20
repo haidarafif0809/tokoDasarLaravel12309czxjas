@@ -8,6 +8,7 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use App\Satuan;
 use App\Suplier;
+use App\Hpp;
 use App\KategoriBarang;
 use App\Barang;
 use Session;
@@ -94,7 +95,7 @@ class BarangController extends Controller
         //validate
         $this->validate($request, [
           'kode_barcode'        => 'unique:barangs,kode_barcode|max:191', 
-          'kode_barang'         => 'required|unique:barangs,kode_barcode|max:191',
+          'kode_barang'         => 'required|unique:barangs,kode_barang|max:191',
           'nama_barang'         => 'required|max:191',
           'golongan_barang'     => 'required',
           'kategori_barangs_id' => 'required|exists:kategori_barangs,id',
@@ -183,7 +184,7 @@ class BarangController extends Controller
 
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Berhasil Menambahkan Barang"
+            "message"=>"Berhasil Menambahkan Produk  $request->nama_barang"
             ]);
         return redirect()->route('master_barang.index');
     }
@@ -209,8 +210,14 @@ class BarangController extends Controller
     {
         //edit
         $barang = Barang::find($id);
+        if ($barang->golongan_barang == '1') {
+          $golongan_barang = 'Barang';
+        }
+        else{
+          $golongan_barang = 'Jasa';
+        }
 
-        return view('master_barang.edit')->with(compact('barang'));
+        return view('master_barang.edit')->with(compact('barang','golongan_barang'));
     }
 
     /**
@@ -226,8 +233,8 @@ class BarangController extends Controller
 
                 //validate
         $this->validate($request, [
-          'kode_barcode'        => 'unique:barangs,kode_barcode|max:191,' .$id, 
-          'kode_barang'         => 'required|unique:barangs,kode_barcode|max:191,' .$id,
+          'kode_barcode'        => 'max:191|unique:barangs,kode_barcode,'. $id,
+          'kode_barang'         => 'required|max:191|unique:barangs,kode_barang,'. $id,
           'nama_barang'         => 'required|max:191',
           'golongan_barang'     => 'required',
           'kategori_barangs_id' => 'required|exists:kategori_barangs,id',
@@ -318,7 +325,7 @@ class BarangController extends Controller
 
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Berhasil Mengubah $request->nama_barang"
+            "message"=>"Berhasil Mengubah Produk $request->nama_barang"
             ]);
 
         return redirect()->route('master_barang.index');
@@ -333,10 +340,18 @@ class BarangController extends Controller
      */
     public function destroy($id)
     {
-        if (!Barang::destroy($id)) {
-            return redirect()->back();
+        //menghapus data dengan pengecekan alert /peringatan
+        $hpp = Hpp::where('id_barang',$id); 
+
+        if ($hpp->count() > 0) {
+            Session::flash("flash_notification", [
+                "level"     => "danger",
+                "message"   => "Barang Tidah Bisa Di Hapus Karena Sudah Terpakai"
+            ]);
+        return redirect()->route('master_barang.index');
         }
         else{
+        Barang::destroy($id);
             Session::flash("flash_notification", [
                 "level"     => "danger",
                 "message"   => "Barang Berhasil Di Hapus"

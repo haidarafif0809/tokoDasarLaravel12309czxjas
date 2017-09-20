@@ -177,7 +177,7 @@
                                  <li><a href="{{ route('master_pelanggan.index') }}">Pelanggan</a></li> 
                                 @endif
                                 @if(Laratrust::can('lihat_produk'))
-                                 <li><a href="{{ route('master_barang.index') }}">Produk</a></li> 
+                                 <li><a href="{{ route('master_barang.index') }}" id="link_produk">Produk</a></li> 
                                 @endif
                                
                               </ul>
