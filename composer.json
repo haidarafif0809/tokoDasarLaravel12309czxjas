@@ -10,7 +10,8 @@
         "laravelcollective/html": "~5.3",
         "santigarcor/laratrust": "3.0.*",
         "yajra/laravel-datatables-oracle": "~6.0",
-        "jenssegers/agent": "^2.5"
+        "jenssegers/agent": "^2.5",
+        "yajra/laravel-auditable": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -20,7 +21,8 @@
         "symfony/dom-crawler": "3.1.*",
         "laravel/dusk": "^1.0",
         "laravel/browser-kit-testing": "1.*",
-        "filp/whoops": "~2.0"
+        "filp/whoops": "~2.0",
+        "barryvdh/laravel-debugbar": "^3.1"
     },
     "autoload": {
         "classmap": [

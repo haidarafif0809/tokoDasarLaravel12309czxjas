@@ -171,6 +171,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class, 
         Laratrust\LaratrustServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
         //
 
@@ -234,6 +235,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Laratrust' => Laratrust\LaratrustFacade::class,
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
 
 
