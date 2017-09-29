@@ -44,7 +44,7 @@
 	          <div class="form-group{{ $errors->has('id_produk') ? ' has-error' : '' }}">
 					{!! Form::label('id_produk', 'Pilih Produk', ['class'=>'col-md-3 control-label']) !!}
 					<div class="col-md-6">
-						{!! Form::select('id_produk', []+App\Barang::select([DB::raw('CONCAT(kode_barang, " - ", nama_barang) AS data_barang'),'id'])->pluck('data_barang','id')->all(), null, ['class'=>'form-control js-selectize-reguler','required', 'placeholder' => '--SILAKAN PILIH--', 'id'=>'pilih_produk']) !!}
+						{!! Form::select('id_produk', []+App\Barang::where('status','Aktif')->select([DB::raw('CONCAT(kode_barang, " - ", nama_barang) AS data_barang'),'id'])->pluck('data_barang','id')->all(), null, ['class'=>'form-control js-selectize-reguler','required', 'placeholder' => '--SILAKAN PILIH--', 'id'=>'pilih_produk']) !!}
 						{!! $errors->first('id_produk', '<p class="help-block">:message</p>') !!}
 					</div>
 				</div>

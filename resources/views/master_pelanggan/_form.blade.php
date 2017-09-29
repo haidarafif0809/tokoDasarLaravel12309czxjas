@@ -17,7 +17,7 @@
 <div class="form-group{{ $errors->has('level_harga') ? ' has-error' : '' }}">
 	{!! Form::label('level_harga', 'Level Harga', ['class'=>'col-md-2 control-label']) !!}
 	<div class="col-md-4">
-		{!! Form::select('level_harga', ['Level 1'=>'Level 1','Level 2'=>'Level 2','Level 3'=>'Level 3','Level 4'=>'Level 4','Level 5'=>'Level 5','Level 6'=>'Level 6','Level 7'=>'Level 7',], null, ['class'=>'form-control js-selectize-reguler', 'placeholder' => 'Pilih Level Harga']) !!}
+		{!! Form::select('level_harga', ['level_1'=>'Level 1','level_2'=>'Level 2','level_3'=>'Level 3','level_4'=>'Level 4','level_5'=>'Level 5','level_6'=>'Level 6','level_7'=>'Level 7',], null, ['class'=>'form-control js-selectize-reguler','placeholder' => 'Pilih Level Harga','id'=>'pilih_level_harga']) !!}
 		{!! $errors->first('level_harga', '<p class="help-block">:message</p>') !!}
 	</div>
 </div>

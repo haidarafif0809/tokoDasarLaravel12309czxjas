@@ -63,7 +63,7 @@ class SuplierController extends Controller
     {
         // 
          $this->validate($request, [
-            'nama_suplier'     => 'required', 
+            'nama_suplier'     => 'required|unique:supliers,nama_suplier,', 
             'alamat'   => 'max:225',
             'no_telpon'=> 'max:20'
             ]);
@@ -115,7 +115,7 @@ class SuplierController extends Controller
     {
         //
          $this->validate($request, [
-            'nama_suplier'     => 'required', 
+            'nama_suplier'     => 'required|unique:supliers,nama_suplier,' .$id, 
             'alamat'   => 'max:225',
             'no_telpon'=> 'max:20'
             ]);
