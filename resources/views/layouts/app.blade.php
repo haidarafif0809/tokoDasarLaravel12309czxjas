@@ -158,9 +158,9 @@
                                        Master Data <span class="caret"></span>
                                     </a>
                               <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> 
-                                @if(Laratrust::can('lihat_user'))
+                                @permission('lihat_user')
                                  <li><a href="{{ route('master_users.index') }}">User</a></li> 
-                                @endif
+                                @endpermission
                                 @if(Laratrust::can('lihat_otoritas'))
                                  <li><a href="{{ route('master_otoritas.index') }}">Otoritas</a></li>
                                 @endif 
